@@ -34,31 +34,43 @@
                 new MindMapTreeNode
                 {
                     Id = "sub1.0",
-                    Topic = "sub1.0-right"
+                    Topic = "Response 2"
                 },
                 new MindMapTreeNode
                 {
                     Id = "sub1.1",
-                    Topic = "sub1.1-right",
+                    Topic = "Task 2",
                     Children = new List<MindMapTreeNode>
                     {
                         new MindMapTreeNode
                         {
                             Id = "sub1.1a",
-                            Topic = "sub1.1a-right"
+                            Topic = "Conflict"
                         }
                     }
                 },
                 new MindMapTreeNode
                 {
                     Id = "sub2",
-                    Topic = "sub2-left",
+                    Topic = "Response 1",
+                    Direction = MindMapNodeDirection.Left
+                },
+                                new MindMapTreeNode
+                {
+                    Id = "sub3",
+                    Topic = "Task 1",
+                    Direction = MindMapNodeDirection.Left
+                },
+                                new MindMapTreeNode
+                {
+                    Id = "sub4",
+                    Topic = "Prime",
                     Direction = MindMapNodeDirection.Left
                 },
                 new MindMapTreeNode
                 {
                     Id = "sub2.1",
-                    Topic = "sub2.1-right",
+                    Topic = "Target",
                     Direction = MindMapNodeDirection.Right
                 }
             }
