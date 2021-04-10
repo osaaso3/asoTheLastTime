@@ -1,38 +1,5 @@
 ﻿@page "/"
-@inject NavigationManager navigationManager
-
 @*@page "/{RouteParameter}"*@
-
-
-<p>
-    <h3>Welcome! </h3>
-</p>
-
-
-@* 
- <RadzenButton Click=@(args => OnClick("CognitiveModel")) Text="Model" Icon="account_balance" Style="margin-bottom: 20px; width: 150px" />
-*@
-
-    
-
-@code
-{
-    void  MyMethodAsync()
-    {
-        navigationManager.NavigateTo("/cm");
-    }
-          void OnClick(string buttonName)
-    {
-       // console.Log($"{buttonName} clicked");
-               navigationManager.NavigateTo("/cm");
-
-    }
-}
-
-@if (1==2)
-{
-
-
 
 @if (DataService.Settings.ShowHelp)
 {
@@ -66,5 +33,4 @@ else
             <SelectedHabitComponent />
         </div>
     </div>
-}
 }

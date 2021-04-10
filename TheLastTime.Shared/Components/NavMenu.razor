@@ -1,47 +1,19 @@
-﻿@inject NavigationManager navigationManager
-@* 
-<div class="top-row navbar navbar-dark bg-primary px-2 px-sm-3 px-md-2">
+﻿<div class="top-row navbar navbar-dark bg-primary px-2 px-sm-3 px-md-2">
     <button id="toggle-nav-menu" class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="fa fa-fw fa-bars"></span>
     </button>
 
-    <span class="navbar-text" role="button" id="ididit" @onclick="ShowHelp">CogModel!</span>
+    <span class="navbar-text" role="button" id="ididit" @onclick="ShowHelp">ididit!</span>
 
     <button class="navbar-toggler" @onclick="ToggleOptions">
         <span class="fa fa-fw fa-cog"></span>
     </button>
 </div>
-*@
 
 <div class="@NavMenuCssClass">
-@* 
-                <RadzenButton Click=@(args => OnClick("Cognitive Model")) Text="Model" Icon="account_balance" Style="margin-bottom: 20px; width: 80px" />
-
-
- <button class="btn-dark"
-            @onclick="@MyMethodAsync">
-        Model
-                </button>
-              
-             
-
+    
     <SettingsComponent />
-    *@
+
     @*<OptionsComponent />*@
     
 </div>
-
-
-@code
-{
-    void  MyMethodAsync()
-    {
-        navigationManager.NavigateTo("/cm");
-    }
-          void OnClick(string buttonName)
-    {
-       // console.Log($"{buttonName} clicked");
-               navigationManager.NavigateTo("/cm");
-
-    }
-}
