@@ -8,12 +8,34 @@
 @using System.Diagnostics
 @inject NavigationManager navigationManager
 @inject DataService dataService
-@*   @layout AsoLayout *@
+@inject State state
+
+@*   @layout AsoLayout 
+@inject Header header
+
+*@
+
 
  @code
 
 {
+    public long asoIndex=0;
+
     private MindMapTreeContainer _myTreeNodeContainer;
+        private MindMapTreeContainer _myTreeNodeContainer2;
+
+            protected override void OnParametersSet()
+    {
+                          asoIndex=state.SelectedCategoryId;
+                  StateHasChanged();
+  }
+
+
+    void asoIndx()
+    {
+                  asoIndex=state.SelectedCategoryId;
+                  StateHasChanged();
+    }
 
     // Define the MindMapOptions
     readonly MindMapOptions _options = new MindMapOptions
@@ -28,7 +50,7 @@
         RootNode = new MindMapTreeNode
         {
             Id = "root",
-            Topic = "Attention",
+            Topic = "Priming",
             Children = new List<MindMapTreeNode>
             {
                 new MindMapTreeNode
@@ -81,6 +103,69 @@
     {
         // When the MindMap is displayed, expand all nodes
         await _myTreeNodeContainer.Expand();
+
+    }
+
+    // Define some MindMapTreeData
+    readonly MindMapTreeData _treeData2 = new MindMapTreeData
+    {
+        RootNode = new MindMapTreeNode
+        {
+            Id = "root",
+            Topic = "Stroop",
+            Children = new List<MindMapTreeNode>
+            {
+                new MindMapTreeNode
+                {
+                    Id = "sub1.0",
+                    Topic = "Response 2"
+                },
+                new MindMapTreeNode
+                {
+                    Id = "sub1.1",
+                    Topic = "Task 2",
+                    Children = new List<MindMapTreeNode>
+                    {
+                        new MindMapTreeNode
+                        {
+                            Id = "sub1.1a",
+                            Topic = "Conflict"
+                        }
+                    }
+                },
+                new MindMapTreeNode
+                {
+                    Id = "sub2",
+                    Topic = "Response 1",
+                    Direction = MindMapNodeDirection.Left
+                },
+                                new MindMapTreeNode
+                {
+                    Id = "sub3",
+                    Topic = "Task 1",
+                    Direction = MindMapNodeDirection.Left
+                },
+                                new MindMapTreeNode
+                {
+                    Id = "sub4",
+                    Topic = "Prime",
+                    Direction = MindMapNodeDirection.Left
+                },
+                new MindMapTreeNode
+                {
+                    Id = "sub2.1",
+                    Topic = "Target",
+                    Direction = MindMapNodeDirection.Right
+                }
+            }
+        }
+    };
+
+        async Task OnShowTree2(EventArgs args)
+    {
+        // When the MindMap is displayed, expand all nodes
+                await _myTreeNodeContainer2.Expand();
+
     }
 }
 
@@ -98,8 +183,16 @@
             @onclick="@MyMethodAsync">
         Start/Stop @ModelNumber of @TrialNumber Trials
         </button>
+
+        <button class="btn: btn-primary"
+            @onclick="@asoIndx">
+            Load Model
+        </button>
+
         </div>
         <RadzenCard Style="width:1000px;">
+            @if (asoIndex==2)
+             {
             <div class="col-md-6">
             <!-- Add the component -->
             <MindMapTreeContainer @ref="_myTreeNodeContainer"
@@ -108,6 +201,18 @@
                       OnShow="@OnShowTree"
                       style="border:solid 1px blue; background:#f4f4f4;" />
               </div>
+              }
+            @if (asoIndex==3)
+              {
+            <div class="col-md-6">
+            <!-- Add the component -->
+            <MindMapTreeContainer @ref="_myTreeNodeContainer2"
+                      Options="@_options"
+                      Data="@_treeData2"
+                      OnShow="@OnShowTree2"
+                      style="border:solid 1px blue; background:#f4f4f4;" />
+              </div>
+              }
             <div class="col-md-6">
             <p>Repetitions</p>
                @*    @dataService.HabitList[0].Description *@
@@ -271,6 +376,7 @@
             <div class="mat-layout-grid-cell">
                 <RadzenNumeric Placeholder="TrialNumber" @bind-Value="@TrialNumber" />
             </div>
+
             <div class="mat-layout-grid-cell">
                 <RadzenNumeric Placeholder="DurationTrial" @bind-Value="@N" />
             </div>

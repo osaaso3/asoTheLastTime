@@ -1,5 +1,9 @@
 ﻿@inject NavigationManager navigationManager
 
+@* 
+@(idx1) @(DataService.CategoryList[idx1-1].Description)
+*@
+
 <div class="top-row navbar navbar-dark bg-primary">
     @if (DataService.Settings.ShowCategoriesInHeader)
     {
@@ -20,8 +24,8 @@
 
             @for (int i = 0; i < DataService.CategoryList.Count; ++i)
             {
-                int idx = i;
-                string index = i == 0 ? "No" : i.ToString();
+                 int idx = i;
+                 string index = i == 0 ? "No" : i.ToString();
                 string css = string.Empty;
 
                 if (State.SelectedCategoryIdx != -1)
@@ -38,7 +42,7 @@
                 }
 
                 <PaginationItem Class="@css" Active="@(State.SelectedCategoryId == DataService.CategoryList[idx].Id)">
-                    <PaginationLink Page="@(DataService.CategoryList[idx].Id.ToString())" Clicked="(Page) => { State.SelectedCategoryId = int.Parse(Page); }">
+                    <PaginationLink Page="@(DataService.CategoryList[idx].Id.ToString())" Clicked="(Page) => { asoPage(Page); }">
                         @index
                     </PaginationLink>
                 </PaginationItem>
@@ -68,10 +72,28 @@
 
 @code
 {
+    [Parameter]
+    public int idx1 {get; set;}=1;
+
     void  MyMethodAsync()
     {
         navigationManager.NavigateTo("/");
     }
+    
+    void asoPage(string page)
+    {
+        State.SelectedCategoryId = int.Parse(page);
+        idx1=int.Parse(page);
+        //StateHasChanged();
+        
+    }
+    
+                protected override void OnParametersSet()
+    {
+       // State.SelectedCategoryId = int.Parse(page);
+       // idx1=int.Parse(page);                  
+       // StateHasChanged();
+  }
 
       void OnClick(string buttonName)
     {

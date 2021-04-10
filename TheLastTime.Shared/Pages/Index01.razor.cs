@@ -5,7 +5,7 @@ using TheLastTime.Shared.Data;
 
 namespace TheLastTime.Shared.Pages
 {
-    public sealed partial class Index : IDisposable
+    public sealed partial class Index01 : IDisposable
     {
         [Inject]
         DataService DataService { get; set; } = null!;
