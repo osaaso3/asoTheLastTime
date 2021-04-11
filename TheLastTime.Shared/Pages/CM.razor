@@ -37,10 +37,17 @@
                   StateHasChanged();
     }
 
+        private string _selectedNodeId = "";
+        private string[] _selectedNodeIds = new string[0];
+
+    public string asoNode = "0";
+        public string asoNodes="00";
+
     // Define the MindMapOptions
     readonly MindMapOptions _options = new MindMapOptions
     {
         Editable = false,
+        MultiSelect = true,
         Theme = MindMapThemes.Primary
     };
 
@@ -104,6 +111,20 @@
         // When the MindMap is displayed, expand all nodes
         await _myTreeNodeContainer.Expand();
 
+    }
+
+    void OnSelectTreeNode(MindMapEventArgs<MindMapTreeNode> args)
+    {
+        var treeNode = args.Node;
+        asoNode=treeNode.GetType().Name + " - " + treeNode.Id;
+        //_selectedNodeId = treeNode.GetType().Name + " - " + treeNode.Id;
+    }
+
+    void OnMultiSelectNodes(MindMapMultiSelectEventArgs<MindMapTreeNode> args)
+    {
+        _selectedNodeId = args.Node != null ? args.Node.GetType().Name + " - " + args.Node.Id : "/none/";
+        _selectedNodeIds = args.Nodes.Select(n => n.Id).ToArray();
+        asoNodes=string.Join(",", _selectedNodeIds);
     }
 
     // Define some MindMapTreeData
@@ -190,6 +211,11 @@
         </button>
 
         </div>
+        <p>
+        @asoNode
+        @asoNodes
+       </p>
+
         <RadzenCard Style="width:1000px;">
             @if (asoIndex==2)
              {
@@ -198,6 +224,8 @@
             <MindMapTreeContainer @ref="_myTreeNodeContainer"
                       Options="@_options"
                       Data="@_treeData"
+                      OnSelectNode="@OnSelectTreeNode"
+                      OnMultiSelectNodes="@OnMultiSelectNodes"
                       OnShow="@OnShowTree"
                       style="border:solid 1px blue; background:#f4f4f4;" />
               </div>
@@ -208,6 +236,8 @@
             <!-- Add the component -->
             <MindMapTreeContainer @ref="_myTreeNodeContainer2"
                       Options="@_options"
+                      OnSelectNode="@OnSelectTreeNode"
+                      OnMultiSelectNodes="@OnMultiSelectNodes"
                       Data="@_treeData2"
                       OnShow="@OnShowTree2"
                       style="border:solid 1px blue; background:#f4f4f4;" />
