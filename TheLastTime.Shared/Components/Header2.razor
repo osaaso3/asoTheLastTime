@@ -1,0 +1,113 @@
+﻿@inject NavigationManager navigationManager
+
+@* 
+@(idx1) @(DataService.CategoryList[idx1-1].Description)
+*@
+
+<div class="top-row navbar navbar-dark bg-primary">
+    @if (1==2)//DataService.Settings.ShowCategoriesInHeader)
+    {
+        <Pagination Class="m-0">
+
+            @*<PaginationItem Disabled="@(State.SelectedCategoryId == DataService.CategoryList.First().Id)">*@
+            <PaginationItem>
+                <PaginationLink Clicked="(Page) => { State.PreviousCategory(); }">
+                    <span aria-hidden="true">«</span>
+                </PaginationLink>
+            </PaginationItem>
+
+            <PaginationItem Active="@(State.SelectedCategoryId == 0)">
+                <PaginationLink Page="0" Clicked="(Page) => { State.SelectedCategoryId = int.Parse(Page); }">
+                    All
+                </PaginationLink>
+            </PaginationItem>
+
+            @for (int i = 0; i < DataService.CategoryList.Count; ++i)
+            {
+                 int idx = i;
+                 string index = i == 0 ? "No" : i.ToString();
+                string css = string.Empty;
+
+                if (State.SelectedCategoryIdx != -1)
+                {
+                    if ((idx > 6 || idx < DataService.CategoryList.Count - 1 - 6) && (idx > State.SelectedCategoryIdx + 3 || idx < State.SelectedCategoryIdx - 3))
+                    {
+                        css = "hide-pagination";
+                    }
+
+                    if ((idx > 10 || idx < DataService.CategoryList.Count - 1 - 10) && (idx > State.SelectedCategoryIdx + 5 || idx < State.SelectedCategoryIdx - 5))
+                    {
+                        css += " hide-pagination-lg";
+                    }
+                }
+
+                <PaginationItem Class="@css" Active="@(State.SelectedCategoryId == DataService.CategoryList[idx].Id)">
+                    <PaginationLink Page="@(DataService.CategoryList[idx].Id.ToString())" Clicked="(Page) => { asoPage(Page); }">
+                        @index
+                    </PaginationLink>
+                </PaginationItem>
+            }
+
+            @*<PaginationItem Disabled="@(State.SelectedCategoryId == DataService.CategoryList.Last().Id)">*@
+            <PaginationItem>
+                <PaginationLink Clicked="(Page) => { State.NextCategory(); }">
+                    <span aria-hidden="true">»</span>
+                </PaginationLink>
+            </PaginationItem>
+
+        </Pagination>
+    }
+    @* 
+    
+     <button class="btn-blue"
+            @onclick="@MyMethodAsync">
+        Home
+                </button>
+                    <span  class="col-lg-12 col-xl-6 px-1 px-sm-3">         CogSci 2020</span>
+
+                *@
+                                <RadzenButton Click=@(args => OnClick("Home")) Text="Home" Icon="home" Style="margin-bottom: 20px; width: 140px" />
+
+</div>
+
+@code
+{
+    [Parameter]
+    public int idx1 {get; set;}=1;
+
+    void  MyMethodAsync()
+    {
+        navigationManager.NavigateTo("/");
+    }
+    
+    void asoPage(string page)
+    {
+        State.SelectedCategoryId = int.Parse(page);
+        idx1=int.Parse(page);
+        //StateHasChanged();
+        
+    }
+    
+                protected override void OnParametersSet()
+    {
+       // State.SelectedCategoryId = int.Parse(page);
+       // idx1=int.Parse(page);                  
+       // StateHasChanged();
+  }
+
+      void OnClick(string buttonName)
+    {
+        if (buttonName=="Home")
+       {
+                           navigationManager.NavigateTo("/");
+
+        }
+        else
+        {
+                           navigationManager.NavigateTo("/cm");
+
+        }
+       // console.Log($"{buttonName} clicked");
+
+    }
+}

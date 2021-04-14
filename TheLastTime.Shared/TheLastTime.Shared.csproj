@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Components\AsoNavMenu.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Components\AsoNavMenu.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
 

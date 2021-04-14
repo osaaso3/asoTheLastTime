@@ -9,8 +9,8 @@
 @inject NavigationManager navigationManager
 @inject DataService dataService
 @inject State state
-
-@*   @layout AsoLayout 
+@layout AsoLayout2
+@*   
 @inject Header header
 
 *@
@@ -20,19 +20,34 @@
 
 {
     public long asoIndex=0;
+    public string[] asoHabitList=new string[5];
+        public string asoHabit="";
 
     private MindMapTreeContainer _myTreeNodeContainer;
-        private MindMapTreeContainer _myTreeNodeContainer2;
+    private MindMapTreeContainer _myTreeNodeContainer2;
+
+   
+   protected override void OnInitialized()
+    {
+
+      for (int i=0;i<2;i++)//dataService.HabitList.Count;i++)
+       {
+          asoHabitList[i]= dataService.HabitList[i].Description;
+       }
+
+        asoHabit=asoHabitList[0];
+     }
 
             protected override void OnParametersSet()
-    {
-                          asoIndex=state.SelectedCategoryId;
+     {
+                  asoIndex=state.SelectedCategoryId;
                   StateHasChanged();
-  }
+     }
 
 
     void asoIndx()
     {
+         asoHabit=asoHabitList[1];
                   asoIndex=state.SelectedCategoryId;
                   StateHasChanged();
     }
@@ -40,7 +55,7 @@
         private string _selectedNodeId = "";
         private string[] _selectedNodeIds = new string[0];
 
-    public string asoNode = "0";
+        public string asoNode = "0";
         public string asoNodes="00";
 
     // Define the MindMapOptions
@@ -56,7 +71,7 @@
     {
         RootNode = new MindMapTreeNode
         {
-            Id = "root",
+            Id = "priming",
             Topic = "Priming",
             Children = new List<MindMapTreeNode>
             {
@@ -92,7 +107,7 @@
                 },
                                 new MindMapTreeNode
                 {
-                    Id = "sub4",
+                    Id = "prime",
                     Topic = "Prime",
                     Direction = MindMapNodeDirection.Left
                 },
@@ -116,8 +131,10 @@
     void OnSelectTreeNode(MindMapEventArgs<MindMapTreeNode> args)
     {
         var treeNode = args.Node;
-        asoNode=treeNode.GetType().Name + " - " + treeNode.Id;
+        asoNode= treeNode.Id;
         //_selectedNodeId = treeNode.GetType().Name + " - " + treeNode.Id;
+        //createUserDialogOpen=!createUserDialogOpen;
+        singleTrialChartPrime=!singleTrialChartPrime;
     }
 
     void OnMultiSelectNodes(MindMapMultiSelectEventArgs<MindMapTreeNode> args)
@@ -214,12 +231,17 @@
         <p>
         @asoNode
         @asoNodes
+        @asoIndex
        </p>
 
         <RadzenCard Style="width:1000px;">
-            @if (asoIndex==2)
+            
+             
+            @if (asoHabit=="ISI")//            @if (dataService.HabitList[i].Description=="ISI")//asoIndex==2)
+            // @for (int i=0;i<dataService.HabitList.Count;i++)
              {
-            <div class="col-md-6">
+                             <div class="col-md-6">
+
             <!-- Add the component -->
             <MindMapTreeContainer @ref="_myTreeNodeContainer"
                       Options="@_options"
@@ -228,11 +250,12 @@
                       OnMultiSelectNodes="@OnMultiSelectNodes"
                       OnShow="@OnShowTree"
                       style="border:solid 1px blue; background:#f4f4f4;" />
-              </div>
+                                  </div>
+
               }
-            @if (asoIndex==3)
+            @if (asoHabit=="RFE")
               {
-            <div class="col-md-6">
+                              <div class="col-md-6">
             <!-- Add the component -->
             <MindMapTreeContainer @ref="_myTreeNodeContainer2"
                       Options="@_options"
@@ -241,8 +264,130 @@
                       Data="@_treeData2"
                       OnShow="@OnShowTree2"
                       style="border:solid 1px blue; background:#f4f4f4;" />
-              </div>
+                                  </div>
+
               }
+              
+@if (asoNode=="prime")
+{
+              <div class="mat-layout-grid">
+    <RadzenChart Style="height: 400px;width: 600px" Visible="singleTrialChartPrime">
+        <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N</label>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Prime" LineType="LineType.Solid" ValueProperty="singleTrialOutbLLX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="R-Prime" LineType="LineType.Solid" ValueProperty="singleTrialOutbLRX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Mask" LineType="LineType.Solid" ValueProperty="singleTrialOutbLMX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenCategoryAxis Step="100" Padding="100" FormatString="{0}" />
+        <RadzenValueAxis Formatter="@FormatAsUSD" Min="0" Max="1">
+            <RadzenGridLines Visible="true" />
+            <RadzenAxisTitle Text="Activation" />
+        </RadzenValueAxis>
+                     </RadzenChart>
+
+                 </div>
+
+}
+
+
+@if (1==2)//createUserDialogOpen)
+{
+<p>
+    <button class="btn @(createUserDialogOpen ?  "btn-primary" : "btn-dark") "
+            @onclick="@MyMethodAsync0">
+        Stop When the Graph is Ready
+    </button>
+    <button class="btn @(createUserDialogOpen ?  "btn-primary" : "btn-dark") "
+            @onclick="@(e => { createUserDialogOpen = false; })">
+        Close Current Window
+    </button>
+</p>
+
+    <p>
+        <button class="btn @(createUserDialogOpen ?  "btn-primary" : "btn-dark") "
+                @onclick="@MyMethodAsync0">
+            Stop When the Graph is Ready
+        </button>
+        <MatButton Raised="true" Icon="close" @onclick="@(e => { createUserDialogOpen = false; })">Close Current Window</MatButton>
+    </p>
+
+    
+
+<div class="mat-layout-grid">
+    <label>Single Trial Chart Visible<RadzenCheckBox @bind-Value="@singleTrialChartPrime" @onclick="asoKeepDataSingleTrial" Name="SingleChart"></RadzenCheckBox></label>
+    <RadzenChart Style="height: 300px;width: 500px" Visible="singleTrialChartPrime">
+        <label>Smooth<RadzenCheckBox @bind-Value="@smoothTrial" Name="smooth"></RadzenCheckBox></label>
+        <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N</label>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Prime" LineType="LineType.Solid" ValueProperty="singleTrialOutbLLX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="R-Prime" LineType="LineType.Solid" ValueProperty="singleTrialOutbLRX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Mask" LineType="LineType.Solid" ValueProperty="singleTrialOutbLMX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Target" LineType="LineType.Solid" ValueProperty="singleTrialOutbRLX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="R-Target" LineType="LineType.Solid" ValueProperty="singleTrialOutbRRX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="R-Mask" LineType="LineType.Solid" ValueProperty="singleTrialOutbRMX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries  Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Response" LineType="LineType.Solid" ValueProperty="singleTrialOutaLX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="R-Response" LineType="LineType.Solid" ValueProperty="singleTrialOutaRX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="Threshold-R" LineType="LineType.Solid" ValueProperty="singleTrialOutaThresh">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        @*
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Task" LineType="LineType.Solid" ValueProperty="singleTrialTaskLX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="R-Task" LineType="LineType.Solid" ValueProperty="singleTrialTaskRX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="Threshold-T" LineType="LineType.Solid" ValueProperty="singleTrialTaskThresh">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="V-Attention" LineType="LineType.Solid" ValueProperty="singleTrialAttV">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="U-Attention" LineType="LineType.Solid" ValueProperty="singleTrialAttU">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="HV-Attention" LineType="LineType.Solid" ValueProperty="singleTrialAttHv">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="Conflict-1" LineType="LineType.Solid" ValueProperty="singleTrialConf">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="Conflict-T" LineType="LineType.Solid" ValueProperty="singleTrialConfThresh">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="Conflict-C" LineType="LineType.Solid" ValueProperty="singleTrialConfTrial">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenCategoryAxis Step="100" Padding="100" FormatString="{0}" />
+        <RadzenValueAxis Formatter="@FormatAsUSD" Min="0" Max="1">
+            <RadzenGridLines Visible="true" />
+            <RadzenAxisTitle Text="Activation" />
+        </RadzenValueAxis>
+        *@
+    </RadzenChart>
+</div>
+
+}
+
             <div class="col-md-6">
             <p>Repetitions</p>
                @*    @dataService.HabitList[0].Description *@
@@ -677,96 +822,6 @@
 
 
 
-
-<div class="mat-layout-grid">
-    <label>Single Trial Chart Visible<RadzenCheckBox @bind-Value="@singleTrialChart" @onclick="asoKeepDataSingleTrial" Name="SingleChart"></RadzenCheckBox></label>
-    <RadzenChart Style="height: 600px;" Visible="singleTrialChart">
-        <label>Smooth<RadzenCheckBox @bind-Value="@smoothTrial" Name="smooth"></RadzenCheckBox></label>
-        <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N</label>
-        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Prime" LineType="LineType.Solid" ValueProperty="singleTrialOutbLLX">
-            <RadzenMarkers MarkerType="MarkerType.Auto" />
-        </RadzenLineSeries>
-        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="R-Prime" LineType="LineType.Solid" ValueProperty="singleTrialOutbLRX">
-            <RadzenMarkers MarkerType="MarkerType.Auto" />
-        </RadzenLineSeries>
-        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Mask" LineType="LineType.Solid" ValueProperty="singleTrialOutbLMX">
-            <RadzenMarkers MarkerType="MarkerType.Auto" />
-        </RadzenLineSeries>
-        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Target" LineType="LineType.Solid" ValueProperty="singleTrialOutbRLX">
-            <RadzenMarkers MarkerType="MarkerType.Auto" />
-        </RadzenLineSeries>
-        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="R-Target" LineType="LineType.Solid" ValueProperty="singleTrialOutbRRX">
-            <RadzenMarkers MarkerType="MarkerType.Auto" />
-        </RadzenLineSeries>
-        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="R-Mask" LineType="LineType.Solid" ValueProperty="singleTrialOutbRMX">
-            <RadzenMarkers MarkerType="MarkerType.Auto" />
-        </RadzenLineSeries>
-        <RadzenLineSeries  Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Response" LineType="LineType.Solid" ValueProperty="singleTrialOutaLX">
-            <RadzenMarkers MarkerType="MarkerType.Auto" />
-        </RadzenLineSeries>
-        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="R-Response" LineType="LineType.Solid" ValueProperty="singleTrialOutaRX">
-            <RadzenMarkers MarkerType="MarkerType.Auto" />
-        </RadzenLineSeries>
-        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="Threshold-R" LineType="LineType.Solid" ValueProperty="singleTrialOutaThresh">
-            <RadzenMarkers MarkerType="MarkerType.Auto" />
-        </RadzenLineSeries>
-        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Task" LineType="LineType.Solid" ValueProperty="singleTrialTaskLX">
-            <RadzenMarkers MarkerType="MarkerType.Auto" />
-        </RadzenLineSeries>
-        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="R-Task" LineType="LineType.Solid" ValueProperty="singleTrialTaskRX">
-            <RadzenMarkers MarkerType="MarkerType.Auto" />
-        </RadzenLineSeries>
-        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="Threshold-T" LineType="LineType.Solid" ValueProperty="singleTrialTaskThresh">
-            <RadzenMarkers MarkerType="MarkerType.Auto" />
-        </RadzenLineSeries>
-        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="V-Attention" LineType="LineType.Solid" ValueProperty="singleTrialAttV">
-            <RadzenMarkers MarkerType="MarkerType.Auto" />
-        </RadzenLineSeries>
-        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="U-Attention" LineType="LineType.Solid" ValueProperty="singleTrialAttU">
-            <RadzenMarkers MarkerType="MarkerType.Auto" />
-        </RadzenLineSeries>
-        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="HV-Attention" LineType="LineType.Solid" ValueProperty="singleTrialAttHv">
-            <RadzenMarkers MarkerType="MarkerType.Auto" />
-        </RadzenLineSeries>
-        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="Conflict-1" LineType="LineType.Solid" ValueProperty="singleTrialConf">
-            <RadzenMarkers MarkerType="MarkerType.Auto" />
-        </RadzenLineSeries>
-        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="Conflict-T" LineType="LineType.Solid" ValueProperty="singleTrialConfThresh">
-            <RadzenMarkers MarkerType="MarkerType.Auto" />
-        </RadzenLineSeries>
-        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="Conflict-C" LineType="LineType.Solid" ValueProperty="singleTrialConfTrial">
-            <RadzenMarkers MarkerType="MarkerType.Auto" />
-        </RadzenLineSeries>
-        <RadzenCategoryAxis Step="100" Padding="100" FormatString="{0}" />
-        <RadzenValueAxis Formatter="@FormatAsUSD" Min="0" Max="1">
-            <RadzenGridLines Visible="true" />
-            <RadzenAxisTitle Text="Activation" />
-        </RadzenValueAxis>
-    </RadzenChart>
-</div>
-
-}
-
-@if (createUserDialogOpen)
-{
-<p>
-    <button class="btn @(createUserDialogOpen ?  "btn-primary" : "btn-dark") "
-            @onclick="@MyMethodAsync0">
-        Stop When the Graph is Ready
-    </button>
-    <button class="btn @(createUserDialogOpen ?  "btn-primary" : "btn-dark") "
-            @onclick="@(e => { createUserDialogOpen = false; })">
-        Close Current Window
-    </button>
-</p>
-
-    <p>
-        <button class="btn @(createUserDialogOpen ?  "btn-primary" : "btn-dark") "
-                @onclick="@MyMethodAsync0">
-            Stop When the Graph is Ready
-        </button>
-        <MatButton Raised="true" Icon="close" @onclick="@(e => { createUserDialogOpen = false; })">Close Current Window</MatButton>
-    </p>
 }
 
 
@@ -848,7 +903,7 @@
     bool smoothTrials = true;
     bool smoothTrial = true;
 
-    public bool singleTrialChart { get; set; } = true;
+    public bool singleTrialChartPrime { get; set; } = false;
 
     bool modelsChart = true;
     bool trialsChart = true;
@@ -1215,7 +1270,7 @@
     }
 
     // IEnumerable<int> values = new int[] { 14, 78 };
-    public int asoSingleTrialSpeed = 20;
+    public int asoSingleTrialSpeed = 150;
     //int valueWithStep = 30;
 
 
