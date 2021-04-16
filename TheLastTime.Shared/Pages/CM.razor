@@ -30,7 +30,7 @@
    protected override void OnInitialized()
     {
 
-      for (int i=0;i<2;i++)//dataService.HabitList.Count;i++)
+      for (int i=0;i<dataService.HabitList.Count;i++)
        {
           asoHabitList[i]= dataService.HabitList[i].Description;
        }
@@ -77,31 +77,31 @@
             {
                 new MindMapTreeNode
                 {
-                    Id = "sub1.0",
+                    Id = "response2",
                     Topic = "Response 2"
                 },
                 new MindMapTreeNode
                 {
-                    Id = "sub1.1",
+                    Id = "task2",
                     Topic = "Task 2",
                     Children = new List<MindMapTreeNode>
                     {
                         new MindMapTreeNode
                         {
-                            Id = "sub1.1a",
+                            Id = "conflict",
                             Topic = "Conflict"
                         }
                     }
                 },
                 new MindMapTreeNode
                 {
-                    Id = "sub2",
+                    Id = "response1",
                     Topic = "Response 1",
                     Direction = MindMapNodeDirection.Left
                 },
                                 new MindMapTreeNode
                 {
-                    Id = "sub3",
+                    Id = "task1",
                     Topic = "Task 1",
                     Direction = MindMapNodeDirection.Left
                 },
@@ -113,7 +113,7 @@
                 },
                 new MindMapTreeNode
                 {
-                    Id = "sub2.1",
+                    Id = "target",
                     Topic = "Target",
                     Direction = MindMapNodeDirection.Right
                 }
@@ -125,7 +125,6 @@
     {
         // When the MindMap is displayed, expand all nodes
         await _myTreeNodeContainer.Expand();
-
     }
 
     void OnSelectTreeNode(MindMapEventArgs<MindMapTreeNode> args)
@@ -134,7 +133,7 @@
         asoNode= treeNode.Id;
         //_selectedNodeId = treeNode.GetType().Name + " - " + treeNode.Id;
         //createUserDialogOpen=!createUserDialogOpen;
-        singleTrialChartPrime=!singleTrialChartPrime;
+       // singleTrialChartPrime=!singleTrialChartPrime;
     }
 
     void OnMultiSelectNodes(MindMapMultiSelectEventArgs<MindMapTreeNode> args)
@@ -155,43 +154,43 @@
             {
                 new MindMapTreeNode
                 {
-                    Id = "sub1.0",
+                    Id = "response2",
                     Topic = "Response 2"
                 },
                 new MindMapTreeNode
                 {
-                    Id = "sub1.1",
+                    Id = "task2",
                     Topic = "Task 2",
                     Children = new List<MindMapTreeNode>
                     {
                         new MindMapTreeNode
                         {
-                            Id = "sub1.1a",
+                            Id = "conflict",
                             Topic = "Conflict"
                         }
                     }
                 },
                 new MindMapTreeNode
                 {
-                    Id = "sub2",
+                    Id = "response1",
                     Topic = "Response 1",
                     Direction = MindMapNodeDirection.Left
                 },
                                 new MindMapTreeNode
                 {
-                    Id = "sub3",
+                    Id = "task1",
                     Topic = "Task 1",
                     Direction = MindMapNodeDirection.Left
                 },
                                 new MindMapTreeNode
                 {
-                    Id = "sub4",
+                    Id = "prime",
                     Topic = "Prime",
                     Direction = MindMapNodeDirection.Left
                 },
                 new MindMapTreeNode
                 {
-                    Id = "sub2.1",
+                    Id = "target",
                     Topic = "Target",
                     Direction = MindMapNodeDirection.Right
                 }
@@ -226,13 +225,7 @@
             @onclick="@asoIndx">
             Load Model
         </button>
-
         </div>
-        <p>
-        @asoNode
-        @asoNodes
-        @asoIndex
-       </p>
 
         <RadzenCard Style="width:1000px;">
             
@@ -240,7 +233,7 @@
             @if (asoHabit=="ISI")//            @if (dataService.HabitList[i].Description=="ISI")//asoIndex==2)
             // @for (int i=0;i<dataService.HabitList.Count;i++)
              {
-                             <div class="col-md-6">
+                            
 
             <!-- Add the component -->
             <MindMapTreeContainer @ref="_myTreeNodeContainer"
@@ -250,12 +243,12 @@
                       OnMultiSelectNodes="@OnMultiSelectNodes"
                       OnShow="@OnShowTree"
                       style="border:solid 1px blue; background:#f4f4f4;" />
-                                  </div>
+                               
 
               }
             @if (asoHabit=="RFE")
               {
-                              <div class="col-md-6">
+                            
             <!-- Add the component -->
             <MindMapTreeContainer @ref="_myTreeNodeContainer2"
                       Options="@_options"
@@ -264,14 +257,15 @@
                       Data="@_treeData2"
                       OnShow="@OnShowTree2"
                       style="border:solid 1px blue; background:#f4f4f4;" />
-                                  </div>
+                              
 
               }
               
-@if (asoNode=="prime")
+          
+@if (asoNodes.Contains("prime"))
 {
-              <div class="mat-layout-grid">
-    <RadzenChart Style="height: 400px;width: 600px" Visible="singleTrialChartPrime">
+                              
+    <RadzenChart Style="height: 400px;" Visible="singleTrialChartPrime">
         <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N</label>
         <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Prime" LineType="LineType.Solid" ValueProperty="singleTrialOutbLLX">
             <RadzenMarkers MarkerType="MarkerType.Auto" />
@@ -289,7 +283,32 @@
         </RadzenValueAxis>
                      </RadzenChart>
 
-                 </div>
+   
+
+}
+
+@if (asoNodes.Contains("target"))
+{
+                            
+    <RadzenChart Style="height: 400px;" Visible="singleTrialChartTarget">
+        <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N</label>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Target" LineType="LineType.Solid" ValueProperty="singleTrialOutbRLX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="R-Target" LineType="LineType.Solid" ValueProperty="singleTrialOutbRRX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="R-Mask" LineType="LineType.Solid" ValueProperty="singleTrialOutbRMX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenCategoryAxis Step="100" Padding="100" FormatString="{0}" />
+        <RadzenValueAxis Formatter="@FormatAsUSD" Min="0" Max="1">
+            <RadzenGridLines Visible="true" />
+            <RadzenAxisTitle Text="Activation" />
+        </RadzenValueAxis>
+                     </RadzenChart>
+
+             
 
 }
 
@@ -903,7 +922,8 @@
     bool smoothTrials = true;
     bool smoothTrial = true;
 
-    public bool singleTrialChartPrime { get; set; } = false;
+    public bool singleTrialChartPrime { get; set; } = true;
+        public bool singleTrialChartTarget { get; set; } = true;
 
     bool modelsChart = true;
     bool trialsChart = true;
