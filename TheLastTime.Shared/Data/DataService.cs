@@ -509,11 +509,11 @@ namespace TheLastTime.Shared.Data
         {
             using IDatabase db = await DatabaseAccess.CreateDatabase();
 
-            db.Categories.Add(new Category() { Id = 2, Description = "Priming" });
-            db.Categories.Add(new Category() { Id = 3, Description = "Stroop" });
+            db.Categories.Add(new Category() { Id = 1, Description = "Priming" });
+            db.Categories.Add(new Category() { Id = 2, Description = "Stroop" });
 
-            db.Habits.Add(new Habit() { Id = 1, CategoryId = 2, Description = "ISI", DesiredInterval = new TimeSpan(0, 8, 0, 0), IsStarred = true, IsTwoMinute = true });
-            db.Habits.Add(new Habit() { Id = 2, CategoryId = 3, Description = "RFE", DesiredInterval = new TimeSpan(0, 12, 0, 0), IsTwoMinute = true });
+            db.Habits.Add(new Habit() { Id = 1, CategoryId = 1, Description = "ISI", DesiredInterval = new TimeSpan(0, 8, 0, 0), IsStarred = true, IsTwoMinute = true });
+            db.Habits.Add(new Habit() { Id = 2, CategoryId = 2, Description = "RFE", DesiredInterval = new TimeSpan(0, 12, 0, 0), IsTwoMinute = true });
 
             db.Times.Add(new Time() { Id = 1, HabitId = 1, DateTime = DateTime.Now.AddDays(-50) });
             db.Times.Add(new Time() { Id = 2, HabitId = 2, DateTime = DateTime.Now.AddDays(-28) });

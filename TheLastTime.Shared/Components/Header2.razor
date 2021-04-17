@@ -67,6 +67,7 @@
 
                 *@
                                 <RadzenButton Click=@(args => OnClick("Home")) Text="Home" Icon="home" Style="margin-bottom: 20px; width: 140px" />
+                                <RadzenButton Click=@(args => OnClick("Settings")) Text="Settings" Icon="account_balance" Style="margin-bottom: 20px; width: 140px" />
 
 </div>
 
@@ -102,11 +103,16 @@
                            navigationManager.NavigateTo("/");
 
         }
-        else
-        {
-                           navigationManager.NavigateTo("/cm");
+                if (buttonName=="Settings")
+       {
+                           navigationManager.NavigateTo("/index01");
 
         }
+       // else
+       // {
+       //                    navigationManager.NavigateTo("/cm");
+
+       // }
        // console.Log($"{buttonName} clicked");
 
     }

@@ -16,6 +16,47 @@
 *@
 
 
+
+@code
+{
+    [Parameter]
+    public int idx1 {get; set;}=0;
+
+    void  MyMethodAsyncX()
+    {
+        navigationManager.NavigateTo("/");
+    }
+    
+
+        
+
+    
+        void asoPageC(string page)
+    {
+        state.SelectedCategoryId = int.Parse(page);
+
+       //state.NextCategory();
+        idx1=int.Parse(page);
+        asoHabit=asoHabitList[idx1-1];
+        StateHasChanged();    
+    }
+
+
+      void OnClick(string buttonName)
+    {
+        if (buttonName=="Home")
+        {
+         navigationManager.NavigateTo("/");
+        }
+        else
+        {
+         navigationManager.NavigateTo("/cm");
+        }
+       // console.Log($"{buttonName} clicked");
+
+    }
+}
+
  @code
 
 {
@@ -30,12 +71,12 @@
    protected override void OnInitialized()
     {
 
-      for (int i=0;i<dataService.HabitList.Count;i++)
+      for (int i=0;i<dataService.CategoryList.Count;i++)//dataService.HabitList.Count-1;i++)
        {
-          asoHabitList[i]= dataService.HabitList[i].Description;
+          asoHabitList[i]= dataService.CategoryList[i].Description;
        }
 
-        asoHabit=asoHabitList[0];
+        asoHabit=asoHabitList[1];
      }
 
             protected override void OnParametersSet()
@@ -77,13 +118,8 @@
             {
                 new MindMapTreeNode
                 {
-                    Id = "response2",
-                    Topic = "Response 2"
-                },
-                new MindMapTreeNode
-                {
-                    Id = "task2",
-                    Topic = "Task 2",
+                    Id = "attention",
+                    Topic = "Attention",
                     Children = new List<MindMapTreeNode>
                     {
                         new MindMapTreeNode
@@ -95,14 +131,14 @@
                 },
                 new MindMapTreeNode
                 {
-                    Id = "response1",
-                    Topic = "Response 1",
+                    Id = "task",
+                    Topic = "Task",
                     Direction = MindMapNodeDirection.Left
                 },
                                 new MindMapTreeNode
                 {
-                    Id = "task1",
-                    Topic = "Task 1",
+                    Id = "response",
+                    Topic = "Response",
                     Direction = MindMapNodeDirection.Left
                 },
                                 new MindMapTreeNode
@@ -131,6 +167,10 @@
     {
         var treeNode = args.Node;
         asoNode= treeNode.Id;
+        if (asoNode=="priming" || asoNode=="stroop")
+        {
+            MyMethodAsync();
+        }
         //_selectedNodeId = treeNode.GetType().Name + " - " + treeNode.Id;
         //createUserDialogOpen=!createUserDialogOpen;
        // singleTrialChartPrime=!singleTrialChartPrime;
@@ -154,13 +194,8 @@
             {
                 new MindMapTreeNode
                 {
-                    Id = "response2",
-                    Topic = "Response 2"
-                },
-                new MindMapTreeNode
-                {
-                    Id = "task2",
-                    Topic = "Task 2",
+                    Id = "attention",
+                    Topic = "Attention",
                     Children = new List<MindMapTreeNode>
                     {
                         new MindMapTreeNode
@@ -172,14 +207,14 @@
                 },
                 new MindMapTreeNode
                 {
-                    Id = "response1",
-                    Topic = "Response 1",
+                    Id = "task",
+                    Topic = "Task",
                     Direction = MindMapNodeDirection.Left
                 },
                                 new MindMapTreeNode
                 {
-                    Id = "task1",
-                    Topic = "Task 1",
+                    Id = "response",
+                    Topic = "Response",
                     Direction = MindMapNodeDirection.Left
                 },
                                 new MindMapTreeNode
@@ -208,33 +243,33 @@
 
 <div class="row">
         <div class="col-xl-6">
-        <RadzenTabs Change=@OnChange style="width:1000px;">
-            <Tabs>
-                <RadzenTabsItem Text="Param1">
-                <p>Blocks: @m / @ModelNumber</p>
-                <p><RadzenProgressBar @bind-Value="@mProgress" /></p>
-                <p>Trials: @n / @TrialNumber</p>
+        <RadzenTabs Change=@OnChange style="width:1200px;">
+            <Tabs>       
+                <RadzenTabsItem Text="Start">
+        
+<RadzenCard Style=" margin-bottom: 20px;">
+    <div class="row">
+         <div class="col-md-6">  
+       <Pagination Class="m-0">
 
-        <div class="head-menu">
-        <button class="btn  @(spinning ?  "btn-red" : "btn-primary") "
-            @onclick="@MyMethodAsync">
-        Start/Stop @ModelNumber of @TrialNumber Trials
-        </button>
+            @for (int i = 1; i < dataService.CategoryList.Count; ++i)
+            {
+                 int idx = i;
+                 string index = i.ToString();
+                string css = string.Empty;
 
-        <button class="btn: btn-primary"
-            @onclick="@asoIndx">
-            Load Model
-        </button>
-        </div>
+                <PaginationItem Class="@css" Active="@(state.SelectedCategoryId == dataService.CategoryList[idx].Id)">
+                    <PaginationLink Page="@(dataService.CategoryList[idx].Id.ToString())" Clicked="(Page) => { asoPageC(Page); }">
+                        @index
+                    </PaginationLink>
+                </PaginationItem>
+            }
 
-        <RadzenCard Style="width:1000px;">
-            
-             
-            @if (asoHabit=="ISI")//            @if (dataService.HabitList[i].Description=="ISI")//asoIndex==2)
+        </Pagination>
+            @if (asoHabit=="Priming")//            @if (dataService.HabitList[i].Description=="ISI")//asoIndex==2)
             // @for (int i=0;i<dataService.HabitList.Count;i++)
-             {
-                            
-
+            //
+             {                 
             <!-- Add the component -->
             <MindMapTreeContainer @ref="_myTreeNodeContainer"
                       Options="@_options"
@@ -242,13 +277,10 @@
                       OnSelectNode="@OnSelectTreeNode"
                       OnMultiSelectNodes="@OnMultiSelectNodes"
                       OnShow="@OnShowTree"
-                      style="border:solid 1px blue; background:#f4f4f4;" />
-                               
-
+                      style="width: 400px; border:solid 1px blue; background:#f4f4f4;" />
               }
-            @if (asoHabit=="RFE")
-              {
-                            
+            @if (asoHabit=="Stroop")
+              {                  
             <!-- Add the component -->
             <MindMapTreeContainer @ref="_myTreeNodeContainer2"
                       Options="@_options"
@@ -256,12 +288,30 @@
                       OnMultiSelectNodes="@OnMultiSelectNodes"
                       Data="@_treeData2"
                       OnShow="@OnShowTree2"
-                      style="border:solid 1px blue; background:#f4f4f4;" />
-                              
-
+                      style="width: 400px; border:solid 1px blue; background:#f4f4f4;" />
               }
-              
-          
+    </div>
+
+        <div class="col-md-6">
+            @*
+         <label>Trials Chart Visible<RadzenCheckBox @bind-Value="@trialsChart" Name="trials"></RadzenCheckBox></label>
+    *@
+         <RadzenChart Visible="trialsChart">
+             @*
+        <label>Smooth<RadzenCheckBox @bind-Value="@smoothTrials" Name="smooth"></RadzenCheckBox></label>
+        *@
+        <RadzenLineSeries Smooth="@smoothTrials" Data="@trialsRTarray" CategoryProperty="trialCycleX" Title="RT" LineType="LineType.Solid" ValueProperty="trialRT">
+            <RadzenMarkers MarkerType="MarkerType.Circle" />
+        </RadzenLineSeries>
+        <RadzenCategoryAxis Step="5" Padding="20" FormatString="{0}" />
+        <RadzenValueAxis Formatter="@FormatAsUSD">
+            <RadzenGridLines Visible="true" />
+            <RadzenAxisTitle Text="Trial RT (ms)" />
+        </RadzenValueAxis>
+    </RadzenChart>
+
+    </div>
+        <div class="col-md-6">
 @if (asoNodes.Contains("prime"))
 {
                               
@@ -281,7 +331,7 @@
             <RadzenGridLines Visible="true" />
             <RadzenAxisTitle Text="Activation" />
         </RadzenValueAxis>
-                     </RadzenChart>
+      </RadzenChart>
 
    
 
@@ -306,12 +356,443 @@
             <RadzenGridLines Visible="true" />
             <RadzenAxisTitle Text="Activation" />
         </RadzenValueAxis>
-                     </RadzenChart>
+    </RadzenChart>
+}
+ @if (asoNodes.Contains("response"))
+{
+                            
+    <RadzenChart Style="height: 400px;" Visible="singleTrialChartResponse">
+        <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N</label>
+        <RadzenLineSeries  Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Response" LineType="LineType.Solid" ValueProperty="singleTrialOutaLX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="R-Response" LineType="LineType.Solid" ValueProperty="singleTrialOutaRX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="Threshold-R" LineType="LineType.Solid" ValueProperty="singleTrialOutaThresh">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenCategoryAxis Step="100" Padding="100" FormatString="{0}" />
+        <RadzenValueAxis Formatter="@FormatAsUSD" Min="0" Max="1">
+            <RadzenGridLines Visible="true" />
+            <RadzenAxisTitle Text="Activation" />
+        </RadzenValueAxis>
+    </RadzenChart>            
 
-             
+}
+        </div>
+        <div class="col-md-6">
+@if (asoNodes.Contains("prime"))
+{
+                              
+    <RadzenChart Style="height: 400px;" Visible="singleTrialChartPrime">
+        <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N</label>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Prime" LineType="LineType.Solid" ValueProperty="singleTrialOutbLLX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="R-Prime" LineType="LineType.Solid" ValueProperty="singleTrialOutbLRX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Mask" LineType="LineType.Solid" ValueProperty="singleTrialOutbLMX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenCategoryAxis Step="100" Padding="100" FormatString="{0}" />
+        <RadzenValueAxis Formatter="@FormatAsUSD" Min="0" Max="1">
+            <RadzenGridLines Visible="true" />
+            <RadzenAxisTitle Text="Activation" />
+        </RadzenValueAxis>
+      </RadzenChart>
+
+   
 
 }
 
+@if (asoNodes.Contains("target"))
+{
+                            
+    <RadzenChart Style="height: 400px;" Visible="singleTrialChartTarget">
+        <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N</label>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Target" LineType="LineType.Solid" ValueProperty="singleTrialOutbRLX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="R-Target" LineType="LineType.Solid" ValueProperty="singleTrialOutbRRX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="R-Mask" LineType="LineType.Solid" ValueProperty="singleTrialOutbRMX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenCategoryAxis Step="100" Padding="100" FormatString="{0}" />
+        <RadzenValueAxis Formatter="@FormatAsUSD" Min="0" Max="1">
+            <RadzenGridLines Visible="true" />
+            <RadzenAxisTitle Text="Activation" />
+        </RadzenValueAxis>
+    </RadzenChart>
+}
+ @if (asoNodes.Contains("response"))
+{
+                            
+    <RadzenChart Style="height: 400px;" Visible="singleTrialChartResponse">
+        <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N</label>
+        <RadzenLineSeries  Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Response" LineType="LineType.Solid" ValueProperty="singleTrialOutaLX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="R-Response" LineType="LineType.Solid" ValueProperty="singleTrialOutaRX">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="Threshold-R" LineType="LineType.Solid" ValueProperty="singleTrialOutaThresh">
+            <RadzenMarkers MarkerType="MarkerType.Auto" />
+        </RadzenLineSeries>
+        <RadzenCategoryAxis Step="100" Padding="100" FormatString="{0}" />
+        <RadzenValueAxis Formatter="@FormatAsUSD" Min="0" Max="1">
+            <RadzenGridLines Visible="true" />
+            <RadzenAxisTitle Text="Activation" />
+        </RadzenValueAxis>
+    </RadzenChart>            
+
+}
+        </div>
+    </div>
+
+    </RadzenCard>
+    </RadzenTabsItem>
+                 
+   <RadzenTabsItem Text="Main Parameters/Settings">
+
+                            <RadzenCard Style="width:400px;">
+                                 <div class="col-md-6">
+            <p>Main</p>
+               @*    @dataService.HabitList[0].Description *@
+                <RadzenNumeric Placeholder="ModelNumber" @bind-Value="@ModelNumber" />
+            </div>
+            <div class="col-md-6">
+                <RadzenNumeric Placeholder="TrialNumber" @bind-Value="@TrialNumber" />
+            </div>
+            <div class="col-md-6">
+                <RadzenNumeric Placeholder="DurationTrial" @bind-Value="@N" />
+            </div>
+            <p>Duration</p>
+            <div class="col-md-6">
+                <RadzenNumeric Placeholder="DurationFix" @bind-Value="@durFix" />
+            </div>
+            <div class="col-md-6">
+                <RadzenNumeric Placeholder="DurationPrime" @bind-Value="@durPrime" />
+            </div>
+            <div class="col-md-6">
+                <RadzenNumeric Placeholder="DurationMask" @bind-Value="@durMask" />
+            </div>
+            <div class="col-md-6">
+                <RadzenNumeric Placeholder="DurationTarget" @bind-Value="@durTarget" />
+            </div>
+            <div class="col-md-6">
+                <RadzenNumeric Placeholder="PrimeMaskISI" @bind-Value="@durPrimeMaskISI" />
+            </div>
+            <div class="col-md-6">
+                <RadzenNumeric Placeholder="MaskTargetISI" @bind-Value="@durMaskTargetISI" />
+            </div>
+            <p>Noise</p>
+            <div class="col-md-6">
+                <RadzenNumeric Placeholder="NoisePTM" @bind-Value="@noisePTR" />
+            </div>
+            <div class="col-md-6">
+                <RadzenNumeric Placeholder="NoiseMasks" @bind-Value="@noiseMasks" />
+            </div>
+            <div class="col-md-6">
+                <RadzenNumeric Placeholder="NoiseTass" @bind-Value="@noiseTask" />
+            </div>
+
+            </RadzenCard>
+
+                </RadzenTabsItem>
+
+
+                <RadzenTabsItem Text="Multiple-Trial/Blocks Results">
+
+
+  <RadzenCard Style="width:600px;">
+     <label>Blocks Chart Visible<RadzenCheckBox @bind-Value="modelsChart" Name="models"></RadzenCheckBox></label>
+    <RadzenChart Visible="modelsChart">
+        <label>Smooth<RadzenCheckBox @bind-Value="@smoothModels" Name="smooth"></RadzenCheckBox></label>
+        <RadzenColumnSeries StrokeWidth="5" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTc" ValueProperty="modelRTc" />
+        <RadzenColumnSeries StrokeWidth="5" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTi" ValueProperty="modelRTi" />
+        <RadzenLineSeries Smooth="@smoothModels" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTc-RTi" LineType="LineType.Solid" ValueProperty="modelRTic">
+            <RadzenMarkers MarkerType="MarkerType.Circle" />
+        </RadzenLineSeries>
+        <RadzenColumnOptions Radius="5" />
+        <RadzenValueAxis Formatter="@FormatAsUSD">
+            <RadzenGridLines Visible="true" />
+            <RadzenAxisTitle Text="Mean RT (ms)" />
+        </RadzenValueAxis>
+    </RadzenChart>
+
+    <div class="col-xl-6">
+        <h3>Fieldset</h3>
+        <RadzenFieldset AllowCollapse="true" Style="width:600px;margin-bottom: 20px; height:500px;"
+                        Expand=@(() => Change("Fieldset expanded")) Collapse=@(() => Change("Fieldset collapsed"))>
+            <HeaderTemplate>
+                <span>
+                    <RadzenIcon Icon="account_box" /><b style="font-size:30px">Model</b>
+                </span>
+            </HeaderTemplate>
+            <ChildContent>
+                <RadzenDataList PageSize="@ModelNumber" WrapItems="true" AllowPaging="true"
+                                Data="@modelsRTlist" TItem="modelDataItem">
+                    <Template Context="order">
+                        <RadzenCard Style="width:300px;height:300px">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div>Trial:</div>
+                                    <b>@order.TrialsStr</b>
+                                    <div style="margin-top:20px">Cycle/RT</div>
+                                    <b>@(order.modelCycleX + " " + order.modelRTc)</b>
+                                    <br />
+                                </div>
+                                <div class="col-md-6">
+                                    <div style="margin-top:20px">Incongruent:</div>
+                                    <b>@(order.modelRTi)</b>
+                                    <div style="margin-top:20px">Congruent:</div>
+                                    <b>@(order.modelRTc)</b>
+                                </div>
+                            </div>
+
+                        </RadzenCard>
+                    </Template>
+                </RadzenDataList>
+            </ChildContent>
+        </RadzenFieldset>
+    </div>
+
+
+       </RadzenCard>
+
+                </RadzenTabsItem>
+
+              <RadzenTabsItem Text="Detailed Parameters/Settings">
+
+                            <RadzenCard Style="width:400px;">
+
+  
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="CrossPri" @bind-Value="@CrossPri" />
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="SelfPri" @bind-Value="@SelfPri" />
+            </div>
+
+        </div>
+        <div class="mat-layout-grid-inner">
+
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="InpPrimeMin" @bind-Value="@inpamin" />
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="InpPrimeMax" @bind-Value="@inpamax" />
+            </div>
+        </div>
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="ThreshPri" @bind-Value="@ThreshPri" />
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="inhPri" @bind-Value="@inhPri" />
+            </div>
+        </div>
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="biasPri" @bind-Value="@biasPL" />
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="conPri" @bind-Value="@conPrime" />
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="CrossTar" @bind-Value="@CrossTar" />
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="SelfTar" @bind-Value="@SelfTar" />
+            </div>
+
+        </div>
+        <div class="mat-layout-grid-inner">
+
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="InpTargetMin" @bind-Value="@inpbmin" />
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="InpTargetMax" @bind-Value="@inpbmax" />
+            </div>
+        </div>
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="inhTar" @bind-Value="@inhTar" />
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="ThreshTar" @bind-Value="@ThreshTar" />
+            </div>
+
+        </div>
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="biasTar" @bind-Value="@biasPR" />
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="conTar" @bind-Value="@conTarget" />
+            </div>
+
+        </div>
+    </div>
+
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="SelfO" @bind-Value="@SelfO" />
+            </div>
+
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="inhO" @bind-Value="@inhO" />
+            </div>
+        </div>
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="ThreshO" @bind-Value="@ThreshO" />
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="biasOut" @bind-Value="@biasOut" />
+            </div>
+        </div>
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="conResponse" @bind-Value="@conResponse" />
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="conResponse" @bind-Value="@conResponse" />
+            </div>
+        </div>
+
+    </div>
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="SelfT" @bind-Value="@SelfT" />
+            </div>
+
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="inhT" @bind-Value="@inhT" />
+            </div>
+        </div>
+        <div class="mat-layout-grid-inner">
+
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="ThreshT" @bind-Value="@ThreshT" />
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="inhT" @bind-Value="@biasTask" />
+            </div>
+        </div>
+    </div>
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="ThresholdConf" @bind-Value="@ThreshConf" />
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="CLC" @bind-Value="@CLC" />
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="CLCthresh" @bind-Value="@CLCthresh" />
+            </div>
+        </div>
+    </div>
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="SelfMasks" @bind-Value="@SelfMasks" />
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="BiasMasks" @bind-Value="@BiasMasks" />
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="CrossLMasks" @bind-Value="@CrossLMasks" />
+            </div>
+        </div>
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="ConMasks" @bind-Value="@ConMasks" />
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="InhMasks" @bind-Value="@InhMasks" />
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="MaskTargetISI" @bind-Value="@durMaskTargetISI" />
+            </div>
+        </div>
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="M_T_ISI_Coef" @bind-Value="@durM_T_ISIcoef" />
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="InpPrimeMask" @bind-Value="@inpamask" />
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="InpTargetMask" @bind-Value="@inpbmask" />
+            </div>
+        </div>
+    </div>
+
+            </RadzenCard>
+            </RadzenTabsItem>
+            </Tabs>
+        </RadzenTabs>
+        </div>
+
+    </div>
+
+        @*
+        <div class="col-xl-6">
+
+    </div>
+  
+    
+  <RadzenCard Style="width:500px;">
+     <label>Blocks Chart Visible<RadzenCheckBox @bind-Value="modelsChart" Name="models"></RadzenCheckBox></label>
+    <RadzenChart Visible="modelsChart">
+        <label>Smooth<RadzenCheckBox @bind-Value="@smoothModels" Name="smooth"></RadzenCheckBox></label>
+        <RadzenColumnSeries StrokeWidth="5" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTc" ValueProperty="modelRTc" />
+        <RadzenColumnSeries StrokeWidth="5" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTi" ValueProperty="modelRTi" />
+        <RadzenLineSeries Smooth="@smoothModels" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTc-RTi" LineType="LineType.Solid" ValueProperty="modelRTic">
+            <RadzenMarkers MarkerType="MarkerType.Circle" />
+        </RadzenLineSeries>
+        <RadzenColumnOptions Radius="5" />
+        <RadzenValueAxis Formatter="@FormatAsUSD">
+            <RadzenGridLines Visible="true" />
+            <RadzenAxisTitle Text="Mean RT (ms)" />
+        </RadzenValueAxis>
+    </RadzenChart>
+
+        <label>Trials Chart Visible<RadzenCheckBox @bind-Value="@trialsChart" Name="trials"></RadzenCheckBox></label>
+    <RadzenChart Visible="trialsChart">
+        <label>Smooth<RadzenCheckBox @bind-Value="@smoothTrials" Name="smooth"></RadzenCheckBox></label>
+        <RadzenLineSeries Smooth="@smoothTrials" Data="@trialsRTarray" CategoryProperty="trialCycleX" Title="RT" LineType="LineType.Solid" ValueProperty="trialRT">
+            <RadzenMarkers MarkerType="MarkerType.Circle" />
+        </RadzenLineSeries>
+        <RadzenCategoryAxis Step="5" Padding="20" FormatString="{0}" />
+        <RadzenValueAxis Formatter="@FormatAsUSD">
+            <RadzenGridLines Visible="true" />
+            <RadzenAxisTitle Text="Trial RT (ms)" />
+        </RadzenValueAxis>
+    </RadzenChart>
+    </RadzenCard>
+      
+    *@
+
+    
 
 @if (1==2)//createUserDialogOpen)
 {
@@ -407,115 +888,8 @@
 
 }
 
-            <div class="col-md-6">
-            <p>Repetitions</p>
-               @*    @dataService.HabitList[0].Description *@
-                <RadzenNumeric Placeholder="ModelNumber" @bind-Value="@ModelNumber" />
-            </div>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="TrialNumber" @bind-Value="@TrialNumber" />
-            </div>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="DurationTrial" @bind-Value="@N" />
-            </div>
-            <p>Duration</p>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="DurationFix" @bind-Value="@durFix" />
-            </div>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="DurationPrime" @bind-Value="@durPrime" />
-            </div>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="DurationMask" @bind-Value="@durMask" />
-            </div>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="DurationTarget" @bind-Value="@durTarget" />
-            </div>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="PrimeMaskISI" @bind-Value="@durPrimeMaskISI" />
-            </div>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="MaskTargetISI" @bind-Value="@durMaskTargetISI" />
-            </div>
-            <p>Noise</p>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="NoisePTM" @bind-Value="@noisePTR" />
-            </div>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="NoiseMasks" @bind-Value="@noiseMasks" />
-            </div>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="NoiseTass" @bind-Value="@noiseTask" />
-            </div>
-      </RadzenCard>
-      </RadzenTabsItem>
-     
-      <RadzenTabsItem Text="Graph">
 
-  <RadzenCard Style="width:1000px;">
-     <label>Blocks Chart Visible<RadzenCheckBox @bind-Value="modelsChart" Name="models"></RadzenCheckBox></label>
-    <RadzenChart Visible="modelsChart">
-        <label>Smooth<RadzenCheckBox @bind-Value="@smoothModels" Name="smooth"></RadzenCheckBox></label>
-        <RadzenColumnSeries StrokeWidth="5" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTc" ValueProperty="modelRTc" />
-        <RadzenColumnSeries StrokeWidth="5" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTi" ValueProperty="modelRTi" />
-        <RadzenLineSeries Smooth="@smoothModels" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTc-RTi" LineType="LineType.Solid" ValueProperty="modelRTic">
-            <RadzenMarkers MarkerType="MarkerType.Circle" />
-        </RadzenLineSeries>
-        <RadzenColumnOptions Radius="5" />
-        <RadzenValueAxis Formatter="@FormatAsUSD">
-            <RadzenGridLines Visible="true" />
-            <RadzenAxisTitle Text="Mean RT (ms)" />
-        </RadzenValueAxis>
-    </RadzenChart>
-
-        <label>Trials Chart Visible<RadzenCheckBox @bind-Value="@trialsChart" Name="trials"></RadzenCheckBox></label>
-    <RadzenChart Visible="trialsChart">
-        <label>Smooth<RadzenCheckBox @bind-Value="@smoothTrials" Name="smooth"></RadzenCheckBox></label>
-        <RadzenLineSeries Smooth="@smoothTrials" Data="@trialsRTarray" CategoryProperty="trialCycleX" Title="RT" LineType="LineType.Solid" ValueProperty="trialRT">
-            <RadzenMarkers MarkerType="MarkerType.Circle" />
-        </RadzenLineSeries>
-        <RadzenCategoryAxis Step="5" Padding="20" FormatString="{0}" />
-        <RadzenValueAxis Formatter="@FormatAsUSD">
-            <RadzenGridLines Visible="true" />
-            <RadzenAxisTitle Text="Trial RT (ms)" />
-        </RadzenValueAxis>
-    </RadzenChart>
-    </RadzenCard>
-
-    </RadzenTabsItem>
-
-                @*
-                                                <RadzenTabsItem Text="Params3">
-
-                            <RadzenCard Style="width:400px;">
-
-                            </RadzenCard>
-
-                </RadzenTabsItem>
-
-
-                            <RadzenTabsItem Text="Params4">
-
-                            <RadzenCard Style="width:400px;">
-
-                               
-
-                            </RadzenCard>
-
-                </RadzenTabsItem>
-
-  *@
-
-            </Tabs>
-        </RadzenTabs>
-        </div>
-        @*
-        <div class="col-xl-6">
-
-    </div>
-    *@
-
-    @if (spinning == false)
+    @if (1==2)//spinning == false)
 {
     @*
                 <div class="col-xl-6 mb-5">
@@ -550,7 +924,6 @@
         </Template>
     </RadzenDataList>
 }
-    </div>
 
 
 
@@ -924,6 +1297,8 @@
 
     public bool singleTrialChartPrime { get; set; } = true;
         public bool singleTrialChartTarget { get; set; } = true;
+                public bool singleTrialChartResponse { get; set; } = true;
+
 
     bool modelsChart = true;
     bool trialsChart = true;
