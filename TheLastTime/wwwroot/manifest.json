@@ -1,6 +1,6 @@
 {
-  "name": "cogmod!",
-  "short_name": "como!",
+  "name": "cogmod",
+  "short_name": "CoMo",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",

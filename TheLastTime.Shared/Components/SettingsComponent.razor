@@ -1,4 +1,4 @@
-﻿<ul class="nav flex-column mx-2 mt-2">
+﻿<ul class="nav flex-column">
 
     @if (DataService.Settings.ShowSearch)
     {
@@ -111,5 +111,15 @@
             </Field>
         </li>
     }
-    
+
+    @if (DataService.Settings.ShowSavedSettings)
+    {
+        <li class="nav-item py-0">
+            <Field>
+                <FieldLabel Class="text-light">Saved settings:</FieldLabel>
+                <SavedSettingsComponent />
+            </Field>
+        </li>
+    }
+
 </ul>

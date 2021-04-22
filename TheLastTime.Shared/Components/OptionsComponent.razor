@@ -1,4 +1,4 @@
-﻿<div class="card flex-grow-1 m-2 m-sm-3" style="max-width: 360px">
+﻿<div class="card flex-grow-1 m-2 m-sm-3" style="max-width: 300px">
 
     <div class="card-body p-2">
 
@@ -12,6 +12,14 @@
 
             <li class="nav-item px-2 pt-2">
                 <a class="" href="https://github.com/Jinjinov/TheLastTime" target="_blank"><span class="fab fa-github"></span> GitHub</a>
+            </li>
+
+            <li class="nav-item px-2 pt-3">
+                <h5>Settings:</h5>
+            </li>
+
+            <li class="nav-item px-2 pt-2">
+                <Check TValue="bool" Checked="@DataService.Settings.ShowSavedSettings" CheckedChanged="@(async (val) => { DataService.Settings.ShowSavedSettings = val; await DataService.SaveSettings(); })"><span class="@TextClass">Show saved settings</span></Check>
             </li>
 
             <li class="nav-item px-2 pt-3">

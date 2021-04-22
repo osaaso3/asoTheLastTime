@@ -1,10 +1,10 @@
-﻿@inject NavigationManager navigationManager
-
-@* 
-@(idx1) @(DataService.CategoryList[idx1-1].Description)
-*@
-
+﻿
+@if (1==1)
+{
 <div class="top-row navbar navbar-dark bg-primary">
+
+
+
     @if (DataService.Settings.ShowCategoriesInHeader)
     {
         <Pagination Class="m-0">
@@ -24,8 +24,8 @@
 
             @for (int i = 0; i < DataService.CategoryList.Count; ++i)
             {
-                 int idx = i;
-                 string index = i == 0 ? "No" : i.ToString();
+                int idx = i;
+                string index = i == 0 ? "No" : i.ToString();
                 string css = string.Empty;
 
                 if (State.SelectedCategoryIdx != -1)
@@ -42,7 +42,7 @@
                 }
 
                 <PaginationItem Class="@css" Active="@(State.SelectedCategoryId == DataService.CategoryList[idx].Id)">
-                    <PaginationLink Page="@(DataService.CategoryList[idx].Id.ToString())" Clicked="(Page) => { asoPage(Page); }">
+                    <PaginationLink Page="@(DataService.CategoryList[idx].Id.ToString())" Clicked="(Page) => { State.SelectedCategoryId = int.Parse(Page); }">
                         @index
                     </PaginationLink>
                 </PaginationItem>
@@ -57,58 +57,8 @@
 
         </Pagination>
     }
-    @* 
-    
-     <button class="btn-blue"
-            @onclick="@MyMethodAsync">
-        Home
-                </button>
-    <RadzenButton Click=@(args => OnClick("Model")) Text="Model" Icon="account_balance" Style="margin-bottom: 20px; width: 160px" />
+        <span class="navbar-text" role="button" id="cogmod">&#169; 2020</span>
 
-                *@
-                                <RadzenButton Click=@(args => OnClick("Home")) Text="Home" Icon="home" Style="margin-bottom: 20px; width: 140px" />
-
-    <span  class="col-lg-12 col-xl-6 px-1 px-sm-3">         CogSci 2020</span>
 </div>
 
-@code
-{
-    [Parameter]
-    public int idx1 {get; set;}=1;
-
-    void  MyMethodAsync()
-    {
-        navigationManager.NavigateTo("/");
-    }
-    
-    void asoPage(string page)
-    {
-        State.SelectedCategoryId = int.Parse(page);
-        idx1=int.Parse(page);
-        //StateHasChanged();
-        
-    }
-    
-                protected override void OnParametersSet()
-    {
-       // State.SelectedCategoryId = int.Parse(page);
-       // idx1=int.Parse(page);                  
-       // StateHasChanged();
-  }
-
-      void OnClick(string buttonName)
-    {
-        if (buttonName=="Home")
-       {
-                           navigationManager.NavigateTo("/");
-
-        }
-        else
-        {
-                           navigationManager.NavigateTo("/cm");
-
-        }
-       // console.Log($"{buttonName} clicked");
-
-    }
 }
