@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using TheLastTime.Data;
 using TheLastTime.Shared;
 using TheLastTime.Shared.Data;
 
