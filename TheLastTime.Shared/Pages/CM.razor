@@ -49,30 +49,19 @@
 
         <RadzenProgressBar @bind-Value="@mProgress" />
       
-
-            @if (asoHabit=="Priming")//            @if (dataService.HabitList[i].Description=="ISI")//asoIndex==2)
+        
+            @if (1==2)//asoHabit=="Priming")//            @if (dataService.HabitList[i].Description=="ISI")//asoIndex==2)
             // @for (int i=0;i<dataService.HabitList.Count;i++)
             //
              {                 
             <!-- Add the component -->
-            <MindMapTreeContainer @ref="_myTreeNodeContainer"
-                      Options="@_options"
-                      Data="@_treeData"
-                      OnSelectNode="@OnSelectTreeNode"
-                      OnMultiSelectNodes="@OnMultiSelectNodes"
-                      OnShow="@OnShowTree"
-                      style="width: 400px; border:solid 1px blue; background:#f4f4f4;" />
+  
               }
-            @if (asoHabit=="Stroop")
+              
+            @if (1==2)//asoHabit=="Stroop")
               {                  
             <!-- Add the component -->
-            <MindMapTreeContainer @ref="_myTreeNodeContainer2"
-                      Options="@_options"
-                      OnSelectNode="@OnSelectTreeNode"
-                      OnMultiSelectNodes="@OnMultiSelectNodes"
-                      Data="@_treeData2"
-                      OnShow="@OnShowTree2"
-                      style="width: 400px; border:solid 1px blue; background:#f4f4f4;" />
+     
               }
     </div>
 
@@ -80,7 +69,7 @@
         @*
          <label>Trials Chart Visible<RadzenCheckBox @bind-Value="@trialsChart" Name="trials"></RadzenCheckBox></label>
         *@
-@if (asoNodes.Contains("priming"))
+@if (1==1)//asoNodes.Contains("priming"))
 {
          <RadzenChart Visible="trialsChart">
         @*
@@ -99,7 +88,7 @@
     </div>
 
 <div class="col-md-6">
-@if (asoNodes.Contains("prime"))
+@if (1==1)//(asoNodes.Contains("prime"))
 {                             
     <RadzenChart Style="height: 400px;" Visible="singleTrialChartPrime">
         <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N</label>
@@ -119,7 +108,7 @@
         </RadzenValueAxis>
       </RadzenChart>
 }
-@if (asoNodes.Contains("target"))
+@if (1==1)//(asoNodes.Contains("target"))
 {
                             
     <RadzenChart Style="height: 400px;" Visible="singleTrialChartTarget">
@@ -140,7 +129,7 @@
         </RadzenValueAxis>
     </RadzenChart>
 }
- @if (asoNodes.Contains("response"))
+ @if (1==1)//(asoNodes.Contains("response"))
 {                         
     <RadzenChart Style="height: 400px;" Visible="singleTrialChartResponse">
         <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N</label>
@@ -163,7 +152,7 @@
  </div>
 
  <div class="col-md-6">
-@if (asoNodes.Contains("task"))
+@if (1==1)//(asoNodes.Contains("task"))
 {                             
     <RadzenChart Style="height: 400px;" Visible="singleTrialChartTask">
         <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N</label>
@@ -184,7 +173,7 @@
       </RadzenChart>
 }
 
-@if (asoNodes.Contains("attention"))
+@if (1==1)//(asoNodes.Contains("attention"))
 {                          
     <RadzenChart Style="height: 400px;" Visible="singleTrialChartAttention">
         <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N</label>
@@ -204,7 +193,7 @@
         </RadzenValueAxis>
     </RadzenChart>
 }
- @if (asoNodes.Contains("conflict"))
+ @if(1==1)//(asoNodes.Contains("conflict"))
 {                          
     <RadzenChart Style="height: 400px;" Visible="singleTrialChartConflict">
         <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N</label>
@@ -575,7 +564,7 @@ else
             void asoPageA()
     {
 
-               if (asoHabit=="Priming")
+               if (1==1)//asoHabit=="Priming")
         {
             MyMethodAsync();
         }
@@ -619,8 +608,7 @@ else
     public string[] asoHabitList=new string[5];
         public string asoHabit="";
 
-    private MindMapTreeContainer _myTreeNodeContainer;
-    private MindMapTreeContainer _myTreeNodeContainer2;
+
 
    
    protected override void OnInitialized()
@@ -662,148 +650,7 @@ else
         public string asoNode = "0";
         public string asoNodes="00";
 
-    // Define the MindMapOptions
-    readonly MindMapOptions _options = new MindMapOptions
-    {
-        Editable = false,
-        MultiSelect = true,
-        Theme = MindMapThemes.Primary
-    };
-
-    // Define some MindMapTreeData
-    readonly MindMapTreeData _treeData = new MindMapTreeData
-    {
-        RootNode = new MindMapTreeNode
-        {
-            Id = "priming",
-            Topic = "Priming",
-            Children = new List<MindMapTreeNode>
-            {
-                new MindMapTreeNode
-                {
-                    Id = "attention",
-                    Topic = "Attention",
-                    Children = new List<MindMapTreeNode>
-                    {
-                        new MindMapTreeNode
-                        {
-                            Id = "conflict",
-                            Topic = "Conflict"
-                        }
-                    }
-                },
-                new MindMapTreeNode
-                {
-                    Id = "task",
-                    Topic = "Task",
-                    Direction = MindMapNodeDirection.Left
-                },
-                                new MindMapTreeNode
-                {
-                    Id = "response",
-                    Topic = "Response",
-                    Direction = MindMapNodeDirection.Left
-                },
-                                new MindMapTreeNode
-                {
-                    Id = "prime",
-                    Topic = "Prime",
-                    Direction = MindMapNodeDirection.Left
-                },
-                new MindMapTreeNode
-                {
-                    Id = "target",
-                    Topic = "Target",
-                    Direction = MindMapNodeDirection.Right
-                }
-            }
-        }
-    };
-
-    async Task OnShowTree(EventArgs args)
-    {
-        // When the MindMap is displayed, expand all nodes
-        await _myTreeNodeContainer.Expand();
-    }
-
-    void OnSelectTreeNode(MindMapEventArgs<MindMapTreeNode> args)
-    {
-        var treeNode = args.Node;
-        asoNode= treeNode.Id;
-        if (asoNode=="priming" || asoNode=="stroop")
-        {
-            //MyMethodAsync();
-        }
-        //_selectedNodeId = treeNode.GetType().Name + " - " + treeNode.Id;
-        //createUserDialogOpen=!createUserDialogOpen;
-       // singleTrialChartPrime=!singleTrialChartPrime;
-    }
-
-    void OnMultiSelectNodes(MindMapMultiSelectEventArgs<MindMapTreeNode> args)
-    {
-        _selectedNodeId = args.Node != null ? args.Node.GetType().Name + " - " + args.Node.Id : "/none/";
-        _selectedNodeIds = args.Nodes.Select(n => n.Id).ToArray();
-        asoNodes=string.Join(",", _selectedNodeIds);
-    }
-
-    // Define some MindMapTreeData
-    readonly MindMapTreeData _treeData2 = new MindMapTreeData
-    {
-        RootNode = new MindMapTreeNode
-        {
-            Id = "root",
-            Topic = "Stroop",
-            Children = new List<MindMapTreeNode>
-            {
-                new MindMapTreeNode
-                {
-                    Id = "attention",
-                    Topic = "Attention",
-                    Children = new List<MindMapTreeNode>
-                    {
-                        new MindMapTreeNode
-                        {
-                            Id = "conflict",
-                            Topic = "Conflict"
-                        }
-                    }
-                },
-                new MindMapTreeNode
-                {
-                    Id = "task",
-                    Topic = "Task",
-                    Direction = MindMapNodeDirection.Left
-                },
-                                new MindMapTreeNode
-                {
-                    Id = "response",
-                    Topic = "Response",
-                    Direction = MindMapNodeDirection.Left
-                },
-                                new MindMapTreeNode
-                {
-                    Id = "prime",
-                    Topic = "Prime",
-                    Direction = MindMapNodeDirection.Left
-                },
-                new MindMapTreeNode
-                {
-                    Id = "target",
-                    Topic = "Target",
-                    Direction = MindMapNodeDirection.Right
-                }
-            }
-        }
-    };
-
-        async Task OnShowTree2(EventArgs args)
-    {
-        // When the MindMap is displayed, expand all nodes
-                await _myTreeNodeContainer2.Expand();
-
-    }   IEnumerable<string> multipleValues = new string[] { "ALFKI", "ANATR" };
-            string value = "ALFKI";
-
+   
     void OnChange(object value, string name)
     {
        // var str = value is IEnumerable<object> ? string.Join(", ", (IEnumerable<object>)value) : value;
