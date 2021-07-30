@@ -45,7 +45,7 @@
             }
 
         </Pagination>
-                                             <Button id="add-habit" class="btn btn-lg btn-primary rounded-circle" @onclick="@(() => { asoPageA(); })"><span class="fa fa-fw fa-plus"></span></Button>
+        <Button id="add-habit" class="btn btn-lg btn-primary rounded-circle" @onclick="@(() => { asoPageA(); })"><span class="fa fa-fw fa-plus"></span></Button>
 
         <RadzenProgressBar @bind-Value="@mProgress" />
       
@@ -317,236 +317,255 @@ else
     </div>
 
     </RadzenTabsItem>
-
         <RadzenTabsItem Text="Parameters">
 
-                   <RadzenCard Style="width:400px;">
-                                 <div class="col-md-6">
-            <p>Main</p>
-               @*    @dataService.HabitList[0].Description *@
-                <RadzenNumeric Placeholder="ModelNumber" @bind-Value="@ModelNumber" />
+    <RadzenCard Style="width:400px;">
+    <p>Maina</p>
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">                
+            <RadzenNumeric Placeholder="ModelNumber" @bind-Value="@ModelNumber"></RadzenNumeric>ModelNumber
             </div>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="TrialNumber" @bind-Value="@TrialNumber" />
+            <div class="mat-layout-grid-cell">                
+                <RadzenNumeric Placeholder="TrialNumber" @bind-Value="@TrialNumber"></RadzenNumeric>TrialNumber
             </div>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="DurationTrial" @bind-Value="@N" />
+        </div>
+    </div>
+    </RadzenCard>
+    
+    <RadzenCard Style="width:400px;">
+    <p>Duration</p>
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">                
+                <RadzenNumeric Placeholder="DurationTrial" @bind-Value="@N"></RadzenNumeric>DurationTrial
             </div>
-            <p>Duration</p>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="DurationFix" @bind-Value="@durFix" />
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="DurationFix" @bind-Value="@durFix" ></RadzenNumeric>DurationFix
             </div>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="DurationPrime" @bind-Value="@durPrime" />
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="DurationPrime" @bind-Value="@durPrime" ></RadzenNumeric>DurationPrime
             </div>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="DurationMask" @bind-Value="@durMask" />
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="DurationMask" @bind-Value="@durMask" ></RadzenNumeric>DurationMask
             </div>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="DurationTarget" @bind-Value="@durTarget" />
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="DurationTarget" @bind-Value="@durTarget" ></RadzenNumeric>DurationTarget
             </div>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="PrimeMaskISI" @bind-Value="@durPrimeMaskISI" />
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="PrimeMaskISI" @bind-Value="@durPrimeMaskISI" ></RadzenNumeric>PrimeMaskISI
             </div>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="MaskTargetISI" @bind-Value="@durMaskTargetISI" />
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="MaskTargetISI" @bind-Value="@durMaskTargetISI" ></RadzenNumeric>MaskTargetISI
             </div>
-            <p>Noise</p>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="NoisePTM" @bind-Value="@noisePTR" />
-            </div>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="NoiseMasks" @bind-Value="@noiseMasks" />
-            </div>
-            <div class="col-md-6">
-                <RadzenNumeric Placeholder="NoiseTass" @bind-Value="@noiseTask" />
-            </div>
-            </RadzenCard>
+        </div>
+    </div>
 
-
-
-        <RadzenCard Style="width:400px;">
-  
+    <p>Noise</p>
     <div class="mat-layout-grid">
         <div class="mat-layout-grid-inner">
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="CrossPri" @bind-Value="@CrossPri" />
+                <RadzenNumeric Placeholder="NoisePTM" @bind-Value="@noisePTR" ></RadzenNumeric>NoisePTM
             </div>
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="SelfPri" @bind-Value="@SelfPri" />
-            </div>
-
-        </div>
-        <div class="mat-layout-grid-inner">
-
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="InpPrimeMin" @bind-Value="@inpamin" />
+                <RadzenNumeric Placeholder="NoiseMasks" @bind-Value="@noiseMasks" ></RadzenNumeric>NoiseMasks
             </div>
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="InpPrimeMax" @bind-Value="@inpamax" />
-            </div>
-        </div>
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="ThreshPri" @bind-Value="@ThreshPri" />
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="inhPri" @bind-Value="@inhPri" />
-            </div>
-        </div>
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="biasPri" @bind-Value="@biasPL" />
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="conPri" @bind-Value="@conPrime" />
+                <RadzenNumeric Placeholder="NoiseTass" @bind-Value="@noiseTask" ></RadzenNumeric>NoiseTass
             </div>
         </div>
     </div>
 
+    <p>Prime</p>
     <div class="mat-layout-grid">
         <div class="mat-layout-grid-inner">
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="CrossTar" @bind-Value="@CrossTar" />
+                <RadzenNumeric Placeholder="CrossPri" @bind-Value="@CrossPri" ></RadzenNumeric>CrossPri
             </div>
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="SelfTar" @bind-Value="@SelfTar" />
+                <RadzenNumeric Placeholder="SelfPri" @bind-Value="@SelfPri" ></RadzenNumeric>SelfPri
             </div>
 
         </div>
         <div class="mat-layout-grid-inner">
 
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="InpTargetMin" @bind-Value="@inpbmin" />
+                <RadzenNumeric Placeholder="InpPrimeMin" @bind-Value="@inpamin" ></RadzenNumeric>InpPrimeMin
             </div>
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="InpTargetMax" @bind-Value="@inpbmax" />
+                <RadzenNumeric Placeholder="InpPrimeMax" @bind-Value="@inpamax" ></RadzenNumeric>InpPrimeMax
             </div>
         </div>
         <div class="mat-layout-grid-inner">
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="inhTar" @bind-Value="@inhTar" />
+                <RadzenNumeric Placeholder="ThreshPri" @bind-Value="@ThreshPri" ></RadzenNumeric>ThreshPri
             </div>
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="ThreshTar" @bind-Value="@ThreshTar" />
+                <RadzenNumeric Placeholder="inhPri" @bind-Value="@inhPri" ></RadzenNumeric>inhPri
             </div>
-
         </div>
         <div class="mat-layout-grid-inner">
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="biasTar" @bind-Value="@biasPR" />
+                <RadzenNumeric Placeholder="biasPri" @bind-Value="@biasPL" ></RadzenNumeric>biasPri
             </div>
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="conTar" @bind-Value="@conTarget" />
+                <RadzenNumeric Placeholder="conPri" @bind-Value="@conPrime" ></RadzenNumeric>conPri
             </div>
-
         </div>
     </div>
-
+    
+    <p>Target</p>
     <div class="mat-layout-grid">
         <div class="mat-layout-grid-inner">
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="SelfO" @bind-Value="@SelfO" />
+                <RadzenNumeric Placeholder="CrossTar" @bind-Value="@CrossTar" ></RadzenNumeric>CrossTar
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="SelfTar" @bind-Value="@SelfTar" ></RadzenNumeric>SelfTar
             </div>
 
+        </div>
+        <div class="mat-layout-grid-inner">
+
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="inhO" @bind-Value="@inhO" />
+                <RadzenNumeric Placeholder="InpTargetMin" @bind-Value="@inpbmin" ></RadzenNumeric>InpTargetMin
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="InpTargetMax" @bind-Value="@inpbmax" ></RadzenNumeric>InpTargetMax
             </div>
         </div>
         <div class="mat-layout-grid-inner">
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="ThreshO" @bind-Value="@ThreshO" />
+                <RadzenNumeric Placeholder="inhTar" @bind-Value="@inhTar" ></RadzenNumeric>inhTar
             </div>
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="biasOut" @bind-Value="@biasOut" />
+                <RadzenNumeric Placeholder="ThreshTar" @bind-Value="@ThreshTar" ></RadzenNumeric>ThreshTar
             </div>
+
         </div>
         <div class="mat-layout-grid-inner">
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="conResponse" @bind-Value="@conResponse" />
+                <RadzenNumeric Placeholder="biasTar" @bind-Value="@biasPR" ></RadzenNumeric>biasTar
             </div>
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="conResponse" @bind-Value="@conResponse" />
+                <RadzenNumeric Placeholder="conTar" @bind-Value="@conTarget" ></RadzenNumeric>conTar
             </div>
-        </div>
 
+        </div>
     </div>
+
+    <p>Response</p>
     <div class="mat-layout-grid">
         <div class="mat-layout-grid-inner">
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="SelfT" @bind-Value="@SelfT" />
+                <RadzenNumeric Placeholder="SelfO" @bind-Value="@SelfO" ></RadzenNumeric>SelfO
             </div>
 
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="inhT" @bind-Value="@inhT" />
+                <RadzenNumeric Placeholder="inhO" @bind-Value="@inhO" ></RadzenNumeric>inhO
             </div>
         </div>
         <div class="mat-layout-grid-inner">
-
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="ThreshT" @bind-Value="@ThreshT" />
+                <RadzenNumeric Placeholder="ThreshO" @bind-Value="@ThreshO" ></RadzenNumeric>ThreshO
             </div>
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="inhT" @bind-Value="@biasTask" />
+                <RadzenNumeric Placeholder="biasOut" @bind-Value="@biasOut" ></RadzenNumeric>biasOut
+            </div>
+        </div>
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="conResponse" @bind-Value="@conResponse" ></RadzenNumeric>conResponse
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="conResponse" @bind-Value="@conResponse" ></RadzenNumeric>conResponse
             </div>
         </div>
     </div>
+
+    <p>Task</p>
     <div class="mat-layout-grid">
         <div class="mat-layout-grid-inner">
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="ThresholdConf" @bind-Value="@ThreshConf" />
+                <RadzenNumeric Placeholder="SelfT" @bind-Value="@SelfT" ></RadzenNumeric>SelfT
+            </div>
+
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="inhT" @bind-Value="@inhT" ></RadzenNumeric>inhT
+            </div>
+        </div>
+        <div class="mat-layout-grid-inner">
+
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="ThreshT" @bind-Value="@ThreshT" ></RadzenNumeric>ThreshT
             </div>
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="CLC" @bind-Value="@CLC" />
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="CLCthresh" @bind-Value="@CLCthresh" />
+                <RadzenNumeric Placeholder="inhT" @bind-Value="@biasTask" ></RadzenNumeric>inhT
             </div>
         </div>
     </div>
+
+    <p>Conflict</p>
     <div class="mat-layout-grid">
         <div class="mat-layout-grid-inner">
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="SelfMasks" @bind-Value="@SelfMasks" />
+                <RadzenNumeric Placeholder="ThresholdConf" @bind-Value="@ThreshConf" ></RadzenNumeric>ThresholdConf
             </div>
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="BiasMasks" @bind-Value="@BiasMasks" />
+                <RadzenNumeric Placeholder="CLC" @bind-Value="@cLC" ></RadzenNumeric>cLC
             </div>
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="CrossLMasks" @bind-Value="@CrossLMasks" />
-            </div>
-        </div>
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="ConMasks" @bind-Value="@ConMasks" />
+                <RadzenNumeric Placeholder="CLCthresh" @bind-Value="@CLCthresh" ></RadzenNumeric>cLCThresh
             </div>
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="InhMasks" @bind-Value="@InhMasks" />
+                <RadzenNumeric Placeholder="CLC" @bind-Value="@g1" ></RadzenNumeric>gPrime
             </div>
             <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="MaskTargetISI" @bind-Value="@durMaskTargetISI" />
-            </div>
-        </div>
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="M_T_ISI_Coef" @bind-Value="@durM_T_ISIcoef" />
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="InpPrimeMask" @bind-Value="@inpamask" />
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="InpTargetMask" @bind-Value="@inpbmask" />
+                <RadzenNumeric Placeholder="CLCthresh" @bind-Value="@g2" ></RadzenNumeric>gTarget
             </div>
         </div>
     </div>
 
-            </RadzenCard>
-            </RadzenTabsItem>
-            </Tabs>
-        </RadzenTabs>
+    <p>Mask</p>
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="SelfMasks" @bind-Value="@SelfMasks" ></RadzenNumeric>SelfMasks
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="BiasMasks" @bind-Value="@BiasMasks" ></RadzenNumeric>BiasMasks
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="CrossLMasks" @bind-Value="@CrossLMasks" ></RadzenNumeric>CrossLMasks
+            </div>
         </div>
-
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="ConMasks" @bind-Value="@ConMasks" ></RadzenNumeric>ConMasks
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="InhMasks" @bind-Value="@InhMasks" ></RadzenNumeric>InhMasks
+            </div>
+        </div>
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="M_T_ISI_Coef" @bind-Value="@durM_T_ISIcoef" ></RadzenNumeric>M_T_ISI_Coef
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="InpPrimeMask" @bind-Value="@inpamask" ></RadzenNumeric>InpPrimeMask
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="InpTargetMask" @bind-Value="@inpbmask" ></RadzenNumeric>InpTargetMask
+            </div>
+        </div>
     </div>
+
+        </RadzenCard>
+        </RadzenTabsItem>
+        </Tabs>
+    </RadzenTabs>
+    </div>
+</div>
 
 
 
@@ -874,7 +893,7 @@ public int asoPageSize {get; set;}=5;
     /// ///////////////////////Conf Hop Att
     /// </summary>
     ///
-    double CLC = 3.85;
+    double cLC = 3.85;
     double CLCthresh = 1.00;
     double ThreshConf = 1;
     double ConfTrial = 0;
@@ -884,6 +903,82 @@ public int asoPageSize {get; set;}=5;
 
     int ACH = 0;
     int ThreshACH = 0;
+
+            double landaP = 0.95;//double.Parse(TextLandaP.Text); //0.95
+                                 // alfaP.
+            double alfaP = 1; //0.8
+
+            double landaM = 0.74; //double.Parse(TextLandaM.Text); //0.74
+            double landaR = 0.925;// double.Parse(TextLandaR.Text); //0.925
+                                  // alfaR.
+            double alfaR = 1.0D; //0.2
+            double landaT = .75;//double.Parse(TextLandaT.Text);//.75
+
+            ///''''''cowan
+            // v.
+            double v = .3;// double.Parse(TextV0.Text);//.3
+                          // u.
+            double u = 0;
+            // vACH.
+            double vACH = 0;
+            // uACH.
+            double uACH = 0;
+            // hv.
+            double hv = 0;
+            // hvACH.
+            double hvACH = 0;
+            // thv.
+            double thv = .98;// double.Parse(TextThv.Text); //0.98
+
+            //hv = thv * hv + (1# - thv) * v
+
+            // tv.
+            double tv = .92;// double.Parse(TextTv.Text); //0.92
+                            // tu.
+            double tu = .996;// double.Parse(TextTu.Text); //0.996
+
+            // a1.
+            double a1 = 2;
+            // a2.
+            double a2 = 3;
+
+            // t1.
+            double t1 = 1.25;
+            // t2.
+            double t2 = 1.5;
+
+            // b.
+            double b = 4;
+            //n = (short) 1;
+            // For n = 1 To CShort(Text1TrialsNumber.Text)
+
+            // neLCT.
+            double neLCT = 0;
+            // neLCP.
+            double neLCP = 0;
+            double neLC = 0;
+            double Conf = 0;
+
+            // g1.
+            double g1 = 3;// double.Parse(TextGain1.Text);//3
+                          // g2.
+            double g2 = 1;// double.Parse(TextGain2.Text);//1
+
+            // cLC.
+            //double cLC = CLC;// double.Parse(TextcLCL.Text);//4.52
+
+            ///TextGain2.Text = 3
+
+            // g1.
+            // g.
+            double g;
+            //g = 3;
+            int iHop;
+
+            //future
+
+            //ic = 1;
+            double neLCACHp, neLCACHt, neLCACH;
 
     double[,] ar5 = new double[3, 3];
     double[] inp = new double[3];
@@ -1299,87 +1394,9 @@ public int asoPageSize {get; set;}=5;
             rtSumC = 0;
             rtSumI = 0;
 
-            double landaP = 0.95;//double.Parse(TextLandaP.Text); //0.95
-                                 // alfaP.
-            double alfaP = 1; //0.8
-
-            double landaM = 0.74; //double.Parse(TextLandaM.Text); //0.74
-            double landaR = 0.925;// double.Parse(TextLandaR.Text); //0.925
-                                  // alfaR.
-            double alfaR = 1.0D; //0.2
-            double landaT = .75;//double.Parse(TextLandaT.Text);//.75
-
-            ///''''''cowan
-            // v.
-            double v = .3;// double.Parse(TextV0.Text);//.3
-                          // u.
-            double u = 0;
-            // vACH.
-            double vACH = 0;
-            // uACH.
-            double uACH = 0;
-            // hv.
-            double hv = 0;
-            // hvACH.
-            double hvACH = 0;
-            // thv.
-            double thv = .98;// double.Parse(TextThv.Text); //0.98
-
-            //hv = thv * hv + (1# - thv) * v
-
-            // tv.
-            double tv = .92;// double.Parse(TextTv.Text); //0.92
-                            // tu.
-            double tu = .996;// double.Parse(TextTu.Text); //0.996
-
-            // a1.
-            double a1 = 2;
-            // a2.
-            double a2 = 3;
-
-            // t1.
-            double t1 = 1.25;
-            // t2.
-            double t2 = 1.5;
-
-            // b.
-            double b = 4;
-            //n = (short) 1;
-            // For n = 1 To CShort(Text1TrialsNumber.Text)
-
-            // neLCT.
-            double neLCT = 0;
-            // neLCP.
-            double neLCP = 0;
-            double neLC = 0;
-            double Conf = 0;
-
-            // g1.
-            double g1 = 3;// double.Parse(TextGain1.Text);//3
-                          // g2.
-                          //double g2 = 1;// double.Parse(TextGain2.Text);//1
-
-            // cLC.
-            double cLC = CLC;// double.Parse(TextcLCL.Text);//4.52
-
-            ///TextGain2.Text = 3
-
-            // g1.
-            // g.
-            double g = g1;
-
             inp[0] = 0;
             // inp(1).
             inp[1] = 0;
-
-            g = 3;
-
-            int iHop;
-
-            //future
-
-            //ic = 1;
-            double neLCACHp, neLCACHt, neLCACH;
 
             Random random = new Random(DateTime.Now.Millisecond);
 
@@ -1471,6 +1488,7 @@ public int asoPageSize {get; set;}=5;
 
                 for (c = 0; c < CycleCount; c++)
                 {
+                    g = g1;
                     // await InvokeAsync(StateHasChanged);
                     // await Task.Delay(1); // 1 second delay
 
@@ -1975,13 +1993,13 @@ public int asoPageSize {get; set;}=5;
                     // g1.
                     // g2.
                     // g.
-                    if (ConfTrial > ThreshConf) //(c > durFix + durPrime && ic == 2)
+                    if (ConfTrial < ThreshConf) //(c > durFix + durPrime && ic == 2)
                     {
-                        g = 1;
+                        g = g1;
                     }
                     else
                     {
-                        g = 3;
+                        g = g2;
                     }
 
                     // neLCACHt.
