@@ -14,6 +14,7 @@
 @layout AsoLayout2
 
 @inject Header header
+        <Button id="add-habit" class="btn btn-lg btn-primary rounded-circle" @onclick="@(() => { asoPageA(); })"><span class="fa fa-fw fa-plus"></span></Button>
 
 *@
 
@@ -45,9 +46,27 @@
             }
 
         </Pagination>
-        <Button id="add-habit" class="btn btn-lg btn-primary rounded-circle" @onclick="@(() => { asoPageA(); })"><span class="fa fa-fw fa-plus"></span></Button>
 
-        <RadzenProgressBar @bind-Value="@mProgress" />
+  
+        @if (1==1)//(asoNodes.Contains("target"))
+{
+  <RadzenCard Style="width:600px;">
+    <RadzenButton Click=@(args => asoPageA()) Text="Start/Stop" Icon="label" Style="margin-bottom: 10px; width: 165px" />
+    <RadzenChart Visible="trialsChart">
+
+        <RadzenColumnSeries StrokeWidth="5" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTc" ValueProperty="modelRTc" />
+        <RadzenColumnSeries StrokeWidth="5" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTi" ValueProperty="modelRTi" />
+        <RadzenLineSeries Smooth="@smoothTrials" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTc-RTi" LineType="LineType.Solid" ValueProperty="modelRTic">
+            <RadzenMarkers MarkerType="MarkerType.Circle" />
+        </RadzenLineSeries>
+        <RadzenColumnOptions Radius="5" />
+        <RadzenValueAxis Formatter="@FormatAsUSD">
+            <RadzenGridLines Visible="true" />
+            <RadzenAxisTitle Text="Mean RT (ms)" />
+        </RadzenValueAxis>
+    </RadzenChart>
+   </RadzenCard>
+}
       
         
             @if (1==2)//asoHabit=="Priming")//            @if (dataService.HabitList[i].Description=="ISI")//asoIndex==2)
@@ -71,10 +90,11 @@
         *@
 @if (1==1)//asoNodes.Contains("priming"))
 {
-         <RadzenChart Visible="trialsChart">
-        @*
+<RadzenCard Style="width:600px;">
+    <RadzenChart Visible="trialsChart">
+      <RadzenProgressBar @bind-Value="@mProgress" />
         <label>Smooth<RadzenCheckBox @bind-Value="@smoothTrials" Name="smooth"></RadzenCheckBox></label>
-        *@
+        <label>Model: @m / @ModelNumber Trial: @n / @TrialNumber </label>
         <RadzenLineSeries Smooth="@smoothTrials" Data="@trialsRTarray" CategoryProperty="trialCycleX" Title="RT" LineType="LineType.Solid" ValueProperty="trialRT">
             <RadzenMarkers MarkerType="MarkerType.Circle" />
         </RadzenLineSeries>
@@ -83,13 +103,16 @@
             <RadzenGridLines Visible="true" />
             <RadzenAxisTitle Text="Trial RT (ms)" />
         </RadzenValueAxis>
-        </RadzenChart>
+    </RadzenChart>
+</RadzenCard>
 }
     </div>
 
 <div class="col-md-6">
 @if (1==1)//(asoNodes.Contains("prime"))
-{                             
+{   
+    <RadzenCard Style="width:600px;">
+                          
     <RadzenChart Style="height: 400px;" Visible="singleTrialChartPrime">
         <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N</label>
         <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Prime" LineType="LineType.Solid" ValueProperty="singleTrialOutbLLX">
@@ -107,10 +130,16 @@
             <RadzenAxisTitle Text="Activation" />
         </RadzenValueAxis>
       </RadzenChart>
+          </RadzenCard>
+
 }
+
+
+
 @if (1==1)//(asoNodes.Contains("target"))
 {
-                            
+     <RadzenCard Style="width:600px;">
+                       
     <RadzenChart Style="height: 400px;" Visible="singleTrialChartTarget">
         <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N</label>
         <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Target" LineType="LineType.Solid" ValueProperty="singleTrialOutbRLX">
@@ -128,9 +157,13 @@
             <RadzenAxisTitle Text="Activation" />
         </RadzenValueAxis>
     </RadzenChart>
+        </RadzenCard>
+
 }
  @if (1==1)//(asoNodes.Contains("response"))
-{                         
+{    
+    <RadzenCard Style="width:600px;">
+
     <RadzenChart Style="height: 400px;" Visible="singleTrialChartResponse">
         <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N</label>
         <RadzenLineSeries  Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Response" LineType="LineType.Solid" ValueProperty="singleTrialOutaLX">
@@ -147,13 +180,17 @@
             <RadzenGridLines Visible="true" />
             <RadzenAxisTitle Text="Activation" />
         </RadzenValueAxis>
-    </RadzenChart>            
+    </RadzenChart>
+        </RadzenCard>
+
 }
  </div>
 
  <div class="col-md-6">
 @if (1==1)//(asoNodes.Contains("task"))
-{                             
+{     
+    <RadzenCard Style="width:600px;">
+
     <RadzenChart Style="height: 400px;" Visible="singleTrialChartTask">
         <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N</label>
         <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Task" LineType="LineType.Solid" ValueProperty="singleTrialTaskLX">
@@ -171,10 +208,14 @@
             <RadzenAxisTitle Text="Activation" />
         </RadzenValueAxis>
       </RadzenChart>
+          </RadzenCard>
+
 }
 
 @if (1==1)//(asoNodes.Contains("attention"))
-{                          
+{  
+    <RadzenCard Style="width:600px;">
+
     <RadzenChart Style="height: 400px;" Visible="singleTrialChartAttention">
         <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N</label>
         <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="V-Attention" LineType="LineType.Solid" ValueProperty="singleTrialAttV">
@@ -192,9 +233,12 @@
             <RadzenAxisTitle Text="Activation" />
         </RadzenValueAxis>
     </RadzenChart>
+        </RadzenCard>
 }
  @if(1==1)//(asoNodes.Contains("conflict"))
-{                          
+{   
+    <RadzenCard Style="width:600px;">
+
     <RadzenChart Style="height: 400px;" Visible="singleTrialChartConflict">
         <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N</label>
         <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="Conflict-1" LineType="LineType.Solid" ValueProperty="singleTrialConf">
@@ -212,6 +256,8 @@
             <RadzenAxisTitle Text="Activation" />
         </RadzenValueAxis>
     </RadzenChart>
+    </RadzenCard>
+
 }
 
     </div>
@@ -277,7 +323,7 @@ else
             <RadzenAxisTitle Text="Mean RT (ms)" />
         </RadzenValueAxis>
     </RadzenChart>
-           </RadzenCard>
+   </RadzenCard>
 
     <div class="col-xl-6">
         <RadzenFieldset AllowCollapse="true" Style="width:600px;margin-bottom: 20px; height:500px;"
@@ -842,7 +888,7 @@ public int asoPageSize {get; set;}=5;
 
     string TrialsStr1 = "";
 
-    int TrialNumber = 50;
+    int TrialNumber = 20;
 
     int N = 1000;
 
