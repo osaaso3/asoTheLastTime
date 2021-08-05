@@ -433,6 +433,8 @@ namespace TheLastTime.Shared.Data
                 dbCategory.Description = category.Description;
                 dbCategory.Color = category.Color;
                 dbCategory.Icon = category.Icon;
+                dbCategory.Mask = category.Mask;
+
             }
 
             await db.SaveChanges();
@@ -617,7 +619,9 @@ namespace TheLastTime.Shared.Data
         {
             using IDatabase db = await DatabaseAccess.CreateDatabase();
 
-            db.Categories.Add(new Category() { Id = 2, Description = "Health" });
+            db.Categories.Add(new Category() { Id = 2, Description = "Health", Mask="1.5" });
+
+
             db.Categories.Add(new Category() { Id = 3, Description = "Exercise" });
             db.Categories.Add(new Category() { Id = 4, Description = "Appearance" });
 

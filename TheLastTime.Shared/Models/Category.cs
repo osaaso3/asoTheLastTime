@@ -12,6 +12,9 @@ namespace TheLastTime.Shared.Models
         public string Description { get; set; } = string.Empty;
 
         [Required]
+        public string Mask  { get; set; } = string.Empty;
+
+        [Required]
         public string Color { get; set; } = string.Empty;
 
         [Required]

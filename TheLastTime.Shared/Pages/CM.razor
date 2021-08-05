@@ -47,7 +47,9 @@
 
         </Pagination>
 
-  
+          <Button id="add-habit" class="btn btn-lg btn-primary rounded-circle" @onclick="@(() => { asoIndx(); })"><span class="fa fa-fw fa-plus"></span></Button>
+          @asoHabit0
+
         @if (1==1)//(asoNodes.Contains("target"))
 {
   <RadzenCard Style="width:600px;">
@@ -627,6 +629,8 @@ else
     [Parameter]
     public int idx1 {get; set;}=0;
 
+    public string asoHabit0="aso0";
+
     void  MyMethodAsyncX()
     {
         navigationManager.NavigateTo("/");
@@ -675,7 +679,9 @@ else
 
     }
 
-    public long asoIndex=0;
+    public int asoIndex=0;
+        public long asoIndex1=0;
+
     public string[] asoHabitList=new string[5];
         public string asoHabit="";
 
@@ -699,19 +705,24 @@ else
 
              void PropertyChanged(object? sender, EventArgs e)
         {
+                              asoIndex1=state.SelectedCategoryId-1;
+
             StateHasChanged();
         }
             protected override void OnParametersSet()
      {
-                  asoIndex=state.SelectedCategoryId;
+                  asoIndex1=state.SelectedCategoryId-1;
                   StateHasChanged();
      }
 
 
     void asoIndx()
     {
-         asoHabit=asoHabitList[1];
-                  asoIndex=state.SelectedCategoryId;
+                          //asoIndex=state.SelectedCategoryId;
+                  asoIndex1=state.SelectedCategoryId-1;
+
+         asoHabit0=dataService.CategoryList[Convert.ToInt32(asoIndex1)].Mask;
+
                   StateHasChanged();
     }
 

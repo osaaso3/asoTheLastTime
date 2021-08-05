@@ -87,7 +87,7 @@
 
                 <div class="mt-3">Habit:</div>
 
-                @if (State.EditHabit)
+                @if (1==1)//State.EditHabit)
                 {
                     <div class="input-group flex-nowrap mb-1">
                         <TextEdit Size="@Theme.Size" @bind-Text="@State.SelectedHabit.Description" Placeholder="Add new habit" />
@@ -96,6 +96,7 @@
                             <Button Color="Color.Primary" Outline="true" Size="@Theme.Size" @onclick="@(() => { State.EditHabit = false; })"><span class="fa fa-fw fa-times"></span></Button>
                         </div>
                     </div>
+
                 }
                 else
                 {
