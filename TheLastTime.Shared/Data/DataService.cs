@@ -623,12 +623,11 @@ namespace TheLastTime.Shared.Data
 
             db.Categories.Add(new Category() { Id = 5, Description = "Peace of mind" });
             db.Categories.Add(new Category() { Id = 6, Description = "Relationships" });
-            
-            //db.Categories.Add(new Category() { Id = 7, Description = "Relaxation" });
+            db.Categories.Add(new Category() { Id = 7, Description = "Relaxation" });
 
-            //db.Categories.Add(new Category() { Id = 8, Description = "Hobbies" });
-            //db.Categories.Add(new Category() { Id = 9, Description = "Chores" });
-            //db.Categories.Add(new Category() { Id = 10, Description = "Job" });
+            db.Categories.Add(new Category() { Id = 8, Description = "Hobbies" });
+            db.Categories.Add(new Category() { Id = 9, Description = "Chores" });
+            db.Categories.Add(new Category() { Id = 10, Description = "Job" });
 
             db.Habits.Add(new Habit() { Id = 1, CategoryId = 2, Description = "Drink a glass of water", DesiredInterval = new TimeSpan(0, 8, 0, 0), IsStarred = true, IsTwoMinute = true });
             db.Habits.Add(new Habit() { Id = 2, CategoryId = 2, Description = "Eat a piece of fruit", DesiredInterval = new TimeSpan(0, 12, 0, 0), IsTwoMinute = true });

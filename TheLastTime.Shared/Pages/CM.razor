@@ -685,16 +685,16 @@ else
    protected override void OnInitialized()
     {
 
-      for (int i=0;i<dataService.CategoryList.Count;i++)//dataService.HabitList.Count-1;i++)
-       {
-          asoHabitList[i]= dataService.CategoryList[i].Description;
-       }
+      //for (int i=0;i<dataService.CategoryList.Count;i++)//dataService.HabitList.Count-1;i++)
+      // {
+      //    asoHabitList[i]= dataService.CategoryList[i].Description;
+      // }
 
-        asoHabit=asoHabitList[0];
+        //asoHabit=asoHabitList[0];
 
-                    dataService.PropertyChanged += PropertyChanged;
-            state.PropertyChanged += PropertyChanged;
-           StateHasChanged(); 
+          //          dataService.PropertyChanged += PropertyChanged;
+          //  state.PropertyChanged += PropertyChanged;
+         //  StateHasChanged(); 
      }
 
              void PropertyChanged(object? sender, EventArgs e)
