@@ -1,42 +1,37 @@
 ﻿
 <div class="main d-flex flex-column">
-@* 
-    <span class="navbar-text" role="button" id="ididit" @onclick="ShowHelp">CogMod!</span>
-*@
 
-    <button class="navbar-toggler" @onclick="ToggleOptions">
+    <span class="navbar-text" role="button" id="ididit">CogMod!</span>
+
+    <Button Color="Color.Primary"  @onclick="@(async () => { DataService.Settings.ShowHelp = !DataService.Settings.ShowHelp; await DataService.SaveSettings(); })"><span class="fa fa-fw fa-cog text-muted">Info</span></Button>
+
+    <button class="av-link btn btn-link p-0 m-0 d-inline align-baseline shadow-none" @onclick="ToggleOptions">
         <span class="fa fa-fw fa-cog"></span>
     </button>
 
-   @if (DataService.Settings.ShowHelp)
-{
-    <HelpComponent />
-}
-else if (State.ShowOptions)
-{
-    <OptionsComponent />
-}
-else
-{
+            @if (DataService.Settings.ShowHelp==true)
+        {
+         <HelpComponent />   
+        }
+       @if (State.ShowOptions==true)
+
+        {
+        <OptionsComponent />
+        }
+
     <div class="main d-flex flex-column">
 
 
-                <HabitComponent Pinned="true" />
 
-                @if (DataService.Settings.ShowCategories)
-                {
+
                     <CategoryComponent />
-                }
+          
 
-                <HabitComponent />
 
                 <div class="py-5"></div>
 
                 <Button id="add-habit" class="btn btn-lg btn-primary rounded-circle" @onclick="@(() => { State.NewHabit(); })"><span class="fa fa-fw fa-plus"></span></Button>
       </div>
-
             <SelectedHabitComponent />
-}
-
 </div>
 

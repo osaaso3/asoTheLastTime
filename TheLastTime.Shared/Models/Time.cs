@@ -13,5 +13,7 @@ namespace TheLastTime.Shared.Models
 
         [Required]
         public long HabitId { get; set; }
+
+
     }
 }
