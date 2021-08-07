@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TheLastTime.Shared.Pages;
 
 namespace TheLastTime.Shared.Models
 {
@@ -9,10 +10,7 @@ namespace TheLastTime.Shared.Models
         public long Id { get; set; }
 
         [Required]
-        public string Description { get; set; } = string.Empty;
-
-        [Required]
-        public string Mask  { get; set; } = string.Empty;
+        public string Description { get; set; } = "Model";
 
         [Required]
         public string Color { get; set; } = string.Empty;
@@ -21,5 +19,10 @@ namespace TheLastTime.Shared.Models
         public string Icon { get; set; } = string.Empty;
 
         public List<Habit> HabitList = new List<Habit>();
+
+        [Required]
+        public int ModelNumber { get; set; } = 5;
+        [Required]
+        public int TrialNumber { get; set; } = 20;
     }
 }

@@ -35,7 +35,7 @@
             @for (int i = 0; i < dataService.CategoryList.Count; ++i)
             {
                  int idx = i;
-                   string index = i == 0 ? "None" : "Model " + i.ToString();//string index = i.ToString();
+                   string index = i == 0 ? "Default" : "Model " + i.ToString();//string index = i.ToString();
                 string css = string.Empty;
 
                 <PaginationItem Class="@css" Active="@(state.SelectedCategoryId == dataService.CategoryList[idx].Id)">
@@ -374,7 +374,7 @@ else
         <RadzenTabsItem Text="Parameters">
 
     <RadzenCard Style="width:400px;">
-    <p>Maina</p>
+    <p>Main</p>
     <div class="mat-layout-grid">
         <div class="mat-layout-grid-inner">
             <div class="mat-layout-grid-cell">                
@@ -654,7 +654,9 @@ else
 
        //state.NextCategory();
         idx1=int.Parse(page);
-        asoHabit=asoHabitList[idx1-1];
+       // asoHabit=asoHabitList[idx1-1];
+
+
       //  if (asoHabit=="Priming")
        // {
         //    MyMethodAsync();
@@ -682,7 +684,7 @@ else
     public int asoIndex=0;
         public long asoIndex1=0;
 
-    public string[] asoHabitList=new string[5];
+   // public string[] asoHabitList=new string[5];
         public string asoHabit="";
 
 
@@ -718,10 +720,20 @@ else
 
     void asoIndx()
     {
-                          //asoIndex=state.SelectedCategoryId;
-                  asoIndex1=state.SelectedCategoryId-1;
+                   
+     
+        //asoIndex=state.SelectedCategoryId;
+            if (state.SelectedCategoryId>0 && state.SelectedCategoryId<=dataService.CategoryList.Count)
+            {
+            asoIndex1=state.SelectedCategoryId-1;
 
-         asoHabit0=dataService.CategoryList[Convert.ToInt32(asoIndex1)].Mask;
+             asoHabit0=dataService.CategoryList[Convert.ToInt32(asoIndex1)].ModelNumber.ToString()+dataService.CategoryList[Convert.ToInt32(asoIndex1)].TrialNumber.ToString();
+            }
+            else
+            {
+            asoHabit0 = "Plz select a model";
+            }
+
 
                   StateHasChanged();
     }

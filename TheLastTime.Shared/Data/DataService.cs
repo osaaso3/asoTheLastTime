@@ -433,8 +433,8 @@ namespace TheLastTime.Shared.Data
                 dbCategory.Description = category.Description;
                 dbCategory.Color = category.Color;
                 dbCategory.Icon = category.Icon;
-                dbCategory.Mask = category.Mask;
-
+                dbCategory.ModelNumber = category.ModelNumber;
+                dbCategory.TrialNumber = category.TrialNumber;
             }
 
             await db.SaveChanges();
@@ -619,9 +619,11 @@ namespace TheLastTime.Shared.Data
         {
             using IDatabase db = await DatabaseAccess.CreateDatabase();
 
-            db.Categories.Add(new Category() { Id = 2, Description = "Health", Mask="1.5" });
+            db.Categories.Add(new Category() { Id = 2, Description = "Model1", ModelNumber=5, TrialNumber=20 });
+            db.Habits.Add(new Habit() { Id = 1, CategoryId = 2, Description = "Drink a glass of water", DesiredInterval = new TimeSpan(0, 8, 0, 0), IsStarred = true, IsTwoMinute = true });
+            db.Times.Add(new Time() { Id = 1, HabitId = 1, DateTime = DateTime.Now.AddDays(-50) });
 
-
+            /*
             db.Categories.Add(new Category() { Id = 3, Description = "Exercise" });
             db.Categories.Add(new Category() { Id = 4, Description = "Appearance" });
 
@@ -673,6 +675,7 @@ namespace TheLastTime.Shared.Data
             db.Times.Add(new Time() { Id = 8, HabitId = 16, DateTime = DateTime.Now.AddDays(-12) });
 
             db.Times.Add(new Time() { Id = 9, HabitId = 17, DateTime = DateTime.Now.AddDays(-300) });
+            */
 
             db.Settings.Add(new Settings() { Description = "Hide", ShowSavedSettings = true, Size = Settings.Size, Theme = Settings.Theme, ShowHelp = false, ShowSearch = false, ShowAverageInterval = false, ShowRatio = false });
             db.Settings.Add(new Settings()
