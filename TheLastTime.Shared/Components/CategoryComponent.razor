@@ -1,10 +1,29 @@
-﻿        <div class="input-group-append">
+﻿@inject NavigationManager navigationManager
+        
+<div class="input-group-append">
             <Button Color="Color.Primary" Outline="true" Size="@Theme.Size" @onclick="@(() => { State.NewCategory(); editCategory = true; })"><span class="fa fa-fw fa-plus"></span></Button>
-            <Button Color="Color.Primary" Outline="true" Size="@Theme.Size" @onclick="@(async () => { await DataService.SaveCategory(State.SelectedCategory); editCategory = false; })"><span class="fa fa-fw fa-save"></span></Button>
+            <Button Color="Color.Primary" Outline="true" Size="@Theme.Size" @onclick="@(async () => { await DataService.SaveCategory(State.SelectedCategory); editCategory = false; MyMethodAsyncX(); })"><span class="fa fa-fw fa-save"></span></Button>
             <Button Color="Color.Primary" Outline="true" Size="@Theme.Size" @onclick="@(() => { editCategory = true; })"><span class="fa fa-fw fa-edit"></span></Button>
-            <Button Color="Color.Primary" Outline="true" Size="@Theme.Size" @onclick="@(async () => {editCategory = false; })"><span class="fa fa-fw fa-time"></span></Button>
+            <Button Color="Color.Primary" Outline="true" Size="@Theme.Size" @onclick="@(async () => {editCategory = false; })"><span class="fa fa-fw fa-times"></span></Button>
 
         </div>
+
+            @code
+    {
+    
+        void OnChange(object value, string name)
+            {
+               // var str = value is IEnumerable<object> ? string.Join(", ", (IEnumerable<object>)value) : value;
+               //console.Log($"{name} value changed to {str}");
+               // StateHasChanged();
+            }
+
+        void  MyMethodAsyncX()
+            {
+                //navigationManager.NavigateTo("/cogmod", forceLoad: true);
+            }
+    }
+
 @if (!editCategory)
 {
 
@@ -35,7 +54,7 @@
 }
 @if (editCategory)
 {
-    <p>Test</p>
+    <p>Models</p>
     <div class="mat-layout-grid">
         <div class="mat-layout-grid-inner">
             <div class="input-group flex-nowrap">
@@ -259,16 +278,6 @@
 }
 
 
-    @code
-    {
-    
-        void OnChange(object value, string name)
-            {
-               // var str = value is IEnumerable<object> ? string.Join(", ", (IEnumerable<object>)value) : value;
-               //console.Log($"{name} value changed to {str}");
-               // StateHasChanged();
-            }
-    }
 
 
 

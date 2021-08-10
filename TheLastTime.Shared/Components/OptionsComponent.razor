@@ -3,17 +3,24 @@
     <div class="card-body p-2">
 
         <ul class="nav flex-column">
+            <li class="nav-item px-2 pt-2">
+                <Check TValue="bool" Checked="@DataService.Settings.ShowCategories" CheckedChanged="@(async (val) => { DataService.Settings.ShowCategories = val; await DataService.SaveSettings(); })"><span class="@TextClass">Show Models</span></Check>
+            </li>
 
+            <li class="nav-item px-2 pt-2">
+                <Check TValue="bool" Disabled="@(!DataService.Settings.ShowCategories)" Checked="@DataService.Settings.ShowCategoriesInHeader" CheckedChanged="@(async (val) => { DataService.Settings.ShowCategoriesInHeader = val; await DataService.SaveSettings(); })"><span class="@TextClass">Show Models in Header</span></Check>
+            </li>
+            <li class="nav-item px-2 pt-2">
+                <a class="" href="https://github.com/osaaso3/asoTheLastTime" target="_blank"><span class="fab fa-github"></span>GitHub</a>
+            </li>
             <li class="nav-item px-2 pt-2">
                  @*
                 <button type="button" class="btn btn-link p-0 m-0 d-inline align-baseline shadow-none" @onclick="@(async () => { State.ShowOptions = false; DataService.Settings.ShowHelp = true; await DataService.SaveSettings(); })"><span class="fa fa-question-circle"></span> Help</button>
                <a class="" href="javascript:void(0)" role="button"><span class="fa fa-question-circle"></span> Help</a>*@
             </li>
 
-            <li class="nav-item px-2 pt-2">
-                <a class="" href="https://github.com/osaaso3/asoTheLastTime" target="_blank"><span class="fab fa-github"></span> GitHub</a>
-            </li>
 
+            @* 
             <li class="nav-item px-2 pt-3">
                 <h5>Settings:</h5>
             </li>
@@ -101,7 +108,7 @@
             <li class="nav-item px-2 pt-2">
                 <Check TValue="bool" Checked="@DataService.Settings.ShowTimes" CheckedChanged="@(async (val) => { DataService.Settings.ShowTimes = val; await DataService.SaveSettings(); })"><span class="@TextClass">Show done times</span></Check>
             </li>
-
+            *@
             <li class="nav-item px-2 pt-3">
                 <h5>Look and feel:</h5>
             </li>

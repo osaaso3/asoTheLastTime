@@ -19,13 +19,14 @@ namespace TheLastTime.Shared.Components
         {
             collapseNavMenu = !collapseNavMenu;
 
-            State.ShowOptions = false;
+            State.ShowOptions = !State.ShowOptions;
 
             if (DataService.Settings.ShowHelp != false)
             {
                 DataService.Settings.ShowHelp = false;
-                await DataService.SaveSettings();
             }
+            await DataService.SaveSettings();
+
         }
 
         async void ShowHelp()

@@ -27,93 +27,100 @@ namespace TheLastTime.Shared.Models
         [Required]
         public int CongRatio { get; set; } = 50;
         [Required]
-        public int N { get; set; } = 20;
+        public int N { get; set; } = 1000;
         [Required]
-        public int durFix { get; set; } = 20;
+        public int durFix { get; set; } = 500;
         [Required]
-        public int durPrime { get; set; } = 20;
+        public int durPrime { get; set; } = 45;
         [Required]
-        public int durMask { get; set; } = 20;
+        public int durMask { get; set; } = 75;
         [Required]
-        public int durTarget { get; set; } = 20;
+        public int durTarget { get; set; } = 200;
         [Required]
-        public int durPrimeMaskISI { get; set; } = 20;
+        public int durPrimeMaskISI { get; set; } = 0;
         [Required]
-        public int durMaskTargetISI { get; set; } = 20;
+        public int durMaskTargetISI { get; set; } = 0;
         [Required]
-        public int noisePTR { get; set; } = 20;
+        public double noisePTR { get; set; } = 0.15;
         [Required]
-        public int noiseMasks { get; set; } = 20;
+        public double noiseMasks { get; set; } = 0.25;
         [Required]
-        public int noiseTask { get; set; } = 20;
+        public double noiseTask { get; set; } = 0.05;
         [Required]
-        public int CrossPri { get; set; } = 20;
+        public double CrossPri { get; set; } = 0.33;
         [Required]
-        public int SelfPri { get; set; } = 20;
+        public double SelfPri { get; set; } = 1.5;
         [Required]
-        public int inpamin { get; set; } = 20;
+        public double inpamin { get; set; } = 0;
         [Required]
-        public int inpamax { get; set; } = 20;
+        public double inpamax { get; set; } = 1.0;
         [Required]
-        public int ThreshPri { get; set; } = 20;
+        public double ThreshPri { get; set; } = 0.65;
         [Required]
-        public int inhPri { get; set; } = 20;
+        public double inhPri { get; set; } = -1.0;
         [Required]
-        public int biasPL { get; set; } = 20;
+        public double biasPL { get; set; } = -0.5;
         [Required]
-        public int conPrime { get; set; } = 20;
-        public int CrossTar { get; set; } = 20;
+        public double conPrime { get; set; } = 3.0;
         [Required]
-        public int SelfTar { get; set; } = 20;
+        public double CrossTar { get; set; } = 0.33;
         [Required]
-        public int inpbmin { get; set; } = 20;
+        public double SelfTar { get; set; } = 1.5;
         [Required]
-        public int inpbmax { get; set; } = 20;
+        public double inpbmin { get; set; } = 0;
         [Required]
-        public int inhTar { get; set; } = 20;
-        public int ThreshTar { get; set; } = 20;
+        public double inpbmax { get; set; } = 1.0;
         [Required]
-        public int biasPR { get; set; } = 20;
+        public double inhTar { get; set; } = -1.0;
         [Required]
-        public int conTarget { get; set; } = 20;
+        public double ThreshTar { get; set; } = 0.65;
         [Required]
-        public int SelfO { get; set; } = 20;
+        public double biasPR { get; set; } = -0.5;
         [Required]
-        public int inhO { get; set; } = 20;
+        public double conTarget { get; set; } = 3.0;
         [Required]
-        public int ThreshO { get; set; } = 20;
-        public int biasOut { get; set; } = 20;
+        public double SelfO { get; set; } = 1.0;
         [Required]
-        public int conResponse { get; set; } = 20;
+        public double inhO { get; set; } = -1.0;
         [Required]
-        public int SelfT { get; set; } = 20;
+        public double ThreshO { get; set; } = 0.7;
         [Required]
-        public int inhT { get; set; } = 20;
-        public int ThreshT { get; set; } = 20;
+        public double biasOut { get; set; } = -2.0;
         [Required]
-        public int biasTask { get; set; } = 20;
+        public double conResponse { get; set; } = 1.5;
         [Required]
-        public int ThreshConf { get; set; } = 20;
+        public double SelfT { get; set; } = 1.0;
         [Required]
-        public int cLC { get; set; } = 20;
+        public double inhT { get; set; } = -1.0;
         [Required]
-        public int CLCthresh { get; set; } = 20;
-        public int g1 { get; set; } = 20;
+        public double ThreshT { get; set; } = 0.45;
         [Required]
-        public int g2 { get; set; } = 20;
+        public double biasTask { get; set; } = -1.25;
         [Required]
-        public int SelfMasks { get; set; } = 20;
-        public int BiasMasks { get; set; } = 20;
+        public double ThreshConf { get; set; } = 2.0;
         [Required]
-        public int CrossLMasks { get; set; } = 20;
+        public double cLC { get; set; } = 3.85;
         [Required]
-        public int ConMasks { get; set; } = 20;
+        public double CLCthresh { get; set; } = 1.0;
         [Required]
-        public int InhMasks { get; set; } = 20;
+        public double g1 { get; set; } = 3;
         [Required]
-        public int durM_T_ISIcoef { get; set; } = 20;
-        public int inpamask { get; set; } = 20;
+        public double g2 { get; set; } = 1;
         [Required]
-        public int inpbmask { get; set; } = 20;
+        public double SelfMasks { get; set; } = 1.5;
+        [Required]
+        public double BiasMasks { get; set; } = -1.25;
+        [Required]
+        public double CrossLMasks { get; set; } = 0.75;
+        [Required]
+        public double ConMasks { get; set; } = 1.5;
+        [Required]
+        public double InhMasks { get; set; } = -1.0;
+        [Required]
+        public int durM_T_ISIcoef { get; set; } = 35;
+        [Required]
+        public double inpamask { get; set; } = 1.0;
+        [Required]
+        public double inpbmask { get; set; } = 1.0;
     }
 }

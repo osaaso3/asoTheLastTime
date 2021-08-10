@@ -1,26 +1,38 @@
-﻿
+﻿@inject NavigationManager navigationManager
+
 <div class="main d-flex flex-column">
 
     <span class="navbar-text" role="button" id="ididit">CogMod!</span>
 
-    <Button Color="Color.Primary"  @onclick="@(async () => { DataService.Settings.ShowHelp = !DataService.Settings.ShowHelp; await DataService.SaveSettings(); })"><span class="fa fa-fw fa-cog text-muted">Info</span></Button>
+    <Button Color="Color.Primary"  @onclick="@(async () => { DataService.Settings.ShowHelp = !DataService.Settings.ShowHelp; await DataService.SaveSettings(); })"><span class="navbar-text">Info</span></Button>
 
-    <button class="av-link btn btn-link p-0 m-0 d-inline align-baseline shadow-none" @onclick="ToggleOptions">
+    <button class="av-link btn btn-link p-0 m-0 d-inline align-baseline shadow-none" @onclick="ToggleOptions">Show/Save Settings
         <span class="fa fa-fw fa-cog"></span>
     </button>
 
-            @if (DataService.Settings.ShowHelp==true)
+        @if (DataService.Settings.ShowHelp==true)
         {
-         <HelpComponent />   
+        <HelpComponent />   
         }
-       @if (State.ShowOptions==true)
+        else
+        {
+        <CategoryComponent />
+        <OptionsComponent />
+        }
 
+        @code
+        {
+    void  MyMethodAsyncX()
+    {
+        navigationManager.NavigateTo("/");
+    }
+        }
+        
+ @* 
+        @if (State.ShowOptions==true)
         {
         <OptionsComponent />
         }
- <CategoryComponent />
-
- @* 
      <div class="main d-flex flex-column">
 
 
