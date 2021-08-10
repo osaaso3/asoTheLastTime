@@ -5,290 +5,6 @@
             <Button Color="Color.Primary" Outline="true" Size="@Theme.Size" @onclick="@(async () => {editCategory = false; })"><span class="fa fa-fw fa-time"></span></Button>
 
         </div>
-
-@if (editCategory)
-{
-    <p>Test</p>
-    <div class="mat-layout-grid">
-        <div class="mat-layout-grid-inner">
-            <div class="input-group flex-nowrap">
-                <TextEdit Size="@Theme.Size" @bind-Text="@State.SelectedCategory.Description" Placeholder="Model"></TextEdit> 
-            </div>
-        </div>
-    </div>
-    <p>Main</p>
-    <div class="mat-layout-grid">
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">                
-                <RadzenNumeric Placeholder="ModelNumber" @bind-Value=@State.SelectedCategory.ModelNumber></RadzenNumeric>ModelNumber
-            </div>
-            <div class="mat-layout-grid-cell">                
-                <RadzenNumeric Placeholder="TrialNumber" @bind-Value=@State.SelectedCategory.TrialNumber></RadzenNumeric>TrialNumber
-            </div>
-        </div>
-    </div>
-
-    @code
-    {
-    
-        void OnChange(object value, string name)
-            {
-               // var str = value is IEnumerable<object> ? string.Join(", ", (IEnumerable<object>)value) : value;
-               //console.Log($"{name} value changed to {str}");
-               // StateHasChanged();
-            }
-    }
-
-@* 
-
-    <div class="input-group flex-nowrap">
-        <TextEdit Size="@Theme.Size" @bind-Text="@State.SelectedCategory.Description" Placeholder="Model">Model</TextEdit> 
-    </div>
-        <div class="input-group flex-nowrap">
-        <TextEdit Size="@Theme.Size" @bind-Text="@State.SelectedCategory.Mask" Placeholder="1.1">mask</TextEdit> 
-    </div>
-
-
-    <p>Main</p>
-    <div class="mat-layout-grid">
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">                
-            <RadzenNumeric Placeholder="ModelNumber" @bind-Value="@ModelNumber"></RadzenNumeric>ModelNumber
-            </div>
-            <div class="mat-layout-grid-cell">                
-                <RadzenNumeric Placeholder="TrialNumber" @bind-Value="@TrialNumber"></RadzenNumeric>TrialNumber
-            </div>
-        </div>
-    </div>
-    
-    <p>Duration</p>
-    <div class="mat-layout-grid">
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">                
-                <RadzenNumeric Placeholder="DurationTrial" @bind-Value="@N"></RadzenNumeric>DurationTrial
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="DurationFix" @bind-Value="@durFix" ></RadzenNumeric>DurationFix
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="DurationPrime" @bind-Value="@durPrime" ></RadzenNumeric>DurationPrime
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="DurationMask" @bind-Value="@durMask" ></RadzenNumeric>DurationMask
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="DurationTarget" @bind-Value="@durTarget" ></RadzenNumeric>DurationTarget
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="PrimeMaskISI" @bind-Value="@durPrimeMaskISI" ></RadzenNumeric>PrimeMaskISI
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="MaskTargetISI" @bind-Value="@durMaskTargetISI" ></RadzenNumeric>MaskTargetISI
-            </div>
-        </div>
-    </div>
-
-    <p>Noise</p>
-    <div class="mat-layout-grid">
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="NoisePTM" @bind-Value="@noisePTR" ></RadzenNumeric>NoisePTM
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="NoiseMasks" @bind-Value="@noiseMasks" ></RadzenNumeric>NoiseMasks
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="NoiseTass" @bind-Value="@noiseTask" ></RadzenNumeric>NoiseTass
-            </div>
-        </div>
-    </div>
-
-    <p>Prime</p>
-    <div class="mat-layout-grid">
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="CrossPri" @bind-Value="@CrossPri" ></RadzenNumeric>CrossPri
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="SelfPri" @bind-Value="@SelfPri" ></RadzenNumeric>SelfPri
-            </div>
-
-        </div>
-        <div class="mat-layout-grid-inner">
-
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="InpPrimeMin" @bind-Value="@inpamin" ></RadzenNumeric>InpPrimeMin
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="InpPrimeMax" @bind-Value="@inpamax" ></RadzenNumeric>InpPrimeMax
-            </div>
-        </div>
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="ThreshPri" @bind-Value="@ThreshPri" ></RadzenNumeric>ThreshPri
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="inhPri" @bind-Value="@inhPri" ></RadzenNumeric>inhPri
-            </div>
-        </div>
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="biasPri" @bind-Value="@biasPL" ></RadzenNumeric>biasPri
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="conPri" @bind-Value="@conPrime" ></RadzenNumeric>conPri
-            </div>
-        </div>
-    </div>
-    
-    <p>Target</p>
-    <div class="mat-layout-grid">
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="CrossTar" @bind-Value="@CrossTar" ></RadzenNumeric>CrossTar
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="SelfTar" @bind-Value="@SelfTar" ></RadzenNumeric>SelfTar
-            </div>
-
-        </div>
-        <div class="mat-layout-grid-inner">
-
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="InpTargetMin" @bind-Value="@inpbmin" ></RadzenNumeric>InpTargetMin
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="InpTargetMax" @bind-Value="@inpbmax" ></RadzenNumeric>InpTargetMax
-            </div>
-        </div>
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="inhTar" @bind-Value="@inhTar" ></RadzenNumeric>inhTar
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="ThreshTar" @bind-Value="@ThreshTar" ></RadzenNumeric>ThreshTar
-            </div>
-
-        </div>
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="biasTar" @bind-Value="@biasPR" ></RadzenNumeric>biasTar
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="conTar" @bind-Value="@conTarget" ></RadzenNumeric>conTar
-            </div>
-
-        </div>
-    </div>
-
-    <p>Response</p>
-    <div class="mat-layout-grid">
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="SelfO" @bind-Value="@SelfO" ></RadzenNumeric>SelfO
-            </div>
-
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="inhO" @bind-Value="@inhO" ></RadzenNumeric>inhO
-            </div>
-        </div>
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="ThreshO" @bind-Value="@ThreshO" ></RadzenNumeric>ThreshO
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="biasOut" @bind-Value="@biasOut" ></RadzenNumeric>biasOut
-            </div>
-        </div>
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="conResponse" @bind-Value="@conResponse" ></RadzenNumeric>conResponse
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="conResponse" @bind-Value="@conResponse" ></RadzenNumeric>conResponse
-            </div>
-        </div>
-    </div>
-
-    <p>Task</p>
-    <div class="mat-layout-grid">
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="SelfT" @bind-Value="@SelfT" ></RadzenNumeric>SelfT
-            </div>
-
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="inhT" @bind-Value="@inhT" ></RadzenNumeric>inhT
-            </div>
-        </div>
-        <div class="mat-layout-grid-inner">
-
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="ThreshT" @bind-Value="@ThreshT" ></RadzenNumeric>ThreshT
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="inhT" @bind-Value="@biasTask" ></RadzenNumeric>inhT
-            </div>
-        </div>
-    </div>
-
-    <p>Conflict</p>
-    <div class="mat-layout-grid">
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="ThresholdConf" @bind-Value="@ThreshConf" ></RadzenNumeric>ThresholdConf
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="CLC" @bind-Value="@cLC" ></RadzenNumeric>cLC
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="CLCthresh" @bind-Value="@CLCthresh" ></RadzenNumeric>cLCThresh
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="CLC" @bind-Value="@g1" ></RadzenNumeric>gPrime
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="CLCthresh" @bind-Value="@g2" ></RadzenNumeric>gTarget
-            </div>
-        </div>
-    </div>
-
-    <p>Mask</p>
-    <div class="mat-layout-grid">
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="SelfMasks" @bind-Value="@SelfMasks" ></RadzenNumeric>SelfMasks
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="BiasMasks" @bind-Value="@BiasMasks" ></RadzenNumeric>BiasMasks
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="CrossLMasks" @bind-Value="@CrossLMasks" ></RadzenNumeric>CrossLMasks
-            </div>
-        </div>
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="ConMasks" @bind-Value="@ConMasks" ></RadzenNumeric>ConMasks
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="InhMasks" @bind-Value="@InhMasks" ></RadzenNumeric>InhMasks
-            </div>
-        </div>
-        <div class="mat-layout-grid-inner">
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="M_T_ISI_Coef" @bind-Value="@durM_T_ISIcoef" ></RadzenNumeric>M_T_ISI_Coef
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="InpPrimeMask" @bind-Value="@inpamask" ></RadzenNumeric>InpPrimeMask
-            </div>
-            <div class="mat-layout-grid-cell">
-                <RadzenNumeric Placeholder="InpTargetMask" @bind-Value="@inpbmask" ></RadzenNumeric>InpTargetMask
-            </div>
-        </div>
-    </div>
-*@
-}
-
 @if (!editCategory)
 {
 
@@ -317,4 +33,243 @@
 
     </div>
 }
+@if (editCategory)
+{
+    <p>Test</p>
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="input-group flex-nowrap">
+                <TextEdit Size="@Theme.Size" @bind-Text="@State.SelectedCategory.Description" Placeholder="Model"></TextEdit> 
+            </div>
+        </div>
+    </div>
+    <p>Main</p>
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">                
+                <RadzenNumeric Placeholder="ModelNumber" @bind-Value="@State.SelectedCategory.ModelNumber"></RadzenNumeric>ModelNumber
+            </div>
+            <div class="mat-layout-grid-cell">                
+                <RadzenNumeric Placeholder="TrialNumber" @bind-Value="@State.SelectedCategory.TrialNumber"></RadzenNumeric>TrialNumber
+            </div>
+            <div class="mat-layout-grid-cell">                
+                <RadzenNumeric Placeholder="NumRatio" @bind-Value="@State.SelectedCategory.CongRatio"></RadzenNumeric>NumRatio
+            </div>
+        </div>
+    </div>
+
+    <p>Duration</p>
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">                
+                <RadzenNumeric Placeholder="DurationTrial" @bind-Value="@State.SelectedCategory.N"></RadzenNumeric>DurationTrial
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="DurationFix" @bind-Value="@State.SelectedCategory.durFix" ></RadzenNumeric>DurationFix
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="DurationPrime" @bind-Value="@State.SelectedCategory.durPrime" ></RadzenNumeric>DurationPrime
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="DurationMask" @bind-Value="@State.SelectedCategory.durMask" ></RadzenNumeric>DurationMask
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="DurationTarget" @bind-Value="@State.SelectedCategory.durTarget" ></RadzenNumeric>DurationTarget
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="PrimeMaskISI" @bind-Value="@State.SelectedCategory.durPrimeMaskISI" ></RadzenNumeric>PrimeMaskISI
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="MaskTargetISI" @bind-Value="@State.SelectedCategory.durMaskTargetISI" ></RadzenNumeric>MaskTargetISI
+            </div>
+        </div>
+    </div>
+
+    <p>Noise</p>
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="NoisePTM" @bind-Value="@State.SelectedCategory.noisePTR" ></RadzenNumeric>NoisePTM
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="NoiseMasks" @bind-Value="@State.SelectedCategory.noiseMasks" ></RadzenNumeric>NoiseMasks
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="NoiseTass" @bind-Value="@State.SelectedCategory.noiseTask" ></RadzenNumeric>NoiseTass
+            </div>
+        </div>
+    </div>
+
+    <p>Prime</p>
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="CrossPri" @bind-Value="@State.SelectedCategory.CrossPri" ></RadzenNumeric>CrossPri
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="SelfPri" @bind-Value="@State.SelectedCategory.SelfPri" ></RadzenNumeric>SelfPri
+            </div>
+
+        </div>
+        <div class="mat-layout-grid-inner">
+
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="InpPrimeMin" @bind-Value="@State.SelectedCategory.inpamin" ></RadzenNumeric>InpPrimeMin
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="InpPrimeMax" @bind-Value="@State.SelectedCategory.inpamax" ></RadzenNumeric>InpPrimeMax
+            </div>
+        </div>
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="ThreshPri" @bind-Value="@State.SelectedCategory.ThreshPri" ></RadzenNumeric>ThreshPri
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="inhPri" @bind-Value="@State.SelectedCategory.inhPri" ></RadzenNumeric>inhPri
+            </div>
+        </div>
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="biasPri" @bind-Value="@State.SelectedCategory.biasPL" ></RadzenNumeric>biasPri
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="conPri" @bind-Value="@State.SelectedCategory.conPrime" ></RadzenNumeric>conPri
+            </div>
+        </div>
+    </div>
+    
+    <p>Target</p>
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="CrossTar" @bind-Value="@State.SelectedCategory.CrossTar" ></RadzenNumeric>CrossTar
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="SelfTar" @bind-Value="@State.SelectedCategory.SelfTar" ></RadzenNumeric>SelfTar
+            </div>
+
+        </div>
+        <div class="mat-layout-grid-inner">
+
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="InpTargetMin" @bind-Value="@State.SelectedCategory.inpbmin" ></RadzenNumeric>InpTargetMin
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="InpTargetMax" @bind-Value="@State.SelectedCategory.inpbmax" ></RadzenNumeric>InpTargetMax
+            </div>
+        </div>
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="inhTar" @bind-Value="@State.SelectedCategory.inhTar" ></RadzenNumeric>inhTar
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="ThreshTar" @bind-Value="@State.SelectedCategory.ThreshTar" ></RadzenNumeric>ThreshTar
+            </div>
+
+        </div>
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="biasTar" @bind-Value="@State.SelectedCategory.biasPR" ></RadzenNumeric>biasTar
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="conTar" @bind-Value="@State.SelectedCategory.conTarget" ></RadzenNumeric>conTar
+            </div>
+
+        </div>
+    </div>
+
+
+    <p>Task</p>
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="SelfT" @bind-Value="@State.SelectedCategory.SelfT" ></RadzenNumeric>SelfT
+            </div>
+
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="inhT" @bind-Value="@State.SelectedCategory.inhT" ></RadzenNumeric>inhT
+            </div>
+        </div>
+        <div class="mat-layout-grid-inner">
+
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="ThreshT" @bind-Value="@State.SelectedCategory.ThreshT" ></RadzenNumeric>ThreshT
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="inhT" @bind-Value="@State.SelectedCategory.biasTask" ></RadzenNumeric>inhT
+            </div>
+        </div>
+    </div>
+
+    <p>Conflict</p>
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="ThresholdConf" @bind-Value="@State.SelectedCategory.ThreshConf" ></RadzenNumeric>ThresholdConf
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="CLC" @bind-Value="@State.SelectedCategory.cLC" ></RadzenNumeric>cLC
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="CLCthresh" @bind-Value="@State.SelectedCategory.CLCthresh" ></RadzenNumeric>cLCThresh
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="CLC" @bind-Value="@State.SelectedCategory.g1" ></RadzenNumeric>gPrime
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="CLCthresh" @bind-Value="@State.SelectedCategory.g2" ></RadzenNumeric>gTarget
+            </div>
+        </div>
+    </div>
+
+    <p>Mask</p>
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="SelfMasks" @bind-Value="@State.SelectedCategory.SelfMasks" ></RadzenNumeric>SelfMasks
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="BiasMasks" @bind-Value="@State.SelectedCategory.BiasMasks" ></RadzenNumeric>BiasMasks
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="CrossLMasks" @bind-Value="@State.SelectedCategory.CrossLMasks" ></RadzenNumeric>CrossLMasks
+            </div>
+        </div>
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="ConMasks" @bind-Value="@State.SelectedCategory.ConMasks" ></RadzenNumeric>ConMasks
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="InhMasks" @bind-Value="@State.SelectedCategory.InhMasks" ></RadzenNumeric>InhMasks
+            </div>
+        </div>
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="M_T_ISI_Coef" @bind-Value="@State.SelectedCategory.durM_T_ISIcoef" ></RadzenNumeric>M_T_ISI_Coef
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="InpPrimeMask" @bind-Value="@State.SelectedCategory.inpamask" ></RadzenNumeric>InpPrimeMask
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="InpTargetMask" @bind-Value="@State.SelectedCategory.inpbmask" ></RadzenNumeric>InpTargetMask
+            </div>
+        </div>
+    </div>
+
+}
+
+
+    @code
+    {
+    
+        void OnChange(object value, string name)
+            {
+               // var str = value is IEnumerable<object> ? string.Join(", ", (IEnumerable<object>)value) : value;
+               //console.Log($"{name} value changed to {str}");
+               // StateHasChanged();
+            }
+    }
+
+
+
 

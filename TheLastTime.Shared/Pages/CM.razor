@@ -46,9 +46,11 @@
             }
 
         </Pagination>
-
-          <Button id="add-habit" class="btn btn-lg btn-primary rounded-circle" @onclick="@(() => { asoIndx(); })"><span class="fa fa-fw fa-plus"></span></Button>
+        @*  
+                 <Button id="add-habit" class="btn btn-lg btn-primary rounded-circle" @onclick="@(() => { asoIndx(); })"><span class="fa fa-fw fa-plus"></span></Button>
           @asoHabit0
+        *@
+
 
         @if (1==1)//(asoNodes.Contains("target"))
 {
@@ -382,6 +384,9 @@ else
             </div>
             <div class="mat-layout-grid-cell">                
                 <RadzenNumeric Placeholder="TrialNumber" @bind-Value="@TrialNumber"></RadzenNumeric>TrialNumber
+            </div>
+            <div class="mat-layout-grid-cell">                
+                <RadzenNumeric Placeholder="NumRatio" @bind-Value="@numRatio"></RadzenNumeric>NumRatio
             </div>
         </div>
     </div>
@@ -913,13 +918,15 @@ public int asoPageSize {get; set;}=5;
     /// <summary>
     /// //////////////////////////////////////////num loop and dur////////////////>>>>>>>
 
-    int ModelNumber = 5;
+    int ModelNumber = 5;//state.SelectedCategory.ModelNumber();
 
     string TrialsStr1 = "";
 
     int TrialNumber = 10;
 
     int N = 1000;
+
+    int numRatio=50;
 
     public double mProgress { get; set; }
     public double nProgress { get; set; }
@@ -1520,26 +1527,70 @@ public int asoPageSize {get; set;}=5;
                 // if (TrialNumber > 1)
                 // {
 
-                int num = randomIC.Next();
+                int num = randomIC.Next(1,100);
+                //int numRatio=50;
                 //MessageBox.Show((num % 2).ToString());
-                if (num % 2 == 0)
+                if (numRatio - 50 == 0)
                 {
-                    inpaArray[0] = inpamax;
-                    inpbArray[0] = inpbmax;
-                    inpaArray[1] = inpamin;
-                    inpbArray[1] = inpbmin;
-                    ic = 1;
-                }
-                else
-                {
-                    inpaArray[0] = inpamax;
-                    inpbArray[0] = inpbmin;
-                    inpaArray[1] = inpamin;
-                    inpbArray[1] = inpbmax;
-                    ic = 2;
-                }
+                        if (num % 2 ==0)
+                
+                    {
+                        inpaArray[0] = inpamax;
+                        inpbArray[0] = inpbmax;
+                        inpaArray[1] = inpamin;
+                        inpbArray[1] = inpbmin;
+                        ic = 1;
+                    }
+                    else
+                    {
+                        inpaArray[0] = inpamax;
+                        inpbArray[0] = inpbmin;
+                        inpaArray[1] = inpamin;
+                        inpbArray[1] = inpbmax;
+                        ic = 2;
+                    }
 
-                //}
+                }
+                    else
+                {
+                    if (numRatio - 50 == 50) //100% cong
+                    {
+                
+                
+                        inpaArray[0] = inpamax;
+                        inpbArray[0] = inpbmax;
+                        inpaArray[1] = inpamin;
+                        inpbArray[1] = inpbmin;
+                        ic = 1;
+                    }
+
+                    else
+                    {
+
+                         if (num < numRatio)
+                
+                        {
+                            inpaArray[0] = inpamax;
+                            inpbArray[0] = inpbmax;
+                            inpaArray[1] = inpamin;
+                            inpbArray[1] = inpbmin;
+                            ic = 1;
+                        }
+                        else
+                        {
+                            inpaArray[0] = inpamax;
+                            inpbArray[0] = inpbmin;
+                            inpaArray[1] = inpamin;
+                            inpbArray[1] = inpbmax;
+                            ic = 2;
+                        }
+    
+                    }
+
+
+
+                } 
+
 
                 inpaArray[2] = inpamask;
                 inpbArray[2] = inpbmask;
