@@ -15,9 +15,9 @@
 
 @inject Header header
         <Button id="add-habit" class="btn btn-lg btn-primary rounded-circle" @onclick="@(() => { asoPageA(); })"><span class="fa fa-fw fa-plus"></span></Button>
+@asoIndex
 
 *@
-
 
 <div class="row">
         <div class="nav flex-column">
@@ -29,6 +29,20 @@
 <RadzenCard Style=" margin-bottom: 20px;">
     <div class="row">
          <div class="col-md-6">  
+              <div class="input-group flex-nowrap">
+                       <RadzenButton Disabled="spinning"Click=@(args => asoPageA()) Text="Run" Icon="label" Style="margin-bottom: 0px; width: 150px" />
+        <Select TValue="long" SelectedValue="@state.SelectedCategoryId" SelectedValueChanged="async (long val) => { state.SelectedCategoryId = val; asoIndex=Convert.ToInt32(val)-1; }">
+            <SelectItem Value="0">All Models</SelectItem>
+            @foreach (Category cat in dataService.CategoryList)
+            {
+            <SelectItem Value="@cat.Id">@cat.Description</SelectItem>
+            }
+        </Select>
+                               <RadzenButton Disabled="!spinning"Click=@(args => ChangeRefresh()) Text="Stop" Icon="stop" Style="margin-bottom: 0px; width: 150px" />
+
+        </div>
+@* 
+            <Button  Disabled="!spinning"  @onclick="@(() => { ChangeRefresh(); })"><span class="fa fa-fw fa-square"></span>Stop</Button>
 
        <Pagination Class="m-0">
                            <RadzenButton Click=@(args => asoPageA()) Text="Start/Stop" Icon="label" Style="margin-bottom: 0px; width: 165px" />
@@ -40,13 +54,15 @@
 
                 <PaginationItem Class="@css" Active="@(state.SelectedCategoryId == dataService.CategoryList[idx].Id)">
                     <PaginationLink Page="@(dataService.CategoryList[idx].Id.ToString())" Clicked="(Page) => { asoPageC(Page); }">
-                        @index
+                        @dataService.CategoryList[idx].Description
                     </PaginationLink>
                 </PaginationItem>
             }
             <Button Color="Color.Primary" Outline="true"  @onclick="@(() => { ChangeRefresh(); })"><span class="fa fa-fw fa-circle"></span>Refresh</Button>
 
         </Pagination>
+*@
+
 
         @*  
                  <Button id="add-habit" class="btn btn-lg btn-primary rounded-circle" @onclick="@(() => { asoIndx(); })"><span class="fa fa-fw fa-plus"></span></Button>
@@ -58,8 +74,8 @@
 {
   <RadzenCard Style="width:600px;">
         <label>
-            Models Chart Visible <RadzenCheckBox @bind-Value="@modelsChart" Name="Models"></RadzenCheckBox>
-            Model: @(m+1) / @ModelNumber Trial: @(n+1) / @TrialNumber Cycle: @c
+            Visible <RadzenCheckBox @bind-Value="@modelsChart" Name="Models"></RadzenCheckBox>
+            Lag: @m / @ModelNumber Trial: @n / @TrialNumber Cycle: @c
         </label>
 
     <RadzenChart Visible="modelsChart">
@@ -103,7 +119,7 @@
                     <RadzenProgressBar @bind-Value="@mProgress"></RadzenProgressBar>
         </label> 
          <label>
-         Trials<RadzenCheckBox @bind-Value="@trialsChart" Name="Trials"></RadzenCheckBox>
+         Visible: Trials<RadzenCheckBox @bind-Value="@trialsChart" Name="Trials"></RadzenCheckBox>
          Prime<RadzenCheckBox @bind-Value="@singleTrialChartPrime" Name="Prime"></RadzenCheckBox>
          Target<RadzenCheckBox @bind-Value="@singleTrialChartTarget" Name="Target"></RadzenCheckBox>
          Response<RadzenCheckBox @bind-Value="@singleTrialChartResponse" Name="Response"></RadzenCheckBox>
@@ -134,7 +150,11 @@
                    
                     
     <RadzenChart Style="height: 400px;" Visible="singleTrialChartPrime">
-        <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N Smooth<RadzenCheckBox @bind-Value="@smoothTrials" Name="smooth"></RadzenCheckBox></label>
+        <label>
+                     Visible<RadzenCheckBox @bind-Value="@singleTrialChartPrime" Name="Prime"></RadzenCheckBox>
+
+        Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N Smooth<RadzenCheckBox @bind-Value="@smoothTrial" Name="smooth"></RadzenCheckBox>
+    </label>
         
         <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Prime" LineType="LineType.Solid" ValueProperty="singleTrialOutbLLX">
             <RadzenMarkers MarkerType="MarkerType.Auto" />
@@ -162,7 +182,11 @@
      <RadzenCard Style="width:600px;">
                        
     <RadzenChart Style="height: 400px;" Visible="singleTrialChartTarget">
-        <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N Smooth<RadzenCheckBox @bind-Value="@smoothTrials" Name="smooth"></RadzenCheckBox></label>
+        <label>
+                 Visible<RadzenCheckBox @bind-Value="@singleTrialChartTarget" Name="Target"></RadzenCheckBox>
+
+        Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N Smooth<RadzenCheckBox @bind-Value="@smoothTrial" Name="smooth"></RadzenCheckBox>
+    </label>
         <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Target" LineType="LineType.Solid" ValueProperty="singleTrialOutbRLX">
             <RadzenMarkers MarkerType="MarkerType.Auto" />
         </RadzenLineSeries>
@@ -186,7 +210,11 @@
     <RadzenCard Style="width:600px;">
 
     <RadzenChart Style="height: 400px;" Visible="singleTrialChartResponse">
-        <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N Smooth<RadzenCheckBox @bind-Value="@smoothTrials" Name="smooth"></RadzenCheckBox></label>
+        <label>
+        Visible<RadzenCheckBox @bind-Value="@singleTrialChartResponse" Name="Response"></RadzenCheckBox>
+
+        Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N Smooth<RadzenCheckBox @bind-Value="@smoothTrial" Name="smooth"></RadzenCheckBox>
+    </label>
         <RadzenLineSeries  Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Response" LineType="LineType.Solid" ValueProperty="singleTrialOutaLX">
             <RadzenMarkers MarkerType="MarkerType.Auto" />
         </RadzenLineSeries>
@@ -213,7 +241,11 @@
     <RadzenCard Style="width:600px;">
 
     <RadzenChart Style="height: 400px;" Visible="singleTrialChartTask">
-        <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N Smooth<RadzenCheckBox @bind-Value="@smoothTrials" Name="smooth"></RadzenCheckBox></label>
+        <label>
+         Visible<RadzenCheckBox @bind-Value="@singleTrialChartTask" Name="Task"></RadzenCheckBox>
+
+        Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N Smooth<RadzenCheckBox @bind-Value="@smoothTrial" Name="smooth"></RadzenCheckBox>
+    </label>
         <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="L-Task" LineType="LineType.Solid" ValueProperty="singleTrialTaskLX">
             <RadzenMarkers MarkerType="MarkerType.Auto" />
         </RadzenLineSeries>
@@ -238,7 +270,11 @@
     <RadzenCard Style="width:600px;">
 
     <RadzenChart Style="height: 400px;" Visible="singleTrialChartAttention">
-        <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N Smooth<RadzenCheckBox @bind-Value="@smoothTrials" Name="smooth"></RadzenCheckBox></label>
+        <label>
+        Visible<RadzenCheckBox @bind-Value="@singleTrialChartAttention" Name="Attention"></RadzenCheckBox>
+        
+        Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N Smooth<RadzenCheckBox @bind-Value="@smoothTrial" Name="smooth"></RadzenCheckBox>
+    </label>
         <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="V-Attention" LineType="LineType.Solid" ValueProperty="singleTrialAttV">
             <RadzenMarkers MarkerType="MarkerType.Auto" />
         </RadzenLineSeries>
@@ -261,7 +297,10 @@
     <RadzenCard Style="width:600px;">
 
     <RadzenChart Style="height: 400px;" Visible="singleTrialChartConflict">
-        <label>Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N Smooth<RadzenCheckBox @bind-Value="@smoothTrials" Name="smooth"></RadzenCheckBox></label>
+        <label>
+             Visible<RadzenCheckBox @bind-Value="@singleTrialChartConflict" Name="Conflict"></RadzenCheckBox>
+        Speed/Resolution: Min 1 <RadzenSlider @bind-Value="asoSingleTrialSpeed" TValue="int" Min="1" Max="N" Step="10" Change="@((args) => Change(args, "Slider from 1 to 100"))" Style="margin-bottom: 0px;" /> Max @N Smooth<RadzenCheckBox @bind-Value="@smoothTrial" Name="smooth"></RadzenCheckBox>
+    </label>
         <RadzenLineSeries Smooth="@smoothTrial" Data="@singleTrialArray" CategoryProperty="singleTrialCycle" Title="Conflict-1" LineType="LineType.Solid" ValueProperty="singleTrialConf">
             <RadzenMarkers MarkerType="MarkerType.Auto" />
         </RadzenLineSeries>
@@ -272,7 +311,7 @@
             <RadzenMarkers MarkerType="MarkerType.Auto" />
         </RadzenLineSeries>
         <RadzenCategoryAxis Step="100" Padding="100" FormatString="{0}" />
-        <RadzenValueAxis Formatter="@FormatAsUSD" Min="0" Max="1">
+        <RadzenValueAxis Formatter="@FormatAsUSD" Min="0" Max="30">
             <RadzenGridLines Visible="true" />
             <RadzenAxisTitle Text="Activation" />
         </RadzenValueAxis>
@@ -289,59 +328,18 @@
 
     </RadzenTabsItem>
                  
-   <RadzenTabsItem Text="Settings">
 
-
-  @if (dataService.Settings.ShowHelp)
-{
-    <div class="container-fluid px-1 px-sm-0 py-2 py-sm-3 d-flex flex-grow-1">
-        <div id="overlay-parent" class="row mx-0 flex-grow-1">
-            <div class="col-lg-12 col-xl-6 px-1 px-sm-3">
-    <HelpComponent />
-            </div>
-        </div>
-    </div>
-}
-else if (state.ShowOptions)
-{
-     <SettingsComponent />
-}
-else
-{
-    <div class="container-fluid px-1 px-sm-0 py-2 py-sm-3 d-flex flex-grow-1">
-        <div id="overlay-parent" class="row mx-0 flex-grow-1">
-
-            <div class="col-lg-12 col-xl-6 px-1 px-sm-3">
-
-                <HabitComponent Pinned="true" />
-
-                @if (dataService.Settings.ShowCategories)
-                {
-                    <CategoryComponent />
-                }
-
-                <HabitComponent />
-
-                <div class="py-5"></div>
-
-                <Button id="add-habit" class="btn btn-lg btn-primary rounded-circle" @onclick="@(() => { state.NewHabit(); })"><span class="fa fa-fw fa-plus"></span></Button>
-            </div>
-
-            <SelectedHabitComponent />
-        </div>
-    </div>
-}
-
-</RadzenTabsItem>
-                <RadzenTabsItem Text="Multiple-Trial/Blocks Results">
+       <RadzenTabsItem Text="Data">
 
   <RadzenCard Style="width:600px;">
-     <label>Blocks Chart Visible<RadzenCheckBox @bind-Value="modelsChart" Name="models"></RadzenCheckBox></label>
+        <label>
+            Visible <RadzenCheckBox @bind-Value="@modelsChart" Name="Models"></RadzenCheckBox>
+        </label>
+
     <RadzenChart Visible="modelsChart">
-        <label>Smooth<RadzenCheckBox @bind-Value="@smoothModels" Name="smooth"></RadzenCheckBox></label>
-        <RadzenColumnSeries StrokeWidth="5" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTc" ValueProperty="modelRTc" />
-        <RadzenColumnSeries StrokeWidth="5" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTi" ValueProperty="modelRTi" />
-        <RadzenLineSeries Smooth="@smoothModels" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTc-RTi" LineType="LineType.Solid" ValueProperty="modelRTic">
+        <RadzenColumnSeries StrokeWidth="5" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTc" ValueProperty="modelRTcNum" />
+        <RadzenColumnSeries StrokeWidth="5" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTi" ValueProperty="modelRTiNum" />
+        <RadzenLineSeries Smooth="@smoothTrials" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTc-RTi" LineType="LineType.Solid" ValueProperty="modelRTic">
             <RadzenMarkers MarkerType="MarkerType.Circle" />
         </RadzenLineSeries>
         <RadzenColumnOptions Radius="5" />
@@ -352,7 +350,49 @@ else
     </RadzenChart>
    </RadzenCard>
 
-    <div class="col-xl-6">
+     <RadzenCard Style="width:600px;">
+        <label>
+            Visible <RadzenCheckBox @bind-Value="@modelsChart" Name="Models"></RadzenCheckBox>
+        </label>
+
+    <RadzenChart Visible="modelsChart">
+        <RadzenColumnSeries StrokeWidth="5" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTc" ValueProperty="modelConfTrialC" />
+        <RadzenColumnSeries StrokeWidth="5" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTi" ValueProperty="modelConfTrialI" />
+        <RadzenLineSeries Smooth="@smoothTrials" Data="@modelsRTarray" CategoryProperty="modelCycleX" Title="RTc-RTi" LineType="LineType.Solid" ValueProperty="modelRTic">
+            <RadzenMarkers MarkerType="MarkerType.Circle" />
+        </RadzenLineSeries>
+        <RadzenColumnOptions Radius="5" />
+        <RadzenValueAxis Formatter="@FormatAsUSD">
+            <RadzenGridLines Visible="true" />
+            <RadzenAxisTitle Text="Mean RT (ms)" />
+        </RadzenValueAxis>
+    </RadzenChart>
+   </RadzenCard>
+    <div class="container-fluid px-1 px-sm-0 py-2 py-sm-3 d-flex flex-grow-1">
+        <div id="overlay-parent" class="row mx-0 flex-grow-1">
+
+            <div class="col-lg-12 col-xl-6 px-1 px-sm-3">
+
+                <HabitComponent Pinned="true" />
+
+                @if (1==1)//dataService.Settings.ShowCategories)
+                {
+                    <CategoryComponent />
+                }
+
+                <HabitComponent />
+
+                <div class="py-5"></div>
+
+                <Button id="add-habit" class="btn btn-lg btn-primary rounded-circle" @onclick="@(() => { state.NewHabit(); })"><span class="fa fa-fw fa-plus"></span>Save Data</Button>
+            </div>
+
+            <SelectedHabitComponent />
+        </div>
+    </div>
+
+
+    <div class="container-fluid px-1 px-sm-0 py-2 py-sm-3 d-flex flex-grow-1">
         <RadzenFieldset AllowCollapse="true" Style="width:600px;margin-bottom: 20px; height:500px;"
                         Expand=@(() => Change("Fieldset expanded")) Collapse=@(() => Change("Fieldset collapsed"))>
             <HeaderTemplate>
@@ -365,7 +405,7 @@ else
                 <RadzenDataList PageSize="@asoPageSize" WrapItems="true" AllowPaging="true"
                                 Data="@modelsRTlist" TItem="modelDataItem">
                     <Template Context="order">
-                        <RadzenCard Style="width:300px;height:300px">
+                        <RadzenCard Style="colour: blue; width:300px;height:400px">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div>Trial:</div>
@@ -379,9 +419,17 @@ else
                                     <b>@(order.modelRTi)</b>
                                     <div style="margin-top:20px">Congruent:</div>
                                     <b>@(order.modelRTc)</b>
+                                    <div style="margin-top:20px">Incongruent:</div>
+                                    <b>@(order.modelRTiNum)</b>
+                                    <div style="margin-top:20px">Congruent:</div>
+                                    <b>@(order.modelRTcNum)</b>
+                                    <div style="margin-top:20px">Incongruent:</div>
+                                    <b>@(order.modelConfTrialI)</b>
+                                    <div style="margin-top:20px">Congruent:</div>
+                                    <b>@(order.modelConfTrialC)</b>
+                                    
                                 </div>
                             </div>
-
                         </RadzenCard>
                     </Template>
                 </RadzenDataList>
@@ -390,6 +438,7 @@ else
     </div>
 
     </RadzenTabsItem>
+
         <RadzenTabsItem Text="Parameters">
 
     <RadzenCard Style="width:400px;">
@@ -397,7 +446,7 @@ else
     <div class="mat-layout-grid">
         <div class="mat-layout-grid-inner">
             <div class="mat-layout-grid-cell">                
-            <RadzenNumeric Placeholder="ModelNumber" @bind-Value="@ModelNumber"></RadzenNumeric>ModelNumber
+            <RadzenNumeric Placeholder="ModelNumber" @bind-Value="@ModelNumber"></RadzenNumeric>ISI-Lags
             </div>
             <div class="mat-layout-grid-cell">                
                 <RadzenNumeric Placeholder="TrialNumber" @bind-Value="@TrialNumber"></RadzenNumeric>TrialNumber
@@ -704,7 +753,7 @@ else
     }
 
     public int asoIndex=0;
-        public long asoIndex1=0;
+      // public long asoIndex=0;
 
    // public string[] asoHabitList=new string[5];
         public string asoHabit="";
@@ -729,121 +778,18 @@ else
 
              void PropertyChanged(object? sender, EventArgs e)
         {
-                              asoIndex1=state.SelectedCategoryId-1;
+                              //asoIndex1=state.SelectedCategoryId-1;
 
             StateHasChanged();
         }
             protected override void OnParametersSet()
      {
-                  asoIndex1=state.SelectedCategoryId-1;
+                  //asoIndex1=state.SelectedCategoryId-1;
                   StateHasChanged();
      }
 
 
-    void asoIndx()
-    {
-                   
-     
-
-    ////////////////////////////////////////////////////vars/////////////////////////////////////////////////
-        ModelNumber  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].ModelNumber;
-
-        TrialNumber  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].TrialNumber;
-
-        CongRatio  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].CongRatio;
-
-        N  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].N;
-
-        durFix  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].durFix;
-
-        durPrime  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].durPrime;
-
-        durMask  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].durMask;
-
-        durTarget  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].durTarget;
-
-        durPrimeMaskISI  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].durPrimeMaskISI;
-
-        durMaskTargetISI  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].durMaskTargetISI;
-
-         noisePTR  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].noisePTR;
-
-         noiseMasks  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].noiseMasks;
-
-         noiseTask  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].noiseTask;
-
-         CrossPri  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].CrossPri;
-
-         SelfPri  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].SelfPri;
-
-         inpamin  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].inpamin;
-
-         inpamax  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].inpamax;
-
-         ThreshPri  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].ThreshPri;
-
-         inhPri  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].inhPri;
-
-         biasPL  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].biasPL;
-
-         conPrime  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].conPrime;
-         CrossTar  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].CrossTar;
-
-         SelfTar  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].SelfTar;
-
-         inpbmin  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].inpbmin;
-
-         inpbmax  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].inpbmax;
-
-         inhTar  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].inhTar;
-         ThreshTar  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].ThreshTar;
-
-         biasPR  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].biasPR;
-
-         conTarget  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].conTarget;
-
-         SelfO  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].SelfO;
-
-         inhO  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].inhO;
-
-         ThreshO  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].ThreshO;
-         biasOut  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].biasOut;
-
-         conResponse  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].conResponse;
-
-         SelfT  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].SelfT;
-
-         inhT  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].inhT;
-         ThreshT  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].ThreshT;
-
-         biasTask  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].biasTask;
-
-         ThreshConf  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].ThreshConf;
-
-         cLC  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].cLC;
-
-         CLCthresh  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].CLCthresh;
-         g1  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].g1;
-
-         g2  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].g2;
-
-         SelfMasks  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].SelfMasks;
-         BiasMasks  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].BiasMasks;
-
-         CrossLMasks  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].CrossLMasks;
-
-         ConMasks  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].ConMasks;
-
-         InhMasks  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].InhMasks;
-
-        durM_T_ISIcoef  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].durM_T_ISIcoef;
-         inpamask  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].inpamask;
-
-       inpbmask  = dataService.CategoryList[Convert.ToInt32(asoIndex1)].inpbmask;
-    //////////////////////////////////////////////////////////////END var////////////////////////////
-
-                  StateHasChanged();
-    }
+ 
 
         private string _selectedNodeId = "";
         private string[] _selectedNodeIds = new string[0];
@@ -909,23 +855,27 @@ public int asoPageSize {get; set;}=5;
     bool smoothModels = true;
     bool smoothTrials = true;
     bool smoothTrial = true;
+    
+   public bool modelsChart { get; set; } = true;
+   public bool trialsChart { get; set; } = true;
 
-   public bool singleTrialChartPrime { get; set; } = true;
-   public bool singleTrialChartTarget { get; set; } = true;
-   public bool singleTrialChartResponse { get; set; } = true;
-   public bool singleTrialChartTask { get; set; } = true;
-   public bool singleTrialChartAttention { get; set; } = true;
-   public bool singleTrialChartConflict { get; set; } = true;
+   public bool singleTrialChartPrime { get; set; } = false;
+   public bool singleTrialChartTarget { get; set; } = false;
+   public bool singleTrialChartResponse { get; set; } = false;
+   public bool singleTrialChartTask { get; set; } = false;
+   public bool singleTrialChartAttention { get; set; } = false;
+   public bool singleTrialChartConflict { get; set; } = false;
 
-    bool modelsChart = true;
-    bool trialsChart = true;
-    bool primeChart = false;
-    bool targetChart = false;
-    bool responseChart = false;
-    bool taskChart = false;
-    bool attentionChart = false;
-    bool conflictChart = false;
+    //bool modelsChart = true;
+    //bool trialsChart = true;
+    //bool primeChart = false;
+    //bool targetChart = false;
+    //bool responseChart = false;
+    //bool taskChart = false;
+    //bool attentionChart = false;
+    //bool conflictChart = false;
 
+    
 
     trialDataItem[] trialsRTarray = new trialDataItem[] { };
     modelDataItem[] modelsRTarray = new modelDataItem[] { };
@@ -952,15 +902,21 @@ public int asoPageSize {get; set;}=5;
         public double singleTrialAttHv { get; set; }
         public double singleTrialConf { get; set; }
         public double singleTrialConfThresh { get; set; }
-        public double singleTrialConfTrial { get; set; }
+        public int singleTrialConfTrial { get; set; }
 
     }
 
+    int ConfTrialC;
+    int ConfTrialI;
 
     public class trialDataItem
     {
         //public DateTime Date { get; set; }
+        public int trialRTc { get; set; }
+        public int trialRTi { get; set; }
         public double trialRT { get; set; }
+        public int trialConfTrialC { get; set; }
+        public int trialConfTrialI { get; set; }
         public string trialCycleX { get; set; }
 
     }
@@ -973,7 +929,10 @@ public int asoPageSize {get; set;}=5;
         public double modelRTc { get; set; }
         public double modelRTi { get; set; }
         public double modelRTic { get; set; }
-
+        public int modelRTcNum { get; set; }
+        public int modelRTiNum { get; set; }
+        public int modelConfTrialC { get; set; }
+        public int modelConfTrialI { get; set; }
         public string TrialsStr { get; set; }
 
     }
@@ -1005,15 +964,17 @@ public int asoPageSize {get; set;}=5;
 
 
     void ChangeRefresh()
-    {
-        StateHasChanged();
-    }
-    void Change(string text)
-    {
-        // orders = modelsRTlist.ToList();//dbContext.Orders.Include("Customer").Include("Employee").ToList();
+        {
+          MyMethodAsync0();
 
-        //console.Log($"{text}");
-    }
+            StateHasChanged();
+        }
+    void Change(string text)
+        {
+            // orders = modelsRTlist.ToList();//dbContext.Orders.Include("Customer").Include("Employee").ToList();
+
+            //console.Log($"{text}");
+        }
     public string AsoStr = "Cognitive";
 
     int currentCount = 0;
@@ -1027,9 +988,9 @@ public int asoPageSize {get; set;}=5;
 
 
     ////////////////////////////////////////////////////vars/////////////////////////////////////////////////
-        public int ModelNumber { get; set; } = 5;
+        public int ModelNumber { get; set; } = 3;
 
-        public int TrialNumber { get; set; } = 20;
+        public int TrialNumber { get; set; } = 80;
 
         public int CongRatio { get; set; } = 50;
 
@@ -1188,7 +1149,7 @@ public int asoPageSize {get; set;}=5;
     //  double cLC = 3.85;
     //  double CLCthresh = 1.00;
     //  double ThreshConf = 1;
-     double ConfTrial = 0;
+     int ConfTrial = 0;
 
     int CueOnset = 0;
     int CueOffset = 0;
@@ -1463,28 +1424,136 @@ public int asoPageSize {get; set;}=5;
 
     }
 
+
+       void asoIndx()
+    {
+                   
+     
+
+    ////////////////////////////////////////////////////vars/////////////////////////////////////////////////
+        ModelNumber  = dataService.CategoryList[asoIndex].ModelNumber;
+
+        TrialNumber  = dataService.CategoryList[asoIndex].TrialNumber;
+
+        CongRatio  = dataService.CategoryList[asoIndex].CongRatio;
+
+        N  = dataService.CategoryList[asoIndex].N;
+
+        durFix  = dataService.CategoryList[asoIndex].durFix;
+
+        durPrime  = dataService.CategoryList[asoIndex].durPrime;
+
+        durMask  = dataService.CategoryList[asoIndex].durMask;
+
+        durTarget  = dataService.CategoryList[asoIndex].durTarget;
+
+        durPrimeMaskISI  = dataService.CategoryList[asoIndex].durPrimeMaskISI;
+
+        durMaskTargetISI  = dataService.CategoryList[asoIndex].durMaskTargetISI;
+
+         noisePTR  = dataService.CategoryList[asoIndex].noisePTR;
+
+         noiseMasks  = dataService.CategoryList[asoIndex].noiseMasks;
+
+         noiseTask  = dataService.CategoryList[asoIndex].noiseTask;
+
+         CrossPri  = dataService.CategoryList[asoIndex].CrossPri;
+
+         SelfPri  = dataService.CategoryList[asoIndex].SelfPri;
+
+         inpamin  = dataService.CategoryList[asoIndex].inpamin;
+
+         inpamax  = dataService.CategoryList[asoIndex].inpamax;
+
+         ThreshPri  = dataService.CategoryList[asoIndex].ThreshPri;
+
+         inhPri  = dataService.CategoryList[asoIndex].inhPri;
+
+         biasPL  = dataService.CategoryList[asoIndex].biasPL;
+
+         conPrime  = dataService.CategoryList[asoIndex].conPrime;
+         CrossTar  = dataService.CategoryList[asoIndex].CrossTar;
+
+         SelfTar  = dataService.CategoryList[asoIndex].SelfTar;
+
+         inpbmin  = dataService.CategoryList[asoIndex].inpbmin;
+
+         inpbmax  = dataService.CategoryList[asoIndex].inpbmax;
+
+         inhTar  = dataService.CategoryList[asoIndex].inhTar;
+         ThreshTar  = dataService.CategoryList[asoIndex].ThreshTar;
+
+         biasPR  = dataService.CategoryList[asoIndex].biasPR;
+
+         conTarget  = dataService.CategoryList[asoIndex].conTarget;
+
+         SelfO  = dataService.CategoryList[asoIndex].SelfO;
+
+         inhO  = dataService.CategoryList[asoIndex].inhO;
+
+         ThreshO  = dataService.CategoryList[asoIndex].ThreshO;
+         biasOut  = dataService.CategoryList[asoIndex].biasOut;
+
+         conResponse  = dataService.CategoryList[asoIndex].conResponse;
+
+         SelfT  = dataService.CategoryList[asoIndex].SelfT;
+
+         inhT  = dataService.CategoryList[asoIndex].inhT;
+         ThreshT  = dataService.CategoryList[asoIndex].ThreshT;
+
+         biasTask  = dataService.CategoryList[asoIndex].biasTask;
+
+         ThreshConf  = dataService.CategoryList[asoIndex].ThreshConf;
+
+         cLC  = dataService.CategoryList[asoIndex].cLC;
+
+         CLCthresh  = dataService.CategoryList[asoIndex].CLCthresh;
+         g1  = dataService.CategoryList[asoIndex].g1;
+
+         g2  = dataService.CategoryList[asoIndex].g2;
+
+         SelfMasks  = dataService.CategoryList[asoIndex].SelfMasks;
+
+         BiasMasks  = dataService.CategoryList[asoIndex].BiasMasks;
+
+         CrossLMasks  = dataService.CategoryList[asoIndex].CrossLMasks;
+
+         ConMasks  = dataService.CategoryList[asoIndex].ConMasks;
+
+         InhMasks  = dataService.CategoryList[asoIndex].InhMasks;
+         
+         durM_T_ISIcoef  = dataService.CategoryList[asoIndex].durM_T_ISIcoef;
+         
+         inpamask  = dataService.CategoryList[asoIndex].inpamask;
+         
+         inpbmask  = dataService.CategoryList[asoIndex].inpbmask;
+         //////////////////////////////////////////////////////////////END var////////////////////////////
+        ///StateHasChanged();
+    }
+
     int asoCountDown = 0;
 
     public async Task MyMethodAsync()
     {
         //asoCountDown = 1;
 
-        if (spinning == true)
+       if (spinning == false)
         {
-            MyMethodAsync0();
-        }
-        else
-        {
+           //MyMethodAsync0();
+        //}
+      //  else
+     //   {
             modelsRTlist.Clear();
             //result = -1;
 
             spinning = true;
+            
+            StateHasChanged();
+           // asoIndex=Convert.ToInt32(state.SelectedCategoryId);
 
-
-                    //asoIndex=state.SelectedCategoryId;
-            if (state.SelectedCategoryId>0 && state.SelectedCategoryId<=dataService.CategoryList.Count)
+            if (asoIndex >-1)
             {
-                asoIndex1=state.SelectedCategoryId-1;
+               // asoIndex1=state.SelectedCategoryId;
 
                 // asoHabit0=dataService.CategoryList[Convert.ToInt32(asoIndex1)].ModelNumber.ToString()+dataService.CategoryList[Convert.ToInt32(asoIndex1)].TrialNumber.ToString();
                     asoIndx();
@@ -2332,7 +2401,7 @@ public int asoPageSize {get; set;}=5;
                         neLCT = 0;
                     }
 
-                    ConfTrial += Conf;
+                    ConfTrial += Convert.ToInt32(Conf);
 
                     //if (ic == 2 & c > durFix + durPrime)//ConfTrial > ThreshConf && c > durFix)
                     // {
@@ -2638,6 +2707,7 @@ public int asoPageSize {get; set;}=5;
                         rtSumC += rt;
                         rtMeanC = rtSumC / rtC;
                         rtC++;
+                        ConfTrialC=ConfTrialC+ConfTrial;
                         TrialsStr1 = TrialsStr1 + "c" + ";" + rt.ToString() + ",";
                         // TextBoxMultiLine.AppendText(nnew.ToString() + "rtC=" + (rtMeanC / rtC).ToString() + Environment.NewLine);
                         //Jobs.Add(new JobDto { Id = n, Description = ic.ToString(), Status = JobStatuses.Running, RT_MeanC = rtMeanC });
@@ -2649,6 +2719,7 @@ public int asoPageSize {get; set;}=5;
                         rtSumI += rt;
                         rtMeanI = rtSumI / rtI;
                         rtI++;
+                        ConfTrialI = ConfTrialI + ConfTrial;
                         TrialsStr1 = TrialsStr1 + "i" + ";" + rt.ToString() + ",";
                         //rt -= rtMeanI;
                         //TextBoxMultiLine.AppendText(nnew.ToString() + "rtI=" + (rtMeanI / rtI).ToString() + Environment.NewLine);
@@ -2678,7 +2749,14 @@ public int asoPageSize {get; set;}=5;
                 {
                     trialCycleX = (n + 1).ToString(),
                     // Date = DateTime.Parse("2020-03-01"),
-                    trialRT = rt
+                    trialRT = rt,
+                    trialRTc=rtC,
+                    trialRTi=rtI,
+                    trialConfTrialC=ConfTrialC,
+                    trialConfTrialI=ConfTrialI,
+
+
+                    
 
                 });
 
@@ -2703,6 +2781,10 @@ public int asoPageSize {get; set;}=5;
                 // Date = DateTime.Parse("2020-03-01"),
                 modelRTc = rtMeanC,
                 modelRTi = rtMeanI,
+                modelRTcNum=rtC,
+                modelRTiNum=rtI,
+                modelConfTrialC=ConfTrialC,
+                modelConfTrialI=ConfTrialI,
 
                 modelRTic = rtMeanI - rtMeanC,
                 TrialsStr = TrialsStr1,
@@ -2712,7 +2794,8 @@ public int asoPageSize {get; set;}=5;
 
             modelsRTarray = modelsRTlist.ToArray();
 
-
+            ConfTrialC=0;
+            ConfTrialI = 0;
 
             // for (int i = 0; i < pointsInpModelsC.Length; i++)
             // {

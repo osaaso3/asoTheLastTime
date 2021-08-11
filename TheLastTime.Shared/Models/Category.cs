@@ -10,7 +10,7 @@ namespace TheLastTime.Shared.Models
         public long Id { get; set; }
 
         [Required]
-        public string Description { get; set; } = "Model";
+        public string Description { get; set; } = "Default";
 
         [Required]
         public string Color { get; set; } = string.Empty;

@@ -42,7 +42,7 @@
         }
 
         <Select TValue="long" Size="@Theme.Size" SelectedValue="@State.SelectedCategoryId" SelectedValueChanged="async (long val) => { State.SelectedCategoryId = val; }">
-            <SelectItem Value="0">All categories</SelectItem>
+            <SelectItem Value="0">All Models</SelectItem>
             @foreach (Category cat in DataService.CategoryList)
             {
             <SelectItem Value="@cat.Id">@cat.Description</SelectItem>
@@ -66,7 +66,7 @@
     <div class="mat-layout-grid">
         <div class="mat-layout-grid-inner">
             <div class="mat-layout-grid-cell">                
-                <RadzenNumeric Placeholder="ModelNumber" @bind-Value="@State.SelectedCategory.ModelNumber"></RadzenNumeric>ModelNumber
+                <RadzenNumeric Placeholder="ModelNumber" @bind-Value="@State.SelectedCategory.ModelNumber"></RadzenNumeric>ISI-Lags
             </div>
             <div class="mat-layout-grid-cell">                
                 <RadzenNumeric Placeholder="TrialNumber" @bind-Value="@State.SelectedCategory.TrialNumber"></RadzenNumeric>TrialNumber

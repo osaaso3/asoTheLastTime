@@ -295,7 +295,7 @@ namespace TheLastTime.Shared.Data
 
             if (db.Categories.Count == 0)
             {
-                db.Categories.Add(new Category() { Id = 1, Description = "No category" });
+                db.Categories.Add(new Category() { Id = 1, Description = "Default" });
                 save = true;
             }
 
@@ -619,7 +619,7 @@ namespace TheLastTime.Shared.Data
         {
             using IDatabase db = await DatabaseAccess.CreateDatabase();
 
-            db.Categories.Add(new Category() { Id = 2, Description = "Model1", ModelNumber=5, TrialNumber=20 });
+            db.Categories.Add(new Category() { Id = 2, Description = "Model-Example", ModelNumber=5, TrialNumber=20 });
             db.Habits.Add(new Habit() { Id = 1, CategoryId = 2, Description = "Block1", DesiredInterval = new TimeSpan(0, 8, 0, 0), IsStarred = true, IsTwoMinute = true });
             db.Times.Add(new Time() { Id = 1, HabitId = 1, DateTime = DateTime.Now.AddDays(-50) });
 

@@ -6,7 +6,7 @@
 
     <Button Color="Color.Primary"  @onclick="@(async () => { DataService.Settings.ShowHelp = !DataService.Settings.ShowHelp; await DataService.SaveSettings(); })"><span class="navbar-text">Info</span></Button>
 
-    <button class="av-link btn btn-link p-0 m-0 d-inline align-baseline shadow-none" @onclick="ToggleOptions">Show/Save Settings
+    <button class="av-link btn btn-link p-0 m-0 d-inline align-baseline shadow-none" @onclick="ToggleOptions">Settings
         <span class="fa fa-fw fa-cog"></span>
     </button>
 
@@ -16,7 +16,13 @@
         }
         else
         {
+
+        
+        @if (1==1)//DataService.Settings.ShowCategories)
+        {
         <CategoryComponent />
+        }
+
         <OptionsComponent />
         }
 
