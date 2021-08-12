@@ -280,7 +280,7 @@ namespace TheLastTime.Shared.Data
                 if (dimensions.Width < 576)
                     db.Settings.Add(new Settings() { Id = 1, Description = "Main", SelectedSettingsId = 1, Size = "small", Theme = "lumen" });
                 else
-                    db.Settings.Add(new Settings() { Id = 1, Description = "Main", SelectedSettingsId = 1, Size = "medium", Theme = "superhero" });
+                    db.Settings.Add(new Settings() { Id = 1, Description = "Main", SelectedSettingsId = 1, Size = "small", Theme = "cosmo" });
 
                 save = true;
             }

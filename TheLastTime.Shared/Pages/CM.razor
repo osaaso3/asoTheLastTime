@@ -76,6 +76,8 @@
         @*  
                  <Button id="add-habit" class="btn btn-lg btn-primary rounded-circle" @onclick="@(() => { asoIndx(); })"><span class="fa fa-fw fa-plus"></span></Button>
           @asoHabit0
+                      Visible <RadzenCheckBox @bind-Value="@modelsChart" Name="Models"></RadzenCheckBox>
+
         *@
 
 
@@ -83,7 +85,6 @@
 {
   <RadzenCard Style="width:600px;">
         <label>
-            Visible <RadzenCheckBox @bind-Value="@modelsChart" Name="Models"></RadzenCheckBox>
             Lag: @m / @ModelNumber Trial: @n / @TrialNumber Cycle: @c
         </label>
 
@@ -128,7 +129,7 @@
                     <RadzenProgressBar @bind-Value="@mProgress"></RadzenProgressBar>
         </label> 
          <label>
-         Visible: Trials<RadzenCheckBox @bind-Value="@trialsChart" Name="Trials"></RadzenCheckBox>
+         Visible: 
          Prime<RadzenCheckBox @bind-Value="@singleTrialChartPrime" Name="Prime"></RadzenCheckBox>
          Target<RadzenCheckBox @bind-Value="@singleTrialChartTarget" Name="Target"></RadzenCheckBox>
          Response<RadzenCheckBox @bind-Value="@singleTrialChartResponse" Name="Response"></RadzenCheckBox>
@@ -461,7 +462,7 @@
                 <RadzenNumeric Placeholder="TrialNumber" @bind-Value="@TrialNumber"></RadzenNumeric>TrialNumber
             </div>
             <div class="mat-layout-grid-cell">                
-                <RadzenNumeric Placeholder="CongRatio" @bind-Value="@CongRatio"></RadzenNumeric>CongRatio
+                <RadzenNumeric Placeholder="CongRatios" @bind-Value="@CongRatio"></RadzenNumeric>CongRatio
             </div>
         </div>
     </div>
