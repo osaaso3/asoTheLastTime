@@ -42,7 +42,7 @@
         }
 
         <Select TValue="long" Size="@Theme.Size" SelectedValue="@State.SelectedCategoryId" SelectedValueChanged="async (long val) => { State.SelectedCategoryId = val; }">
-            <SelectItem Value="0">All Models</SelectItem>
+            <SelectItem Value="0">Select</SelectItem>
             @foreach (Category cat in DataService.CategoryList)
             {
             <SelectItem Value="@cat.Id">@cat.Description</SelectItem>
@@ -197,6 +197,31 @@
         </div>
     </div>
 
+    <p>Response</p>
+    <div class="mat-layout-grid">
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="SelfO" @bind-Value="@State.SelectedCategory.SelfO" ></RadzenNumeric>SelfO
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="inhO" @bind-Value="@State.SelectedCategory.inhO" ></RadzenNumeric>inhO
+            </div>
+        </div>
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="ThreshO" @bind-Value="@State.SelectedCategory.ThreshO" ></RadzenNumeric>ThreshO
+            </div>
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="biasOut" @bind-Value="@State.SelectedCategory.biasOut" ></RadzenNumeric>biasOut
+            </div>
+        </div>
+        <div class="mat-layout-grid-inner">
+            <div class="mat-layout-grid-cell">
+                <RadzenNumeric Placeholder="conResponse" @bind-Value="@State.SelectedCategory.conResponse" ></RadzenNumeric>conResponse
+            </div>
+
+        </div>
+    </div>
 
     <p>Task</p>
     <div class="mat-layout-grid">

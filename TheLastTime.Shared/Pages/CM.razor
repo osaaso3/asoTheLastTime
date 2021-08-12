@@ -31,18 +31,27 @@
          <div class="col-md-6">  
               <div class="input-group flex-nowrap">
                        <RadzenButton Disabled="spinning"Click=@(args => asoPageA()) Text="Run" Icon="label" Style="margin-bottom: 0px; width: 150px" />
-        <Select TValue="long" SelectedValue="@state.SelectedCategoryId" SelectedValueChanged="async (long val) => { state.SelectedCategoryId = val; asoIndex=Convert.ToInt32(val)-1; }">
-            <SelectItem Value="0">All Models</SelectItem>
+
+                                <Select TValue="long" SelectedValue="@state.SelectedCategoryId" SelectedValueChanged="async (long val) => {state.SelectedCategoryId =val;  }">
+            <SelectItem Value="0">Select</SelectItem>
+
             @foreach (Category cat in dataService.CategoryList)
             {
             <SelectItem Value="@cat.Id">@cat.Description</SelectItem>
             }
         </Select>
-                               <RadzenButton Disabled="!spinning"Click=@(args => ChangeRefresh()) Text="Stop" Icon="stop" Style="margin-bottom: 0px; width: 150px" />
+                               <RadzenButton Disabled="spinningStop"Click=@(args => ChangeRefresh()) Text="Stop" Icon="stop" Style="margin-bottom: 0px; width: 150px" />
 
         </div>
 @* 
-            <Button  Disabled="!spinning"  @onclick="@(() => { ChangeRefresh(); })"><span class="fa fa-fw fa-square"></span>Stop</Button>
+                   <Select TValue="long" SelectedValue="@state.SelectedCategoryId" SelectedValueChanged="async (long val) => {state.SelectedCategoryId =val; asoIndx(val-1); }">
+            @foreach (Category cat in dataService.CategoryList)
+            {
+            <SelectItem Value="@cat.Id">@cat.Description</SelectItem>
+            }
+        </Select>
+        
+<Button  Disabled="!spinning"  @onclick="@(() => { ChangeRefresh(); })"><span class="fa fa-fw fa-square"></span>Stop</Button>
 
        <Pagination Class="m-0">
                            <RadzenButton Click=@(args => asoPageA()) Text="Start/Stop" Icon="label" Style="margin-bottom: 0px; width: 165px" />
@@ -763,7 +772,106 @@
    
    protected override void OnInitialized()
     {
+         asoIndex = 0;
+                ModelNumber  = dataService.CategoryList[asoIndex].ModelNumber;
 
+        TrialNumber  = dataService.CategoryList[asoIndex].TrialNumber;
+
+        CongRatio  = dataService.CategoryList[asoIndex].CongRatio;
+
+        N  = dataService.CategoryList[asoIndex].N;
+
+        durFix  = dataService.CategoryList[asoIndex].durFix;
+
+        durPrime  = dataService.CategoryList[asoIndex].durPrime;
+
+        durMask  = dataService.CategoryList[asoIndex].durMask;
+
+        durTarget  = dataService.CategoryList[asoIndex].durTarget;
+
+        durPrimeMaskISI  = dataService.CategoryList[asoIndex].durPrimeMaskISI;
+
+        durMaskTargetISI  = dataService.CategoryList[asoIndex].durMaskTargetISI;
+
+         noisePTR  = dataService.CategoryList[asoIndex].noisePTR;
+
+         noiseMasks  = dataService.CategoryList[asoIndex].noiseMasks;
+
+         noiseTask  = dataService.CategoryList[asoIndex].noiseTask;
+
+         CrossPri  = dataService.CategoryList[asoIndex].CrossPri;
+
+         SelfPri  = dataService.CategoryList[asoIndex].SelfPri;
+
+         inpamin  = dataService.CategoryList[asoIndex].inpamin;
+
+         inpamax  = dataService.CategoryList[asoIndex].inpamax;
+
+         ThreshPri  = dataService.CategoryList[asoIndex].ThreshPri;
+
+         inhPri  = dataService.CategoryList[asoIndex].inhPri;
+
+         biasPL  = dataService.CategoryList[asoIndex].biasPL;
+
+         conPrime  = dataService.CategoryList[asoIndex].conPrime;
+         CrossTar  = dataService.CategoryList[asoIndex].CrossTar;
+
+         SelfTar  = dataService.CategoryList[asoIndex].SelfTar;
+
+         inpbmin  = dataService.CategoryList[asoIndex].inpbmin;
+
+         inpbmax  = dataService.CategoryList[asoIndex].inpbmax;
+
+         inhTar  = dataService.CategoryList[asoIndex].inhTar;
+         ThreshTar  = dataService.CategoryList[asoIndex].ThreshTar;
+
+         biasPR  = dataService.CategoryList[asoIndex].biasPR;
+
+         conTarget  = dataService.CategoryList[asoIndex].conTarget;
+
+         SelfO  = dataService.CategoryList[asoIndex].SelfO;
+
+         inhO  = dataService.CategoryList[asoIndex].inhO;
+
+         ThreshO  = dataService.CategoryList[asoIndex].ThreshO;
+         biasOut  = dataService.CategoryList[asoIndex].biasOut;
+
+         conResponse  = dataService.CategoryList[asoIndex].conResponse;
+
+         SelfT  = dataService.CategoryList[asoIndex].SelfT;
+
+         inhT  = dataService.CategoryList[asoIndex].inhT;
+         ThreshT  = dataService.CategoryList[asoIndex].ThreshT;
+
+         biasTask  = dataService.CategoryList[asoIndex].biasTask;
+
+         ThreshConf  = dataService.CategoryList[asoIndex].ThreshConf;
+
+         cLC  = dataService.CategoryList[asoIndex].cLC;
+
+         CLCthresh  = dataService.CategoryList[asoIndex].CLCthresh;
+         g1  = dataService.CategoryList[asoIndex].g1;
+
+         g2  = dataService.CategoryList[asoIndex].g2;
+
+         SelfMasks  = dataService.CategoryList[asoIndex].SelfMasks;
+
+         BiasMasks  = dataService.CategoryList[asoIndex].BiasMasks;
+
+         CrossLMasks  = dataService.CategoryList[asoIndex].CrossLMasks;
+
+         ConMasks  = dataService.CategoryList[asoIndex].ConMasks;
+
+         InhMasks  = dataService.CategoryList[asoIndex].InhMasks;
+         
+         durM_T_ISIcoef  = dataService.CategoryList[asoIndex].durM_T_ISIcoef;
+         
+         inpamask  = dataService.CategoryList[asoIndex].inpamask;
+         
+         inpbmask  = dataService.CategoryList[asoIndex].inpbmask;
+         //////////////////////////////////////////////////////////////END var////////////////////////////
+        //spinning = false;
+        StateHasChanged();
       //for (int i=0;i<dataService.CategoryList.Count;i++)//dataService.HabitList.Count-1;i++)
       // {
       //    asoHabitList[i]= dataService.CategoryList[i].Description;
@@ -980,6 +1088,8 @@ public int asoPageSize {get; set;}=5;
     int currentCount = 0;
 
     bool spinning = false;
+        bool spinningStop = true;
+
     //definition1 start
 
     /// <summary>
@@ -988,100 +1098,100 @@ public int asoPageSize {get; set;}=5;
 
 
     ////////////////////////////////////////////////////vars/////////////////////////////////////////////////
-        public int ModelNumber { get; set; } = 3;
+        public int ModelNumber { get; set; }// = 3;
 
-        public int TrialNumber { get; set; } = 80;
+        public int TrialNumber { get; set; }// = 80;
 
-        public int CongRatio { get; set; } = 50;
+        public int CongRatio { get; set; }// = 50;
 
-        public int N { get; set; } = 1000;
+        public int N { get; set; }// = 1000;
 
-        public int durFix { get; set; } = 500;
+        public int durFix { get; set; }// = 500;
 
-        public int durPrime { get; set; } = 45;
+        public int durPrime { get; set; }// = 45;
 
-        public int durMask { get; set; } = 75;
+        public int durMask { get; set; }// = 75;
 
-        public int durTarget { get; set; } = 200;
+        public int durTarget { get; set; }// = 200;
 
-        public int durPrimeMaskISI { get; set; } = 0;
+        public int durPrimeMaskISI { get; set; }// = 0;
 
-        public int durMaskTargetISI { get; set; } = 0;
+        public int durMaskTargetISI { get; set; }// = 0;
 
-        public double noisePTR { get; set; } = 0.15;
+        public double noisePTR { get; set; }// = 0.15;
 
-        public double noiseMasks { get; set; } = 0.25;
+        public double noiseMasks { get; set; }// = 0.25;
 
-        public double noiseTask { get; set; } = 0.05;
+        public double noiseTask { get; set; }// = 0.05;
 
-        public double CrossPri { get; set; } = 0.33;
+        public double CrossPri { get; set; }// = 0.33;
 
-        public double SelfPri { get; set; } = 1.5;
+        public double SelfPri { get; set; }// = 1.5;
 
-        public double inpamin { get; set; } = 0;
+        public double inpamin { get; set; }// = 0;
 
-        public double inpamax { get; set; } = 1.0;
+        public double inpamax { get; set; }// = 1.0;
 
-        public double ThreshPri { get; set; } = 0.65;
+        public double ThreshPri { get; set; }// = 0.65;
 
-        public double inhPri { get; set; } = -1.0;
+        public double inhPri { get; set; }// = -1.0;
 
-        public double biasPL { get; set; } = -0.5;
+        public double biasPL { get; set; }// = -0.5;
 
-        public double conPrime { get; set; } = 3.0;
-        public double CrossTar { get; set; } = 0.33;
+        public double conPrime { get; set; }// = 3.0;
+        public double CrossTar { get; set; }// = 0.33;
 
-        public double SelfTar { get; set; } = 1.5;
+        public double SelfTar { get; set; }// = 1.5;
 
-        public double inpbmin { get; set; } = 0;
+        public double inpbmin { get; set; }// = 0;
 
-        public double inpbmax { get; set; } = 1.0;
+        public double inpbmax { get; set; }// = 1.0;
 
-        public double inhTar { get; set; } = -1.0;
-        public double ThreshTar { get; set; } = 0.65;
+        public double inhTar { get; set; }// = -1.0;
+        public double ThreshTar { get; set; }// = 0.65;
 
-        public double biasPR { get; set; } = -0.5;
+        public double biasPR { get; set; }// = -0.5;
 
-        public double conTarget { get; set; } = 3.0;
+        public double conTarget { get; set; }// = 3.0;
 
-        public double SelfO { get; set; } = 1.0;
+        public double SelfO { get; set; }// = 1.0;
 
-        public double inhO { get; set; } = -1.0;
+        public double inhO { get; set; }// = -1.0;
 
-        public double ThreshO { get; set; } = 0.7;
-        public double biasOut { get; set; } = -2.0;
+        public double ThreshO { get; set; }// = 0.7;
+        public double biasOut { get; set; }// = -2.0;
 
-        public double conResponse { get; set; } = 1.5;
+        public double conResponse { get; set; }// = 1.5;
 
-        public double SelfT { get; set; } = 1.0;
+        public double SelfT { get; set; }// = 1.0;
 
-        public double inhT { get; set; } = -1.0;
-        public double ThreshT { get; set; } = 0.45;
+        public double inhT { get; set; }// = -1.0;
+        public double ThreshT { get; set; }// = 0.45;
 
-        public double biasTask { get; set; } = -1.25;
+        public double biasTask { get; set; }// = -1.25;
 
-        public double ThreshConf { get; set; } = 2.0;
+        public double ThreshConf { get; set; }// = 2.0;
 
-        public double cLC { get; set; } = 3.85;
+        public double cLC { get; set; }// = 3.85;
 
-        public double CLCthresh { get; set; } = 1.0;
-        public double g1 { get; set; } = 3;
+        public double CLCthresh { get; set; }// = 1.0;
+        public double g1 { get; set; }// = 3;
 
-        public double g2 { get; set; } = 1;
+        public double g2 { get; set; }// = 1;
 
-        public double SelfMasks { get; set; } = 1.5;
-        public double BiasMasks { get; set; } = -1.25;
+        public double SelfMasks { get; set; }// = 1.5;
+        public double BiasMasks { get; set; }// = -1.25;
 
-        public double CrossLMasks { get; set; } = 0.75;
+        public double CrossLMasks { get; set; }// = 0.75;
 
-        public double ConMasks { get; set; } = 1.5;
+        public double ConMasks { get; set; }// = 1.5;
 
-        public double InhMasks { get; set; } = -1.0;
+        public double InhMasks { get; set; }// = -1.0;
 
-        public int durM_T_ISIcoef { get; set; } = 35;
-        public double inpamask { get; set; } = 1.0;
+        public int durM_T_ISIcoef { get; set; }// = 35;
+        public double inpamask { get; set; }// = 1.0;
 
-        public double inpbmask { get; set; } = 1.0;
+        public double inpbmask { get; set; }// = 1.0;
     //////////////////////////////////////////////////////////////END var////////////////////////////
     //  int ModelNumber = 5;//state.SelectedCategory.ModelNumber();
 
@@ -1411,6 +1521,7 @@ public int asoPageSize {get; set;}=5;
     public void MyMethodAsync0()
     {
         spinning = false;
+        spinningStop = true;
 
         n = TrialNumber;
 
@@ -1425,11 +1536,11 @@ public int asoPageSize {get; set;}=5;
     }
 
 
-       void asoIndx()
+       void asoIndx(int asoVal)
     {
-                   
-     
 
+        asoIndex = asoVal-1;
+        
     ////////////////////////////////////////////////////vars/////////////////////////////////////////////////
         ModelNumber  = dataService.CategoryList[asoIndex].ModelNumber;
 
@@ -1528,7 +1639,8 @@ public int asoPageSize {get; set;}=5;
          
          inpbmask  = dataService.CategoryList[asoIndex].inpbmask;
          //////////////////////////////////////////////////////////////END var////////////////////////////
-        ///StateHasChanged();
+        //spinning = false;
+        StateHasChanged();
     }
 
     int asoCountDown = 0;
@@ -1537,8 +1649,8 @@ public int asoPageSize {get; set;}=5;
     {
         //asoCountDown = 1;
 
-       if (spinning == false)
-        {
+      // if (spinning == false)
+       // {
            //MyMethodAsync0();
         //}
       //  else
@@ -1546,18 +1658,20 @@ public int asoPageSize {get; set;}=5;
             modelsRTlist.Clear();
             //result = -1;
 
-            spinning = true;
+            spinning = false;
             
-            StateHasChanged();
+          //  StateHasChanged();
            // asoIndex=Convert.ToInt32(state.SelectedCategoryId);
+                         long  asoIndex1=state.SelectedCategoryId;
 
-            if (asoIndex >-1)
-            {
-               // asoIndex1=state.SelectedCategoryId;
+           // if (asoIndex1 != null)
+           // {
+                asoIndex1=state.SelectedCategoryId;
+                  StateHasChanged();
 
                 // asoHabit0=dataService.CategoryList[Convert.ToInt32(asoIndex1)].ModelNumber.ToString()+dataService.CategoryList[Convert.ToInt32(asoIndex1)].TrialNumber.ToString();
-                    asoIndx();
-            }
+                  asoIndx(Convert.ToInt32(asoIndex1));
+           // }
            // else
            // {
            // asoHabit0 = "Plz select a model";
@@ -1566,12 +1680,13 @@ public int asoPageSize {get; set;}=5;
           //  return;
           //  }
             
+                      spinningStop = false;
 
 
                   StateHasChanged();
 
             Task longRunningTask = LongRunningOperationAsync(ModelNumber, TrialNumber, N);
-        }
+       // }
         // Count = TrialNumber;
 
         //c = ModelNumber;
