@@ -444,97 +444,46 @@ namespace TheLastTime.Shared.Data
                 dbCategory.durPrimeMaskISI = category.durPrimeMaskISI;
                 dbCategory.durMaskTargetISI = category.durMaskTargetISI;
                 dbCategory.noisePTR = category.noisePTR;
-                dbCategory.ModelNumber = category.ModelNumber;
-                dbCategory.TrialNumber = category.TrialNumber;
-                dbCategory.ModelNumber = category.ModelNumber;
-                dbCategory.TrialNumber = category.TrialNumber;
-                        public int  { get; set; } = 50;
-
-
-        [Required]
-        public int  { get; set; } = 0;
-        [Required]
-        public double  { get; set; } = 0.15;
-        [Required]
-        public double noiseMasks { get; set; } = 0.25;
-        [Required]
-        public double noiseTask { get; set; } = 0.05;
-        [Required]
-        public double CrossPri { get; set; } = 0.33;
-        [Required]
-        public double SelfPri { get; set; } = 1.5;
-        [Required]
-        public double inpamin { get; set; } = 0;
-        [Required]
-        public double inpamax { get; set; } = 1.0;
-        [Required]
-        public double ThreshPri { get; set; } = 0.65;
-        [Required]
-        public double inhPri { get; set; } = -1.0;
-        [Required]
-        public double biasPL { get; set; } = -0.5;
-        [Required]
-        public double conPrime { get; set; } = 3.0;
-        [Required]
-        public double CrossTar { get; set; } = 0.33;
-        [Required]
-        public double SelfTar { get; set; } = 1.5;
-        [Required]
-        public double inpbmin { get; set; } = 0;
-        [Required]
-        public double inpbmax { get; set; } = 1.0;
-        [Required]
-        public double inhTar { get; set; } = -1.0;
-        [Required]
-        public double ThreshTar { get; set; } = 0.65;
-        [Required]
-        public double biasPR { get; set; } = -0.5;
-        [Required]
-        public double conTarget { get; set; } = 3.0;
-        [Required]
-        public double SelfO { get; set; } = 1.0;
-        [Required]
-        public double inhO { get; set; } = -1.0;
-        [Required]
-        public double ThreshO { get; set; } = 0.7;
-        [Required]
-        public double biasOut { get; set; } = -2.0;
-        [Required]
-        public double conResponse { get; set; } = 1.5;
-        [Required]
-        public double SelfT { get; set; } = 1.0;
-        [Required]
-        public double inhT { get; set; } = -1.0;
-        [Required]
-        public double ThreshT { get; set; } = 0.45;
-        [Required]
-        public double biasTask { get; set; } = -1.25;
-        [Required]
-        public double ThreshConf { get; set; } = 2.0;
-        [Required]
-        public double cLC { get; set; } = 3.85;
-        [Required]
-        public double CLCthresh { get; set; } = 1.0;
-        [Required]
-        public double g1 { get; set; } = 3;
-        [Required]
-        public double g2 { get; set; } = 1;
-        [Required]
-        public double SelfMasks { get; set; } = 1.5;
-        [Required]
-        public double BiasMasks { get; set; } = -1.25;
-        [Required]
-        public double CrossLMasks { get; set; } = 0.75;
-        [Required]
-        public double ConMasks { get; set; } = 1.5;
-        [Required]
-        public double InhMasks { get; set; } = -1.0;
-        [Required]
-        public int durM_T_ISIcoef { get; set; } = 35;
-        [Required]
-        public double inpamask { get; set; } = 1.0;
-        [Required]
-        public double inpbmask { get; set; } = 1.0;
+                dbCategory.noiseMasks = category.noiseMasks;
+                dbCategory.noiseTask = category.noiseTask;
+                dbCategory.CrossPri = category.CrossPri;
+                dbCategory.SelfPri = category.SelfPri;
+                dbCategory.inpamin = category.inpamin;
+                dbCategory.inpamax = category.inpamax;
+                dbCategory.ThreshPri = category.ThreshPri;
+                dbCategory.inhPri = category.inhPri;
+                dbCategory.biasPL = category.biasPL;
+                dbCategory.conPrime = category.conPrime;
+                dbCategory.CrossTar = category.CrossTar;
+                dbCategory.SelfTar = category.SelfTar;
+                dbCategory.inpbmin = category.inpbmin;
+                dbCategory.inpbmax = category.inpbmax;
+                dbCategory.inhTar = category.inhTar;
+                dbCategory.ThreshTar = category.ThreshTar;
+                dbCategory.biasPR = category.biasPR;
+                dbCategory.conTarget = category.conTarget;
+                dbCategory.SelfO = category.SelfO;
+                dbCategory.inhO = category.inhO;
+                dbCategory.ThreshO = category.ThreshO;
+                dbCategory.biasOut = category.biasOut;
+                dbCategory.conResponse = category.conResponse;
+                dbCategory.SelfT = category.SelfT;
+                dbCategory.inhT = category.inhT;
+                dbCategory.ThreshT = category.ThreshT;
+                dbCategory.biasTask = category.biasTask;
+                dbCategory.ThreshConf = category.ThreshConf;
+                dbCategory.cLC = category.cLC;
+                dbCategory.CLCthresh = category.CLCthresh;
+                dbCategory.g1 = category.g1;
+                dbCategory.g2 = category.g2;
+                dbCategory.SelfMasks = category.SelfMasks;
+                dbCategory.BiasMasks = category.BiasMasks;
+                dbCategory.CrossLMasks = category.CrossLMasks;
+                dbCategory.ConMasks = category.ConMasks;
+                dbCategory.InhMasks = category.InhMasks;
+                dbCategory.durM_T_ISIcoef = category.durM_T_ISIcoef;
+                dbCategory.inpamask = category.inpamask;
+                dbCategory.inpbmask = category.inpbmask;
     }
 
             await db.SaveChanges();

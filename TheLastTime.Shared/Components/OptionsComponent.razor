@@ -1,4 +1,6 @@
-﻿<div class="card flex-grow-1 m-2 m-sm-3" style="max-width: 300px">
+﻿@inject IJSRuntime JSRuntime
+
+<div class="card flex-grow-1 m-2 m-sm-3" style="max-width: 300px">
 
     <div class="card-body p-2">
 
@@ -8,6 +10,7 @@
                 <Check TValue="bool" Checked="@DataService.Settings.ShowCategoriesInHeader" CheckedChanged="@(async (val) => { DataService.Settings.ShowCategoriesInHeader = val; await DataService.SaveSettings(); })"><span class="@TextClass">Show Models in Header</span></Check>
             </li>
             <li class="nav-item px-2 pt-2">
+
                  @*
                 <button type="button" class="btn btn-link p-0 m-0 d-inline align-baseline shadow-none" @onclick="@(async () => { State.ShowOptions = false; DataService.Settings.ShowHelp = true; await DataService.SaveSettings(); })"><span class="fa fa-question-circle"></span> Help</button>
                <a class="" href="javascript:void(0)" role="button"><span class="fa fa-question-circle"></span> Help</a>*@
@@ -193,7 +196,15 @@
                     </RadioGroup>
                 </Field>
             </li>
-
+            <li class="nav-item px-2 pt-2">
+                <Check TValue="bool" Checked="@DataService.Settings.BackupToGoogleDrive" CheckedChanged="@(async (val) => { DataService.Settings.BackupToGoogleDrive = val; await DataService.SaveSettings(); })"><span class="@TextClass">Backup to Google Drive</span></Check>
+            </li>
+             @if (@DataService.Settings.BackupToGoogleDrive)
+            {
+                <li class="nav-item px-2 pt-2">
+                    <LoginDisplay />
+                </li>
+            }
             <li class="nav-item px-2 pb-2">
                 <Button Color="Color.Primary" Size="@Theme.Size" Block="true" @onclick="@(() => ExportFile())">Export</Button>
             </li>
@@ -207,17 +218,21 @@
             <li class="nav-item p-2">
                 <Button Color="Color.Primary" Size="@Theme.Size" Block="true" @onclick="@(async () => { await DataService.SeedExamples(); })">Load examples</Button>
             </li>
-
-            <li class="nav-item px-2 pt-2">
-                <Check TValue="bool" Checked="@DataService.Settings.BackupToGoogleDrive" CheckedChanged="@(async (val) => { DataService.Settings.BackupToGoogleDrive = val; await DataService.SaveSettings(); })"><span class="@TextClass">Backup to Google Drive</span></Check>
+            <li class="nav-item p-2">
+                <Button Color="Color.Primary" Size="@Theme.Size" Block="true" @onclick="@(async () => { await SendLocalEmail(asoToEmail, asoSubj, AsoBody); })">Send Email</Button>
             </li>
+                <div class="mat-layout-grid">
+                <div class="mat-layout-grid-inner">
+                    <div class="input-group flex-nowrap">
+                        <TextEdit Size="@Theme.Size" @bind-Text="@asoToEmail" Placeholder="Model">To:</TextEdit>
+                        <TextEdit Size="@Theme.Size" @bind-Text="@asoSubj" Placeholder="Model">Subject:</TextEdit> 
+                        <TextEdit Size="@Theme.Size" @bind-Text="@AsoBody" Placeholder="Model">Text:</TextEdit> 
 
-            @if (@DataService.Settings.BackupToGoogleDrive)
-            {
-                <li class="nav-item px-2 pt-2">
-                    <LoginDisplay />
-                </li>
-            }
+                    </div>
+                </div>
+                </div>
+
+
 
         </ul>
 
@@ -227,6 +242,16 @@
 
 @code
 {
+
+    public string asoToEmail="sohrabya@gmail.com";
+    public string asoSubj="Test Netlif";
+    public string AsoBody="Hi Aso";
+
+    protected async Task SendLocalEmail(string toEmailAddress, string subject, string body)
+{
+      JSRuntime.InvokeAsync<object>("blazorExtensions.SendLocalEmail",
+      new object[] { toEmailAddress, subject, body });
+}
         void asoChange()
     {
         //var str = value is IEnumerable ? string.Join(", ", value) : value;

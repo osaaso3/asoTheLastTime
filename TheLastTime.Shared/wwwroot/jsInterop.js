@@ -24,3 +24,7 @@ export function getDimensions() {
 export function setElementProperty(element, property, value) {
     element[property] = value;
 }
+
+function isEmpty(str) {
+    return (!str || str.length === 0);
+}
