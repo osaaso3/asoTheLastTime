@@ -430,7 +430,15 @@ namespace TheLastTime.Shared.Data
             }
             else if (db.Categories.SingleOrDefault(c => c.Id == category.Id) is Category dbCategory)
             {
-                dbCategory.Description = category.Description;
+                //if (category.Description=="Default")
+                //{
+                    dbCategory.Description = category.Description;
+
+                //}
+                //else
+                //{
+                   // dbCategory.Description = category.Description + category.Id.ToString();
+                //}
                 dbCategory.Color = category.Color;
                 dbCategory.Icon = category.Icon;
                 dbCategory.ModelNumber = category.ModelNumber;

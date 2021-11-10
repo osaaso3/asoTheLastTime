@@ -192,7 +192,7 @@
                     <FieldLabel Class="@TextClass">Export file format:</FieldLabel>
                     <RadioGroup Orientation="Blazorise.Orientation.Vertical" TValue="bool" Name="format" @bind-CheckedValue="@exportAllData">
                         <Radio TValue="bool" Value="true"><span class="@TextClass">Everything (JSON)</span></Radio>
-                        <Radio TValue="bool" Value="false"><span class="@TextClass">Printable (YAML)</span></Radio>
+                        <Radio TValue="bool" Disabled="true" Value="false"><span class="@TextClass">Printable (YAML)</span></Radio>
                     </RadioGroup>
                 </Field>
             </li>
@@ -218,7 +218,8 @@
             <li class="nav-item p-2">
                 <Button Color="Color.Primary" Size="@Theme.Size" Block="true" @onclick="@(async () => { await DataService.SeedExamples(); })">Load examples</Button>
             </li>
-            <li class="nav-item p-2">
+            @*
+                        <li class="nav-item p-2">
                 <Button Color="Color.Primary" Size="@Theme.Size" Block="true" @onclick="@(async () => { await SendLocalEmail(asoToEmail, asoSubj, AsoBody); })">Send Email</Button>
             </li>
                 <div class="mat-layout-grid">
@@ -231,6 +232,8 @@
                     </div>
                 </div>
                 </div>
+            *@
+
 
 
 
